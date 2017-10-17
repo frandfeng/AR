@@ -1,0 +1,557 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		915C50401F963C06002EC05E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C503F1F963C06002EC05E /* AppDelegate.m */; };
+		915C50431F963C06002EC05E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50421F963C06002EC05E /* ViewController.m */; };
+		915C50461F963C06002EC05E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 915C50441F963C06002EC05E /* Main.storyboard */; };
+		915C50481F963C06002EC05E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915C50471F963C06002EC05E /* Assets.xcassets */; };
+		915C504B1F963C06002EC05E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 915C50491F963C06002EC05E /* LaunchScreen.storyboard */; };
+		915C504E1F963C06002EC05E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C504D1F963C06002EC05E /* main.m */; };
+		915C50581F963C06002EC05E /* AR3DCityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50571F963C06002EC05E /* AR3DCityTests.m */; };
+		915C50631F963C06002EC05E /* AR3DCityUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50621F963C06002EC05E /* AR3DCityUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		915C50541F963C06002EC05E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915C50331F963C06002EC05E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 915C503A1F963C06002EC05E;
+			remoteInfo = AR3DCity;
+		};
+		915C505F1F963C06002EC05E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 915C50331F963C06002EC05E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 915C503A1F963C06002EC05E;
+			remoteInfo = AR3DCity;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		915C503B1F963C06002EC05E /* AR3DCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR3DCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		915C503E1F963C06002EC05E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		915C503F1F963C06002EC05E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		915C50411F963C06002EC05E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		915C50421F963C06002EC05E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		915C50451F963C06002EC05E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		915C50471F963C06002EC05E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		915C504A1F963C06002EC05E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		915C504C1F963C06002EC05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		915C504D1F963C06002EC05E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		915C50531F963C06002EC05E /* AR3DCityTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AR3DCityTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		915C50571F963C06002EC05E /* AR3DCityTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AR3DCityTests.m; sourceTree = "<group>"; };
+		915C50591F963C06002EC05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		915C505E1F963C06002EC05E /* AR3DCityUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AR3DCityUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		915C50621F963C06002EC05E /* AR3DCityUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AR3DCityUITests.m; sourceTree = "<group>"; };
+		915C50641F963C06002EC05E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		915C50381F963C06002EC05E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C50501F963C06002EC05E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C505B1F963C06002EC05E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		915C50321F963C06002EC05E = {
+			isa = PBXGroup;
+			children = (
+				915C503D1F963C06002EC05E /* AR3DCity */,
+				915C50561F963C06002EC05E /* AR3DCityTests */,
+				915C50611F963C06002EC05E /* AR3DCityUITests */,
+				915C503C1F963C06002EC05E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		915C503C1F963C06002EC05E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				915C503B1F963C06002EC05E /* AR3DCity.app */,
+				915C50531F963C06002EC05E /* AR3DCityTests.xctest */,
+				915C505E1F963C06002EC05E /* AR3DCityUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		915C503D1F963C06002EC05E /* AR3DCity */ = {
+			isa = PBXGroup;
+			children = (
+				915C503E1F963C06002EC05E /* AppDelegate.h */,
+				915C503F1F963C06002EC05E /* AppDelegate.m */,
+				915C50411F963C06002EC05E /* ViewController.h */,
+				915C50421F963C06002EC05E /* ViewController.m */,
+				915C50441F963C06002EC05E /* Main.storyboard */,
+				915C50471F963C06002EC05E /* Assets.xcassets */,
+				915C50491F963C06002EC05E /* LaunchScreen.storyboard */,
+				915C504C1F963C06002EC05E /* Info.plist */,
+				915C504D1F963C06002EC05E /* main.m */,
+			);
+			path = AR3DCity;
+			sourceTree = "<group>";
+		};
+		915C50561F963C06002EC05E /* AR3DCityTests */ = {
+			isa = PBXGroup;
+			children = (
+				915C50571F963C06002EC05E /* AR3DCityTests.m */,
+				915C50591F963C06002EC05E /* Info.plist */,
+			);
+			path = AR3DCityTests;
+			sourceTree = "<group>";
+		};
+		915C50611F963C06002EC05E /* AR3DCityUITests */ = {
+			isa = PBXGroup;
+			children = (
+				915C50621F963C06002EC05E /* AR3DCityUITests.m */,
+				915C50641F963C06002EC05E /* Info.plist */,
+			);
+			path = AR3DCityUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		915C503A1F963C06002EC05E /* AR3DCity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915C50671F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCity" */;
+			buildPhases = (
+				915C50371F963C06002EC05E /* Sources */,
+				915C50381F963C06002EC05E /* Frameworks */,
+				915C50391F963C06002EC05E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AR3DCity;
+			productName = AR3DCity;
+			productReference = 915C503B1F963C06002EC05E /* AR3DCity.app */;
+			productType = "com.apple.product-type.application";
+		};
+		915C50521F963C06002EC05E /* AR3DCityTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915C506A1F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCityTests" */;
+			buildPhases = (
+				915C504F1F963C06002EC05E /* Sources */,
+				915C50501F963C06002EC05E /* Frameworks */,
+				915C50511F963C06002EC05E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				915C50551F963C06002EC05E /* PBXTargetDependency */,
+			);
+			name = AR3DCityTests;
+			productName = AR3DCityTests;
+			productReference = 915C50531F963C06002EC05E /* AR3DCityTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		915C505D1F963C06002EC05E /* AR3DCityUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 915C506D1F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCityUITests" */;
+			buildPhases = (
+				915C505A1F963C06002EC05E /* Sources */,
+				915C505B1F963C06002EC05E /* Frameworks */,
+				915C505C1F963C06002EC05E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				915C50601F963C06002EC05E /* PBXTargetDependency */,
+			);
+			name = AR3DCityUITests;
+			productName = AR3DCityUITests;
+			productReference = 915C505E1F963C06002EC05E /* AR3DCityUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		915C50331F963C06002EC05E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = JingHeQianCheng;
+				TargetAttributes = {
+					915C503A1F963C06002EC05E = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					915C50521F963C06002EC05E = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 915C503A1F963C06002EC05E;
+					};
+					915C505D1F963C06002EC05E = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 915C503A1F963C06002EC05E;
+					};
+				};
+			};
+			buildConfigurationList = 915C50361F963C06002EC05E /* Build configuration list for PBXProject "AR3DCity" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 915C50321F963C06002EC05E;
+			productRefGroup = 915C503C1F963C06002EC05E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				915C503A1F963C06002EC05E /* AR3DCity */,
+				915C50521F963C06002EC05E /* AR3DCityTests */,
+				915C505D1F963C06002EC05E /* AR3DCityUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		915C50391F963C06002EC05E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915C504B1F963C06002EC05E /* LaunchScreen.storyboard in Resources */,
+				915C50481F963C06002EC05E /* Assets.xcassets in Resources */,
+				915C50461F963C06002EC05E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C50511F963C06002EC05E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C505C1F963C06002EC05E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		915C50371F963C06002EC05E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915C50431F963C06002EC05E /* ViewController.m in Sources */,
+				915C504E1F963C06002EC05E /* main.m in Sources */,
+				915C50401F963C06002EC05E /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C504F1F963C06002EC05E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915C50581F963C06002EC05E /* AR3DCityTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		915C505A1F963C06002EC05E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				915C50631F963C06002EC05E /* AR3DCityUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		915C50551F963C06002EC05E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 915C503A1F963C06002EC05E /* AR3DCity */;
+			targetProxy = 915C50541F963C06002EC05E /* PBXContainerItemProxy */;
+		};
+		915C50601F963C06002EC05E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 915C503A1F963C06002EC05E /* AR3DCity */;
+			targetProxy = 915C505F1F963C06002EC05E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		915C50441F963C06002EC05E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				915C50451F963C06002EC05E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		915C50491F963C06002EC05E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				915C504A1F963C06002EC05E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		915C50651F963C06002EC05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		915C50661F963C06002EC05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		915C50681F963C06002EC05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCity/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		915C50691F963C06002EC05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCity/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCity;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		915C506B1F963C06002EC05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AR3DCity.app/AR3DCity";
+			};
+			name = Debug;
+		};
+		915C506C1F963C06002EC05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCityTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCityTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AR3DCity.app/AR3DCity";
+			};
+			name = Release;
+		};
+		915C506E1F963C06002EC05E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCityUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCityUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AR3DCity;
+			};
+			name = Debug;
+		};
+		915C506F1F963C06002EC05E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 27ZN797VLM;
+				INFOPLIST_FILE = AR3DCityUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCityUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = AR3DCity;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		915C50361F963C06002EC05E /* Build configuration list for PBXProject "AR3DCity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915C50651F963C06002EC05E /* Debug */,
+				915C50661F963C06002EC05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915C50671F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915C50681F963C06002EC05E /* Debug */,
+				915C50691F963C06002EC05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915C506A1F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCityTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915C506B1F963C06002EC05E /* Debug */,
+				915C506C1F963C06002EC05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		915C506D1F963C06002EC05E /* Build configuration list for PBXNativeTarget "AR3DCityUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				915C506E1F963C06002EC05E /* Debug */,
+				915C506F1F963C06002EC05E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 915C50331F963C06002EC05E /* Project object */;
+}
