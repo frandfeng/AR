@@ -20,9 +20,8 @@
 
 - (const char *)unityMsgDealing:(const char *) value ;
 
-- (void)sendMsg2Unity:(NSString *)value;
-
-@property (nonatomic, copy) void (^sendUnityMsg)(NSString * obj, NSString * method, NSString * msg);
+- (void)sendMsg2UnityOfType:(NSString *)type andValue:(NSString *)value;
 
 @property (nonatomic, assign) id<PWUnityMsgManagerDelegate> delegate;
+
 @end

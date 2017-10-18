@@ -29,23 +29,21 @@ static PWUnityMsgManager *sharedObject = nil;
     return nil;
 }
 
-- (void)sendMsg2Unity:(NSString *)value {
-    if (self.sendUnityMsg != nil) {
-        NSLog(@"=========== sendMsg2Unity Value :%@",value);
-        self.sendUnityMsg(@"Unity",@"sendData", value);
-    }
+- (void)sendMsg2UnityOfType:(NSString *)type andValue:(NSString *)value {
+    NSLog(@"发送给Unity消息 方法 %@, 参数 :%@",type, value);
+    UnitySendMessage(@"Entrance".UTF8String, type.UTF8String, value.UTF8String);
 }
 
 -(const char *)unityMsgDealing:(const char *) value {
     NSString *str =[PWU3DCodec NSStringCodec:value];
-//    if (self.delegate != nil) {
-//        [self.delegate recvU3DMSG:str];
-//    }
+    NSLog(@"收到unity消息 %@", str);
     NSDictionary *dic = [PWU3DCodec toArrayOrNSDictionary:[str dataUsingEncoding:NSASCIIStringEncoding]];
     if ([[dic allKeys] containsObject:@"method"]) {
         NSString *func = [dic objectForKey:@"method"];
         if ([func isEqualToString:@"ReqIntelligentFun"]) {
             
+        } else if ([func isEqualToString:@"ReqGPSState"]) {
+            [self sendMsg2UnityOfType:@"OnGPSStateResult" andValue:@"{\"params\":{\"isOpened\":true}}"];
         }
     }
     return [PWU3DCodec U3DCodec:@"false"];

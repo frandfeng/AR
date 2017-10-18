@@ -1029,8 +1029,6 @@
 		915C507C1F963CE6002EC05E /* UnityUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnityUtil.swift; sourceTree = "<group>"; };
 		915C50821F963D38002EC05E /* PWApplicationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWApplicationUtils.h; sourceTree = "<group>"; };
 		915C50831F963D38002EC05E /* PWApplicationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWApplicationUtils.m; sourceTree = "<group>"; };
-		915C50841F963D38002EC05E /* PWiOSBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWiOSBridge.h; sourceTree = "<group>"; };
-		915C50851F963D38002EC05E /* PWiOSBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWiOSBridge.m; sourceTree = "<group>"; };
 		915C50861F963D38002EC05E /* PWU3DBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PWU3DBridge.mm; sourceTree = "<group>"; };
 		915C50871F963D38002EC05E /* PWU3DCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PWU3DCodec.h; sourceTree = "<group>"; };
 		915C50881F963D38002EC05E /* PWU3DCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PWU3DCodec.m; sourceTree = "<group>"; };
@@ -2065,8 +2063,6 @@
 				9130727A1F96EF870091386E /* ShareSDKUnity3DBridge.m */,
 				915C50821F963D38002EC05E /* PWApplicationUtils.h */,
 				915C50831F963D38002EC05E /* PWApplicationUtils.m */,
-				915C50841F963D38002EC05E /* PWiOSBridge.h */,
-				915C50851F963D38002EC05E /* PWiOSBridge.m */,
 				915C50861F963D38002EC05E /* PWU3DBridge.mm */,
 				915C50871F963D38002EC05E /* PWU3DCodec.h */,
 				915C50881F963D38002EC05E /* PWU3DCodec.m */,
