@@ -9,6 +9,9 @@
 #import "PWUnityMsgManager.h"
 #import "PWU3DCodec.h"
 #import <objc/objc.h>
+#import "ZYPlayingViewController.h"
+#import "PWApplicationUtils.h"
+#import "AppDelegate.h"
 
 @implementation PWUnityMsgManager
 
@@ -85,6 +88,10 @@ static PWUnityMsgManager *sharedObject = nil;
          打开智能导游窗口和关闭智能导游窗口（OnIntelligentFun是回调函数）
          */
         else if ([func isEqualToString:@"ReqIntelligentFun"]) {
+            ZYPlayingViewController *playingVc = [[ZYPlayingViewController alloc] initWithNibName:@"ZYPlayingViewController" bundle:nil];
+            [[PWApplicationUtils sharedInstance].activityViewController presentViewController:playingVc animated:YES completion:^{
+                [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
+            }];
             [self sendMsg2UnityOfType:@"OnIntelligentFun" andValue:@"{\"params\":{}}"];
         }
     }
