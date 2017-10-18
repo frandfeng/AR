@@ -18,14 +18,12 @@
 #import <notify.h>
 #import "ZYLrcLine.h"
 #import "AppDelegate.h"
-
 #import "INTULocationManager.h"
 
 @interface ZYPlayingViewController ()  <AVAudioPlayerDelegate>
 
 @property (nonatomic, strong) ZYMusic *playingMusic;
 @property (nonatomic, strong) AVAudioPlayer *player;
-
 @property (nonatomic, strong) CLLocation *currentLocation;
 
 /**
@@ -56,10 +54,6 @@
  */
 @property (strong, nonatomic) IBOutlet UILabel *songLabel;
 /**
- *  歌手名字
- */
-@property (strong, nonatomic) IBOutlet UILabel *singerLabel;
-/**
  *  暂停\播放按钮
  */
 @property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
@@ -68,13 +62,9 @@
  */
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 /**
- *  歌曲进度颜色背景
- */
-@property (weak, nonatomic) IBOutlet UIView *progressView;
-/**
  *  歌曲滑块
  */
-@property (weak, nonatomic) IBOutlet UIButton *slider;
+@property (weak, nonatomic) IBOutlet UISlider *sliderView;
 /**
  *  滑块上面显示当前时间的label
  */
@@ -107,14 +97,13 @@
  *  拖拽滑块时，调用的方法
  *
  */
-- (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
+//- (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
 /**
  *  点击背景时，滑块调整位置时调用的方法
  *
  */
-- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
-- (IBAction)previous:(id)sender;
-- (IBAction)next:(id)sender;
+//- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
+- (IBAction)sliderValueChanged:(id)sender;
 
 //锁屏图片视图,用来绘制带歌词的image
 @property (nonatomic, strong) UIImageView * lrcImageView;;
@@ -132,12 +121,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor redColor];
-    
-    [self.slider setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.slider.font = [UIFont systemFontOfSize:12];
-    [self setupLrcView];
+//    [self setupLrcView];
 //    [self playControl];
-    [self createRemoteCommandCenter];
+//    [self createRemoteCommandCenter];
 }
 
 #pragma mark ----setup系列方法
@@ -487,13 +473,10 @@
 - (void)resetPlayingMusic
 {
     // 重置界面数据
-    self.iconView.image = [UIImage imageNamed:@"play_cover_pic_bg"];
-    self.singerLabel.text = nil;
+    self.iconView.image = [UIImage imageNamed:@"default"];
     self.songLabel.text = nil;
     self.timeLabel.text = [self stringWithTime:0];
-    self.slider.x = 0;
-    self.progressView.width = self.slider.center.x;
-    [self.slider setTitle:[self stringWithTime:0] forState:UIControlStateNormal];
+    self.sliderView.x = 0;
     
     //停止播放音乐
     [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
@@ -519,9 +502,8 @@
     
     // 设置所需要的数据
     self.playingMusic = [ZYMusicTool playingMusic];
-//    self.iconView.image = [UIImage imageNamed:self.playingMusic.icon];
+    self.iconView.image = [UIImage imageNamed:@"yiheyuan"];
     self.songLabel.text = self.playingMusic.name;
-    self.singerLabel.text = self.playingMusic.musicId;
     
     //开发播放音乐
     self.player = [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
@@ -568,9 +550,7 @@
 - (void)updateCurrentTimer
 {
     double temp = self.player.currentTime / self.player.duration;
-    self.slider.x = temp * (self.view.width - self.slider.width);
-    [self.slider setTitle:[self stringWithTime:self.player.currentTime] forState:UIControlStateNormal];
-    self.progressView.width = self.slider.center.x;
+//    self.slider.x = temp * (self.view.width - self.slider.width);
     
     float totalTime = self.player.duration;
     float currentTime = self.player.currentTime;
@@ -778,9 +758,9 @@
     }
     CGFloat time = (sender.view.x / (self.view.width - sender.view.width)) * self.player.duration;
     [self.showProgressLabel setTitle:[self stringWithTime:time] forState:UIControlStateNormal];
-    [self.slider setTitle:[self stringWithTime:time] forState:UIControlStateNormal];
-    self.progressView.width = sender.view.center.x;
-    self.showProgressLabel.x = self.slider.x;
+//    [self.slider setTitle:[self stringWithTime:time] forState:UIControlStateNormal];
+//    self.progressView.width = sender.view.center.x;
+//    self.showProgressLabel.x = self.slider.x;
     
     if (sender.state == UIGestureRecognizerStateBegan) {
         [self removeCurrentTimer];
@@ -809,6 +789,9 @@
     
     [self updateCurrentTimer];
     [self updateLrcTimer];
+}
+
+- (IBAction)sliderValueChanged:(id)sender {
 }
 
 /**
