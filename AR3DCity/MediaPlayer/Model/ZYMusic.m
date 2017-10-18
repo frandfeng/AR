@@ -8,6 +8,22 @@
 
 #import "ZYMusic.h"
 
+@implementation ZYMusicData
+
++ (NSDictionary *)objectClassInArray {
+    return @{
+             @"datas" : [ZYMusic class]
+             };
+}
+
+@end
+
 @implementation ZYMusic
+
++ (NSDictionary *)replacedKeyFromPropertyName{
+    return @{
+             @"musicId" : @"id"
+             };
+}
 
 @end

@@ -121,9 +121,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor redColor];
-//    [self setupLrcView];
+    [self setupLrcView];
 //    [self playControl];
-//    [self createRemoteCommandCenter];
+    ZYMusic *currentMusic = [ZYMusicTool musics][0];
+    [ZYMusicTool setPlayingMusic:currentMusic];
+    [self startPlayingMusic:currentMusic];
+    [self createRemoteCommandCenter];
 }
 
 #pragma mark ----setup系列方法
@@ -134,9 +137,7 @@
     self.lrcView = lrcView;
     lrcView.hidden = YES;
     [self.topView addSubview:lrcView];
-    [lrcView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(0, 0, - 50, 0)];
-    [self.topView insertSubview:self.exitBtn aboveSubview:lrcView];
-    [self.topView insertSubview:self.lyricOrPhotoBtn aboveSubview:lrcView];
+    [lrcView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(50, 50, 100, 50)];
 }
 
 //锁屏界面开启和监控远程控制事件
@@ -210,29 +211,6 @@
 //        }];
         self.player.currentTime = playbackPositionEvent.positionTime;
         return MPRemoteCommandHandlerStatusSuccess;
-    }];
-    
-    
-}
-
-- (void)show
-{
-//    NSLog(@"%@",NSStringFromCGRect(self.view.frame));
-    UIWindow *windows = [UIApplication sharedApplication].keyWindow;
-    self.view.bounds = windows.bounds;
-    [windows addSubview:self.view];
-    self.view.y = self.view.height;
-    self.view.hidden = NO;
-    if (self.playingMusic != [ZYMusicTool playingMusic]) {
-        [self resetPlayingMusic];
-    }
-    
-    windows.userInteractionEnabled = NO;         //以免在动画过程中用户多次点击，或者造成其他事件的发生
-    [UIView animateWithDuration:0.25 animations:^{
-        self.view.y = 0;
-    }completion:^(BOOL finished) {
-        windows.userInteractionEnabled = YES;
-        [self startPlayingMusic];
     }];
 }
 
@@ -395,7 +373,8 @@
 //    //设置已经播放时长
 //    [songDict setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     
-    UIImage * lrcImage = [UIImage imageNamed:@"backgroundImage5.jpg"];
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Data/Raw/Texture2d/%@", self.playingMusic.icon] ofType:@"png"];
+    UIImage *lrcImage = [UIImage imageWithContentsOfFile:filePath];
     if (isShow) {
         
         //制作带歌词的海报
@@ -445,9 +424,11 @@
             lrcImage = _lastImage;
         }
     }
-    //设置显示的海报图片
-    info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:lrcImage];
     
+    if (lrcImage) {
+        //设置显示的海报图片
+        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:lrcImage];
+    }
     
     [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:info];
     
@@ -491,7 +472,7 @@
 }
 
 //开始播放音乐
-- (void)startPlayingMusic
+- (void)startPlayingMusic:(ZYMusic *)music
 {
     if (self.playingMusic == [ZYMusicTool playingMusic])  {
         [self addLocTimer];
@@ -633,14 +614,14 @@
                                                  // Request succeeded, meaning achievedAccuracy is at least the requested accuracy, and
                                                  // currentLocation contains the device's current location.
                                                  _currentLocation = currentLocation;
-                                                 [self next:nil];
+//                                                 [self next:nil];
                                              }
                                              else if (status == INTULocationStatusTimedOut) {
                                                  // Wasn't able to locate the user with the requested accuracy within the timeout interval.
                                                  // However, currentLocation contains the best location available (if any) as of right now,
                                                  // and achievedAccuracy has info on the accuracy/recency of the location in currentLocation.
                                                  _currentLocation = currentLocation;
-                                                 [self next:nil];
+//                                                 [self next:nil];
                                              }
                                              else {
                                                  // An error occurred, more info is available by looking at the specific status returned.
@@ -813,40 +794,12 @@
         [self removeLrcTimer];
     }
 }
-/**
- *  前一首
- *
- */
-- (IBAction)previous:(id)sender {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.userInteractionEnabled = NO;
-    [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
-    [ZYMusicTool setPlayingMusic:[ZYMusicTool previousMusic]];
-    [self removeCurrentTimer];
-    [self removeLrcTimer];
-    [self startPlayingMusic];
-    window.userInteractionEnabled = YES;
-}
-/**
- *  下一首
- *
- */
-- (IBAction)next:(id)sender {
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    window.userInteractionEnabled = NO;
-    [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
-    [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
-    [self removeCurrentTimer];
-    [self removeLrcTimer];
-    [self startPlayingMusic];
-    window.userInteractionEnabled = YES;
-}
 
 #pragma mark ----AVAudioPlayerDelegate
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    [self next:nil];
+//    [self next:nil];
 }
 /**
  *  当电话给过来时，进行相应的操作
@@ -904,11 +857,11 @@
             break;
             
         case UIEventSubtypeRemoteControlNextTrack:
-            [self next:nil];
+//            [self next:nil];
             break;
             
         case UIEventSubtypeRemoteControlPreviousTrack:
-            [self previous:nil];
+//            [self previous:nil];
             
         default:
             break;

@@ -70,7 +70,7 @@ static ZYAudioManager *_instance = nil;
     AVAudioPlayer *player = self.musicPlayers[filename];      //先查询对象是否缓存了
     
     if (!player) {
-        NSURL *url = [[NSBundle mainBundle] URLForResource:filename withExtension:nil];
+        NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithFormat:@"Data/Raw/Song/%@", filename] withExtension:@"mp3"];
         
         if (!url)  return nil;
         

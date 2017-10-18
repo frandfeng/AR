@@ -47,12 +47,12 @@ public class UnityEdit : NSObject {
     
     /// 当Unity重新导出需要刷新工程时需要调用的
     public static func startUnityRefresh() -> Void {
-        let res : Bool = removeMainmm();
-        if res {
-            print("移除main.mm成功");
-        } else {
-            print("移除main.mm失败");
-        }
+//        let res : Bool = removeMainmm();
+//        if res {
+//            print("移除main.mm成功");
+//        } else {
+//            print("移除main.mm失败");
+//        }
         
 //        let res1 : Bool = replaceDec2Attr();
 //        if res1 {
@@ -163,10 +163,10 @@ public class UnityEdit : NSObject {
         let path : String = ProjectPath + "CityPlus/CityPlus.xcodeproj/project.pbxproj";
         var content : String = UnityUtil.read(path: path);
         let headerPath : String = "HEADER_SEARCH_PATHS = (\n\t\t\t\t\t\"$(inherited)\",";
-        let headerPathEnd : String = headerPath+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Classes\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Classes/Native\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Classes/UI\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Libraries\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Libraries/libil2cpp/include\",";
+        let headerPathEnd : String = headerPath+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Classes\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Classes/Native\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Classes/UI\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Libraries\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Libraries/libil2cpp/include\",";
         content = content.replacingOccurrences(of: headerPath, with: headerPathEnd);
         let libPath : String = "LIBRARY_SEARCH_PATHS = (\n\t\t\t\t\t\"$(inherited)\",";
-        let libPathEnd : String = libPath+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Libraries\","+"\n\t\t\t\t\t\"$(SRCROOT)/../UnityBuildiOSProj/Libraries/Plugins/iOS\",";
+        let libPathEnd : String = libPath+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Libraries\","+"\n\t\t\t\t\t\"$(SRCROOT)/../AR3DCity/Unity3DPlugin/Libraries/Plugins/iOS\",";
         content = content.replacingOccurrences(of: libPath, with: libPathEnd);
         return UnityUtil.writeString(aStr: content, toFile: path);
     }
@@ -197,7 +197,7 @@ public class UnityEdit : NSObject {
             }
         }
         
-        //只保留在UnityBuildiOSProj文件夹下的main.mm的id
+        //只保留在AR3DCity/Unity3DPlugin文件夹下的main.mm的id
         for key1 : String in propertyList.keys {
             if key1 == "objects" {
                 let propertyList1 : [String: Any] = propertyList[key1] as! [String : Any];
@@ -210,7 +210,7 @@ public class UnityEdit : NSObject {
                                 let value3 : [String] = propertyList2[key3] as! [String];
                                 for value4 : String in value3 {
                                     if (keys.contains(value4)) {
-                                        if (!path.contains("UnityBuildiOSProj")) {
+                                        if (!path.contains("AR3DCity/Unity3DPlugin")) {
                                             print("remove key "+value4);
                                             keys.remove(value4);
                                         }
@@ -265,7 +265,7 @@ public class UnityEdit : NSObject {
     
     /// 修改il2cpp-config.h中的attribute
     static func replaceDec2Attr() -> Bool {
-        let path : String = ProjectPath + "UnityBuildiOSProj/Libraries/libil2cpp/include/il2cpp-config.h";
+        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Libraries/libil2cpp/include/il2cpp-config.h";
         var content : String = UnityUtil.read(path: path);
         if content.contains("__declspec(noreturn)") {
             content = content.replacingOccurrences(of: "__declspec(noreturn)", with: "__attribute__((noreturn))");
@@ -278,13 +278,13 @@ public class UnityEdit : NSObject {
     
     /// 修改GetAppController中的代码
     static func editGetAppController() -> Bool {
-        let path : String = ProjectPath + "UnityBuildiOSProj/Classes/UnityAppController.h";
+        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/UnityAppController.h";
         var content : String = UnityUtil.read(path: path);
-        if !content.contains("#import \"CPAppDelegate.h\"") {
+        if !content.contains("#import \"AppDelegate.h\"") {
             //添加#import "CPAppDelegate.h"
-            content = content.replacingOccurrences(of: "#import <QuartzCore/CADisplayLink.h>", with: "#import <QuartzCore/CADisplayLink.h>\n#import \"CPAppDelegate.h\"");
+            content = content.replacingOccurrences(of: "#import <QuartzCore/CADisplayLink.h>", with: "#import <QuartzCore/CADisplayLink.h>\n#import \"AppDelegate.h\"");
             //替换GetAppController函数
-            content = content.replacingOccurrences(of: "(UnityAppController*)[UIApplication sharedApplication].delegate", with: "[(CPAppDelegate*)[UIApplication sharedApplication].delegate unityController]")
+            content = content.replacingOccurrences(of: "(UnityAppController*)[UIApplication sharedApplication].delegate", with: "[(AppDelegate*)[UIApplication sharedApplication].delegate unityController]")
             let res = UnityUtil.writeString(aStr: content, toFile: path);
             return res;
         } else {

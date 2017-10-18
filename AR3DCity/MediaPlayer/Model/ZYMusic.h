@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@interface ZYMusicData : NSObject
+
+@property (strong, nonatomic) NSArray *datas;
+
+@end
+
 @interface ZYMusic : NSObject
 /**
  *  景点名称

@@ -17,8 +17,8 @@ static ZYMusic *_playingMusic;
 + (NSArray *)musics
 {
     if (_musics == nil) {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"AddressInfo1" ofType:@"txt"];
-        _musics = [ZYMusic objectArrayWithJSONData:[NSData dataWithContentsOfFile:filePath]];
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Data/Raw/Config/AddressInfo" ofType:@"txt"];
+        _musics = [ZYMusicData objectWithJSONData:[NSData dataWithContentsOfFile:filePath]].datas;
     }
     return _musics;
 }

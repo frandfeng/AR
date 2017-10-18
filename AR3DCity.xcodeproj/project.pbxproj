@@ -342,7 +342,6 @@
 		913071B21F963FEF0091386E /* libVuforiaUnityPlayer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 913070B61F963FEE0091386E /* libVuforiaUnityPlayer.a */; };
 		913071B31F963FEF0091386E /* RegisterFeatures.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 913070B71F963FEE0091386E /* RegisterFeatures.cpp */; };
 		913071B41F963FEF0091386E /* RegisterMonoModules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 913070B91F963FEE0091386E /* RegisterMonoModules.cpp */; };
-		913071B61F963FF80091386E /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 913071B51F963FF80091386E /* Data */; };
 		913072071F9640200091386E /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913071B91F96401D0091386E /* MOBFoundation.framework */; };
 		913072081F9640200091386E /* ShareSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 913071BB1F96401D0091386E /* ShareSDK.framework */; };
 		913072091F9640200091386E /* ShareSDKConfigFile.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 913071BE1F96401D0091386E /* ShareSDKConfigFile.bundle */; };
@@ -464,6 +463,7 @@
 		9162322C1F972806006F4D96 /* INTULocationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232261F972806006F4D96 /* INTULocationRequest.m */; };
 		9162322D1F972806006F4D96 /* INTURequestIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232291F972806006F4D96 /* INTURequestIDGenerator.m */; };
 		9162322F1F972AE3006F4D96 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9162322E1F972ADF006F4D96 /* Accelerate.framework */; };
+		916232331F975835006F4D96 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 916232321F975835006F4D96 /* Data */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -929,7 +929,6 @@
 		913070B81F963FEE0091386E /* RegisterFeatures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterFeatures.h; sourceTree = "<group>"; };
 		913070B91F963FEE0091386E /* RegisterMonoModules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RegisterMonoModules.cpp; sourceTree = "<group>"; };
 		913070BA1F963FEE0091386E /* RegisterMonoModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterMonoModules.h; sourceTree = "<group>"; };
-		913071B51F963FF80091386E /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Data; path = ../../../Unity3DPlugin/Data; sourceTree = "<group>"; };
 		913071B91F96401D0091386E /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		913071BB1F96401D0091386E /* ShareSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDK.framework; sourceTree = "<group>"; };
 		913071BE1F96401D0091386E /* ShareSDKConfigFile.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKConfigFile.bundle; sourceTree = "<group>"; };
@@ -1102,6 +1101,7 @@
 		916232281F972806006F4D96 /* INTURequestIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTURequestIDGenerator.h; sourceTree = "<group>"; };
 		916232291F972806006F4D96 /* INTURequestIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTURequestIDGenerator.m; sourceTree = "<group>"; };
 		9162322E1F972ADF006F4D96 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		916232321F975835006F4D96 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Data; path = ../../../Unity3DPlugin/Data; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2128,8 +2128,8 @@
 		915C50901F963EE3002EC05E /* U3D */ = {
 			isa = PBXGroup;
 			children = (
+				916232321F975835006F4D96 /* Data */,
 				913071B71F96401D0091386E /* SDK */,
-				913071B51F963FF80091386E /* Data */,
 				91306DDA1F963FED0091386E /* Libraries */,
 				91306C841F963FD30091386E /* Classes */,
 			);
@@ -2418,6 +2418,7 @@
 				913071041F963FEF0091386E /* ShareSDK-ShortMessage-3.1.0.jar.meta in Resources */,
 				913070F01F963FEF0091386E /* ShareSDK-KakaoTalk-3.1.0.jar.meta in Resources */,
 				9130710A1F963FEF0091386E /* ShareSDK-TencentWeibo-3.1.0.jar.meta in Resources */,
+				916232331F975835006F4D96 /* Data in Resources */,
 				913071AC1F963FEF0091386E /* ssdk_strings.xml.meta in Resources */,
 				913071691F963FEF0091386E /* ssdk_oks_classic_laiwangmoments.png in Resources */,
 				9130717C1F963FEF0091386E /* ssdk_oks_classic_renren.png.meta in Resources */,
@@ -2446,7 +2447,6 @@
 				9130711E1F963FEF0091386E /* ShareSDK-Yixin-Core-3.1.0.jar.meta in Resources */,
 				913071261F963FEF0091386E /* SSDKU3D.jar.meta in Resources */,
 				913071241F963FEF0091386E /* ShareSDK-Youtube-3.1.0.jar.meta in Resources */,
-				913071B61F963FF80091386E /* Data in Resources */,
 				913071821F963FEF0091386E /* ssdk_oks_classic_tencentweibo.png.meta in Resources */,
 				9130717D1F963FEF0091386E /* ssdk_oks_classic_shortmessage.png in Resources */,
 				913071AD1F963FEF0091386E /* values-en.meta in Resources */,
