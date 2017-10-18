@@ -27,6 +27,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.unityController = [[UnityAppController alloc] init];
     [self.unityController application:application didFinishLaunchingWithOptions:launchOptions];
+    self.window = self.unityWindow;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
