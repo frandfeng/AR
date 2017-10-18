@@ -54,12 +54,12 @@ public class UnityEdit : NSObject {
             print("移除main.mm失败");
         }
         
-        let res1 : Bool = replaceDec2Attr();
-        if res1 {
-            print("替换attribute成功");
-        } else {
-            print("替换attribute失败");
-        }
+//        let res1 : Bool = replaceDec2Attr();
+//        if res1 {
+//            print("替换attribute成功");
+//        } else {
+//            print("替换attribute失败");
+//        }
         
         let res2 : Bool = editGetAppController();
         if res2 {

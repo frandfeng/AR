@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class  UnityAppController;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
 @property (strong, nonatomic) UIWindow *window;
-
-
+@property (strong, nonatomic) UIWindow *unityWindow;
+@property (strong, nonatomic) UnityAppController *unityController;
+- (void)showUnityWindow;
+- (void)hideUnityWindow;
 @end
 

@@ -72,9 +72,13 @@ static PWUnityMsgManager *sharedObject = nil;
          
          */
         else if ([func isEqualToString:@"ReqCallPhone"]) {
-            if ([[dic allKeys] containsObject:@"phoneNum"]) {
-                NSString *phoneNum = [dic objectForKey:@"phoneNum"];
-                [[UIApplication sharedApplication]openURL:[NSURL URLWithString:[@"tel://" stringByAppendingString:phoneNum]]];
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"phoneNum"]) {
+                    NSString *phoneNum = paramsDic[@"phoneNum"];
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[@"tel://" stringByAppendingString:phoneNum]]];
+                    return [PWU3DCodec U3DCodec:@"true"];
+                }
             }
         }
         /**
@@ -84,6 +88,6 @@ static PWUnityMsgManager *sharedObject = nil;
             [self sendMsg2UnityOfType:@"OnIntelligentFun" andValue:@"{\"params\":{}}"];
         }
     }
-    return [PWU3DCodec U3DCodec:@"true"];
+    return [PWU3DCodec U3DCodec:@"false"];
 }
 @end
