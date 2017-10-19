@@ -12,11 +12,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZYPlayingViewController">
             <connections>
                 <outlet property="bottomView" destination="3dw-Ib-Yb5" id="JXb-Eo-9iS"/>
-                <outlet property="exitBtn" destination="RhU-y1-h35" id="N0u-ft-pTg"/>
                 <outlet property="iconView" destination="kTN-0G-jAp" id="LY2-wB-fNe"/>
                 <outlet property="lyricOrPhotoBtn" destination="GhW-Be-8tq" id="0Ya-67-Oy0"/>
                 <outlet property="playOrPauseButton" destination="WXb-Xt-7Au" id="DhG-4g-3Dn"/>
-                <outlet property="showProgressLabel" destination="rR8-qy-Fkh" id="j5e-8j-imG"/>
+                <outlet property="progressLabel" destination="gtR-mx-zcy" id="AG8-iX-g5j"/>
                 <outlet property="sliderView" destination="8eA-fs-4n9" id="sq6-qk-pYs"/>
                 <outlet property="songLabel" destination="OC4-UN-Y0l" id="04g-Pp-glF"/>
                 <outlet property="timeLabel" destination="dUB-Mu-OAm" id="OAP-Rb-KO6"/>
@@ -35,15 +34,6 @@
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yiheyuan" translatesAutoresizingMaskIntoConstraints="NO" id="kTN-0G-jAp" userLabel="歌曲图片">
                             <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         </imageView>
-                        <button hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rR8-qy-Fkh" userLabel="显示拖拽进度">
-                            <rect key="frame" x="318.5" y="173" width="30" height="29"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="1:30">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                        </button>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_top" translatesAutoresizingMaskIntoConstraints="NO" id="iMt-pp-hGb">
                             <rect key="frame" x="0.0" y="0.0" width="667" height="100"/>
                             <constraints>
@@ -67,18 +57,16 @@
                             </constraints>
                             <state key="normal" backgroundImage="back"/>
                             <connections>
-                                <action selector="exit:" destination="-1" eventType="touchUpInside" id="PzU-qy-sCu"/>
+                                <action selector="exit:" destination="-1" eventType="touchUpInside" id="iBw-fD-H8m"/>
                             </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="rR8-qy-Fkh" firstAttribute="centerY" secondItem="M4u-b5-UNB" secondAttribute="centerY" id="82H-AG-KTl"/>
                         <constraint firstItem="RhU-y1-h35" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" constant="20" id="8bg-nT-nqh"/>
                         <constraint firstItem="OC4-UN-Y0l" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" constant="10" id="C7S-m8-ZUZ"/>
                         <constraint firstAttribute="trailing" secondItem="OC4-UN-Y0l" secondAttribute="trailing" id="DqK-TA-LLF"/>
                         <constraint firstItem="kTN-0G-jAp" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" id="IhY-7o-Bg3"/>
-                        <constraint firstItem="rR8-qy-Fkh" firstAttribute="centerX" secondItem="M4u-b5-UNB" secondAttribute="centerX" id="X35-6Y-SfS"/>
                         <constraint firstItem="RhU-y1-h35" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" constant="20" id="Yah-wK-UXY"/>
                         <constraint firstItem="OC4-UN-Y0l" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" id="cGO-hL-rIN"/>
                         <constraint firstAttribute="bottom" secondItem="kTN-0G-jAp" secondAttribute="bottom" id="fiG-5H-LpZ"/>
@@ -98,13 +86,14 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dw-Ib-Yb5" userLabel="底部">
                     <rect key="frame" x="0.0" y="315" width="667" height="60"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXb-Xt-7Au">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WXb-Xt-7Au">
                             <rect key="frame" x="60" y="10" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="Ebi-Yh-iCn"/>
                                 <constraint firstAttribute="width" constant="40" id="IT7-0x-Jq0"/>
                             </constraints>
                             <state key="normal" backgroundImage="btn_play"/>
+                            <state key="selected" backgroundImage="btn_pause"/>
                             <connections>
                                 <action selector="playOrPause:" destination="-1" eventType="touchUpInside" id="t7P-nh-pTe"/>
                             </connections>
@@ -119,13 +108,14 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhW-Be-8tq">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhW-Be-8tq">
                             <rect key="frame" x="567" y="10" width="40" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="TYC-XZ-DMG"/>
                                 <constraint firstAttribute="height" constant="40" id="VyX-pE-ANO"/>
                             </constraints>
                             <state key="normal" backgroundImage="btn_setting"/>
+                            <state key="selected" backgroundImage="btn_setting"/>
                             <connections>
                                 <action selector="lyricOrPhoto:" destination="-1" eventType="touchUpInside" id="DsI-Y4-EdG"/>
                             </connections>
@@ -183,6 +173,7 @@
         <image name="back" width="100" height="100"/>
         <image name="back_bottom" width="1920" height="276"/>
         <image name="back_top" width="1920" height="213"/>
+        <image name="btn_pause" width="120" height="120"/>
         <image name="btn_play" width="120" height="120"/>
         <image name="btn_setting" width="72" height="72"/>
         <image name="yiheyuan" width="1920" height="1080"/>

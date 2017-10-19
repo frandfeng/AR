@@ -26,89 +26,48 @@
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) CLLocation *currentLocation;
 
-/**
- *  显示播放进度条的定时器
- */
+//显示播放进度条的定时器
 @property (nonatomic, strong) NSTimer *timer;
-
-/**
- *  定位的定时器
- */
+//定位的定时器
 @property (nonatomic, strong) NSTimer *locTimer;
-/**
- *  显示歌词的定时器
- */
+//显示歌词的定时器
 @property (nonatomic, strong) CADisplayLink *lrcTimer;
-/**
- *  判断歌曲播放过程中是否被电话等打断播放
- */
+//判断歌曲播放过程中是否被电话等打断播放
 @property (nonatomic, assign) BOOL isInterruption;
-
+//歌词视图
 @property (nonatomic, weak) ZYLrcView *lrcView;
-/**
- *  歌手图片
- */
+//歌曲图片
 @property (strong, nonatomic) IBOutlet UIImageView *iconView;
-/**
- *  歌曲名字
- */
+//歌曲名字
 @property (strong, nonatomic) IBOutlet UILabel *songLabel;
-/**
- *  暂停\播放按钮
- */
+//暂停\播放按钮
 @property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
-/**
- *  整首歌是多长时间
- */
+//整首歌是多长时间
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-/**
- *  歌曲滑块
- */
+//歌曲进度滑块
 @property (weak, nonatomic) IBOutlet UISlider *sliderView;
-/**
- *  滑块上面显示当前时间的label
- */
-@property (weak, nonatomic) IBOutlet UIButton *showProgressLabel;
-
+//滑块上面显示当前时间的label
+@property (weak, nonatomic) IBOutlet UILabel *progressLabel;
+//上半部分视图view
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
+//操作部分
 @property (weak, nonatomic) IBOutlet UIView *topView;
-
-@property (weak, nonatomic) IBOutlet UIButton *exitBtn;
+//设置按钮
 @property (weak, nonatomic) IBOutlet UIButton *lyricOrPhotoBtn;
-
-
-
-/**
- *  显示图片还是歌词
- *
- */
-- (IBAction)lyricOrPhoto:(id)sender;
-/**
- *  暂停或者播放
- *
- */
-- (IBAction)playOrPause:(id)sender;
-/**
- *  退下窗口
- *
- */
-- (IBAction)exit:(UIButton *)sender;
-/**
- *  拖拽滑块时，调用的方法
- *
- */
-//- (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
-/**
- *  点击背景时，滑块调整位置时调用的方法
- *
- */
-//- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender;
-- (IBAction)sliderValueChanged:(id)sender;
-
 //锁屏图片视图,用来绘制带歌词的image
 @property (nonatomic, strong) UIImageView * lrcImageView;;
 //用来显示锁屏歌词
 @property (nonatomic, strong) UITextView * lockScreenTableView;
+
+
+//设置按钮，暂控制显示图片还是歌词
+- (IBAction)lyricOrPhoto:(id)sender;
+//暂停或者播放
+- (IBAction)playOrPause:(id)sender;
+//退下窗口
+- (IBAction)exit:(UIButton *)sender;
+//拖动滑块时的处理
+- (IBAction)sliderValueChanged:(id)sender;
 
 @end
 
@@ -116,16 +75,16 @@
     id _playerTimeObserver;
     BOOL _isDragging;
     UIImage * _lastImage;//最后一次锁屏之后的歌词海报
+    int _playingIndex;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor redColor];
     [self setupLrcView];
-//    [self playControl];
-    ZYMusic *currentMusic = [ZYMusicTool musics][0];
+    _playingIndex = 0;
+    ZYMusic *currentMusic = [ZYMusicTool musics][_playingIndex];
     [ZYMusicTool setPlayingMusic:currentMusic];
-    [self startPlayingMusic:currentMusic];
+    [self startPlayingMusic];
     [self createRemoteCommandCenter];
 }
 
@@ -141,41 +100,10 @@
 }
 
 //锁屏界面开启和监控远程控制事件
-- (void)createRemoteCommandCenter{
-    /**/
+- (void)createRemoteCommandCenter {
     //远程控制命令中心 iOS 7.1 之后  详情看官方文档：https://developer.apple.com/documentation/mediaplayer/mpremotecommandcenter
     
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-    
-    //   MPFeedbackCommand对象反映了当前App所播放的反馈状态. MPRemoteCommandCenter对象提供feedback对象用于对媒体文件进行喜欢, 不喜欢, 标记的操作. 效果类似于网易云音乐锁屏时的效果
-    
-    //添加喜欢按钮
-//    MPFeedbackCommand *likeCommand = commandCenter.likeCommand;
-//    likeCommand.enabled = YES;
-//    likeCommand.localizedTitle = @"喜欢";
-//    [likeCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//        NSLog(@"喜欢");
-//        return MPRemoteCommandHandlerStatusSuccess;
-//    }];
-//    //添加不喜欢按钮，假装是“上一首”
-//    MPFeedbackCommand *dislikeCommand = commandCenter.dislikeCommand;
-//    dislikeCommand.enabled = YES;
-//    dislikeCommand.localizedTitle = @"上一首";
-//    [dislikeCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//        NSLog(@"上一首");
-//        return MPRemoteCommandHandlerStatusSuccess;
-//    }];
-//    //标记
-//    MPFeedbackCommand *bookmarkCommand = commandCenter.bookmarkCommand;
-//    bookmarkCommand.enabled = YES;
-//    bookmarkCommand.localizedTitle = @"标记";
-//    [bookmarkCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//        NSLog(@"标记");
-//        return MPRemoteCommandHandlerStatusSuccess;
-//    }];
-    
-    //    commandCenter.togglePlayPauseCommand 耳机线控的暂停/播放
-    
     [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         [self.player pause];
         return MPRemoteCommandHandlerStatusSuccess;
@@ -184,254 +112,17 @@
         [self.player play];
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-    //        [commandCenter.previousTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-    //            NSLog(@"上一首");
-    //            return MPRemoteCommandHandlerStatusSuccess;
-    //        }];
     
     [commandCenter.changePlaybackRateCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-    //    [commandCenter.nextTrackCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-    //        NSLog(@"下一首");
-    //        return MPRemoteCommandHandlerStatusSuccess;
-    //    }];
-    
-    //快进
-    //    MPSkipIntervalCommand *skipBackwardIntervalCommand = commandCenter.skipForwardCommand;
-    //    skipBackwardIntervalCommand.preferredIntervals = @[@(54)];
-    //    skipBackwardIntervalCommand.enabled = YES;
-    //    [skipBackwardIntervalCommand addTarget:self action:@selector(skipBackwardEvent:)];
     
     //在控制台拖动进度条调节进度（仿QQ音乐的效果）
     [commandCenter.changePlaybackPositionCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
-//        float totlaTime = self.player.duration;
         MPChangePlaybackPositionCommandEvent * playbackPositionEvent = (MPChangePlaybackPositionCommandEvent *)event;
-//        [self.player seekToTime:CMTimeMake(totlaTime*playbackPositionEvent.positionTime/CMTimeGetSeconds(totlaTime), totlaTime.timescale) completionHandler:^(BOOL finished) {
-//        }];
         self.player.currentTime = playbackPositionEvent.positionTime;
         return MPRemoteCommandHandlerStatusSuccess;
     }];
-}
-
-//- (void)playControl{
-//
-//    //后台播放音频设置,需要在Capabilities->Background Modes中勾选Audio,Airplay,and Picture in Picture
-//    AVAudioSession *session = [AVAudioSession sharedInstance];
-//    [session setActive:YES error:nil];
-//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-//
-//    __weak ZYPlayingViewController * weakSelf = self;
-//    _playerTimeObserver = [weakSelf.player addPeriodicTimeObserverForInterval:CMTimeMake(0.1*30, 30) queue:dispatch_get_main_queue() usingBlock:^(CMTime time) {
-//
-//        CGFloat currentTime = CMTimeGetSeconds(time);
-//
-//        CMTime total = weakSelf.player.currentItem.duration;
-//        CGFloat totalTime = CMTimeGetSeconds(total);
-//
-//        if (!_isDragging) {
-//
-//            //歌词滚动显示
-////            for ( int i = (int)(self.lrcArray.count - 1); i >= 0 ;i--) {
-////                wslLrcEach * lrc = self.lrcArray[i];
-////                if (lrc.time < currentTime) {
-////                    self.currentRow = i;
-////                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: self.currentRow inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-////                    [self.tableView reloadData];
-////                    [self.lockScreenTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: self. currentRow inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-////                    [self.lockScreenTableView reloadData];
-////                    break;
-////                }
-////            }
-//
-//        }
-//
-//
-//        //监听锁屏状态 lock=1则为锁屏状态
-//        uint64_t locked;
-//        __block int token = 0;
-//        notify_register_dispatch("com.apple.springboard.lockstate",&token,dispatch_get_main_queue(),^(int t){
-//        });
-//        notify_get_state(token, &locked);
-//
-//        //监听屏幕点亮状态 screenLight = 1则为变暗关闭状态
-//        uint64_t screenLight;
-//        __block int lightToken = 0;
-//        notify_register_dispatch("com.apple.springboard.hasBlankedScreen",&lightToken,dispatch_get_main_queue(),^(int t){
-//        });
-//        notify_get_state(lightToken, &screenLight);
-//
-//        BOOL isShowLyricsPoster = NO;
-//        // NSLog(@"screenLight=%llu locked=%llu",screenLight,locked);
-//        if (screenLight == 0 && locked == 1) {
-//            //点亮且锁屏时
-//            isShowLyricsPoster = YES;
-//        }else if(screenLight){
-//            return;
-//        }
-//
-//        //展示锁屏歌曲信息，上面监听屏幕锁屏和点亮状态的目的是为了提高效率
-//        [self showLockScreenTotaltime:totalTime andCurrentTime:currentTime andLyricsPoster:isShowLyricsPoster];
-//
-//    }];
-//
-//    /* iOS 7.1之前
-//     //让App开始接收远程控制事件, 该方法属于UIApplication类
-//     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-//     //结束远程控制,需要的时候关闭
-//     //     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-//     //处理控制台的暂停/播放、上/下一首事件
-//     [[NSNotificationCenter defaultCenter] addObserverForName:@"songRemoteControlNotification" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification) {
-//
-//     NSInteger  eventSubtype = [notification.userInfo[@"eventSubtype"] integerValue];
-//     switch (eventSubtype) {
-//     case UIEventSubtypeRemoteControlNextTrack:
-//     NSLog(@"下一首");
-//     break;
-//     case UIEventSubtypeRemoteControlPreviousTrack:
-//     NSLog(@"上一首");
-//     break;
-//     case  UIEventSubtypeRemoteControlPause:
-//     [self.player pause];
-//     break;
-//     case  UIEventSubtypeRemoteControlPlay:
-//     [self.player play];
-//     break;
-//     //耳机上的播放暂停
-//     case  UIEventSubtypeRemoteControlTogglePlayPause:
-//     NSLog(@"播放或暂停");
-//     break;
-//     //后退
-//     case UIEventSubtypeRemoteControlBeginSeekingBackward:
-//     break;
-//     case UIEventSubtypeRemoteControlEndSeekingBackward:
-//     NSLog(@"后退");
-//     break;
-//     //快进
-//     case UIEventSubtypeRemoteControlBeginSeekingForward:
-//     break;
-//     case UIEventSubtypeRemoteControlEndSeekingForward:
-//     NSLog(@"前进");
-//     break;
-//     default:
-//     break;
-//     }
-//
-//     }];
-//     */
-//
-//}
-
-//展示锁屏歌曲信息：图片、歌词、进度、演唱者
-- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andLyricsPoster:(BOOL)isShow{
-    
-    
-    
-    //切换锁屏
-//    [self updateLockedScreenMusic];
-    
-    // 播放信息中心
-    MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
-    
-    // 初始化播放信息
-    NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    // 专辑名称
-    info[MPMediaItemPropertyAlbumTitle] = self.playingMusic.name;
-    // 歌手
-    info[MPMediaItemPropertyArtist] = self.playingMusic.musicId;
-    // 歌曲名称
-    info[MPMediaItemPropertyTitle] = [NSString stringWithFormat:@"%f,@%f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude];
-    // 设置图片
-    //    info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:self.playingMusic.icon]];
-    // 设置持续时间（歌曲的总时间）
-    info[MPMediaItemPropertyPlaybackDuration] = @(self.player.duration);
-    // 设置当前播放进度
-    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = @(self.player.currentTime);
-    
-    // 切换播放信息
-//    center.nowPlayingInfo = info;
-    
-    // 远程控制事件 Remote Control Event
-    // 加速计事件 Motion Event
-    // 触摸事件 Touch Event
-    
-    // 开始监听远程控制事件
-    // 成为第一响应者（必备条件）
-    [self becomeFirstResponder];
-    // 开始监控
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    
-//    NSMutableDictionary * songDict = [[NSMutableDictionary alloc] init];
-//    //设置歌曲题目
-//    [songDict setObject:@"多幸运" forKey:MPMediaItemPropertyTitle];
-//    //设置歌手名
-//    [songDict setObject:@"韩安旭" forKey:MPMediaItemPropertyArtist];
-//    //设置专辑名
-//    [songDict setObject:@"专辑名" forKey:MPMediaItemPropertyAlbumTitle];
-//    //设置歌曲时长
-//    [songDict setObject:[NSNumber numberWithDouble:totalTime]  forKey:MPMediaItemPropertyPlaybackDuration];
-//    //设置已经播放时长
-//    [songDict setObject:[NSNumber numberWithDouble:currentTime] forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-    
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Data/Raw/Texture2d/%@", self.playingMusic.icon] ofType:@"png"];
-    UIImage *lrcImage = [UIImage imageWithContentsOfFile:filePath];
-    if (isShow) {
-        
-        //制作带歌词的海报
-        if (!_lrcImageView) {
-            _lrcImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 480,480)];
-        }
-        if (!_lockScreenTableView) {
-            _lockScreenTableView = [[UITextView alloc] initWithFrame:CGRectMake(0, 240, 480, 240)];
-            _lockScreenTableView.editable = NO;
-            _lockScreenTableView.backgroundColor = [UIColor clearColor];
-            _lockScreenTableView.font = [UIFont systemFontOfSize:26];
-        }
-        if ([_playingMusic.detail hasSuffix:@".lrc"]) {
-            NSMutableArray *lrcLines = [ZYLrcLine lrcLinesWithFileName:_playingMusic.detail];
-            NSString *detail = @"";
-            for ( int i = (int)(lrcLines.count - 1); i >= 0 ;i--) {
-                ZYLrcLine * lrc = lrcLines[i];
-                if (lrc.time && lrc.word) {
-                    if ([self timeIntervalFromTime:lrc.time] < currentTime) {
-                        detail = lrc.word;
-                        break;
-                    }
-                }
-            }
-            _lockScreenTableView.text = detail;
-        } else {
-            double rate = self.player.currentTime / self.player.duration;
-            double textLength = [_playingMusic.detail length];
-            double pointer = rate * textLength;
-            _lockScreenTableView.text = [_playingMusic.detail substringFromIndex:(int)pointer];
-        }
-        //主要为了把歌词绘制到图片上，已达到更新歌词的目的
-        [_lrcImageView addSubview:self.lockScreenTableView];
-        _lrcImageView.image = lrcImage;
-        _lrcImageView.backgroundColor = [UIColor blackColor];
-        
-        //获取添加了歌词数据的海报图片
-        UIGraphicsBeginImageContextWithOptions(_lrcImageView.frame.size, NO, 0.0);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        [_lrcImageView.layer renderInContext:context];
-        lrcImage = UIGraphicsGetImageFromCurrentImageContext();
-        _lastImage = lrcImage;
-        UIGraphicsEndImageContext();
-        
-    }else{
-        if (_lastImage) {
-            lrcImage = _lastImage;
-        }
-    }
-    
-    if (lrcImage) {
-        //设置显示的海报图片
-        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:lrcImage];
-    }
-    
-    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:info];
-    
 }
 
 - (NSTimeInterval)timeIntervalFromTime:(NSString *)time {
@@ -472,7 +163,7 @@
 }
 
 //开始播放音乐
-- (void)startPlayingMusic:(ZYMusic *)music
+- (void)startPlayingMusic
 {
     if (self.playingMusic == [ZYMusicTool playingMusic])  {
         [self addLocTimer];
@@ -502,7 +193,7 @@
 
 #pragma mark ----进度条定时器处理
 /**
- *  添加定时器
+ *  添加定时器，更新slider，播放进度和锁屏页面
  */
 - (void)addCurrentTimer
 {
@@ -531,28 +222,14 @@
 - (void)updateCurrentTimer
 {
     double temp = self.player.currentTime / self.player.duration;
+    self.sliderView.value = temp;
 //    self.slider.x = temp * (self.view.width - self.slider.width);
     
     float totalTime = self.player.duration;
     float currentTime = self.player.currentTime;
     
-    if (!_isDragging) {
-        
-        //歌词滚动显示
-        //            for ( int i = (int)(self.lrcArray.count - 1); i >= 0 ;i--) {
-        //                wslLrcEach * lrc = self.lrcArray[i];
-        //                if (lrc.time < currentTime) {
-        //                    self.currentRow = i;
-        //                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: self.currentRow inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        //                    [self.tableView reloadData];
-        //                    [self.lockScreenTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow: self. currentRow inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-        //                    [self.lockScreenTableView reloadData];
-        //                    break;
-        //                }
-        //            }
-        
-    }
-    
+    self.timeLabel.text = [self stringWithTime:totalTime];
+    self.progressLabel.text = [self stringWithTime:currentTime];
     
     //监听锁屏状态 lock=1则为锁屏状态
     uint64_t locked;
@@ -582,6 +259,103 @@
     
 }
 
+
+
+//展示锁屏歌曲信息：图片、歌词、进度、演唱者
+- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andLyricsPoster:(BOOL)isShow{
+    
+    // 播放信息中心
+    MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
+    
+    // 初始化播放信息
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    // 专辑名称
+    info[MPMediaItemPropertyAlbumTitle] = self.playingMusic.name;
+    // 歌手
+    info[MPMediaItemPropertyArtist] = self.playingMusic.musicId;
+    // 歌曲名称
+    info[MPMediaItemPropertyTitle] = [NSString stringWithFormat:@"%f,@%f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude];
+    // 设置图片
+    //    info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:self.playingMusic.icon]];
+    // 设置持续时间（歌曲的总时间）
+    info[MPMediaItemPropertyPlaybackDuration] = @(self.player.duration);
+    // 设置当前播放进度
+    info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = @(self.player.currentTime);
+    
+    // 切换播放信息
+    //    center.nowPlayingInfo = info;
+    
+    // 远程控制事件 Remote Control Event
+    // 加速计事件 Motion Event
+    // 触摸事件 Touch Event
+    
+    // 开始监听远程控制事件
+    // 成为第一响应者（必备条件）
+    [self becomeFirstResponder];
+    // 开始监控
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Data/Raw/Texture2d/%@", self.playingMusic.icon] ofType:@"png"];
+    UIImage *lrcImage = [UIImage imageWithContentsOfFile:filePath];
+    if (isShow) {
+        
+        //制作带歌词的海报
+        if (!_lrcImageView) {
+            _lrcImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 480,480)];
+        }
+        if (!_lockScreenTableView) {
+            _lockScreenTableView = [[UITextView alloc] initWithFrame:CGRectMake(0, 240, 480, 240)];
+            _lockScreenTableView.editable = NO;
+            _lockScreenTableView.backgroundColor = [UIColor clearColor];
+            _lockScreenTableView.font = [UIFont systemFontOfSize:26];
+        }
+        if ([_playingMusic.detail hasSuffix:@".lrc"]) {
+            NSMutableArray *lrcLines = [ZYLrcLine lrcLinesWithFileName:_playingMusic.detail];
+            NSString *detail = @"";
+            for ( int i = (int)(lrcLines.count - 1); i >= 0 ;i--) {
+                ZYLrcLine * lrc = lrcLines[i];
+                if (lrc.time && lrc.word) {
+                    if ([self timeIntervalFromTime:lrc.time] < currentTime) {
+                        detail = lrc.word;
+                        break;
+                    }
+                }
+            }
+            _lockScreenTableView.text = detail;
+        } else {
+            double rate = self.player.currentTime / self.player.duration;
+            double textLength = [_playingMusic.detail length];
+            double pointer = rate * textLength;
+            _lockScreenTableView.text = [_playingMusic.detail substringFromIndex:(int)pointer];
+        }
+        //主要为了把歌词绘制到图片上，已达到更新歌词的目的
+        //        [_lrcImageView addSubview:self.lockScreenTableView];
+        _lrcImageView.image = lrcImage;
+        _lrcImageView.backgroundColor = [UIColor blackColor];
+        
+        //获取添加了歌词数据的海报图片
+        UIGraphicsBeginImageContextWithOptions(_lrcImageView.frame.size, NO, 0.0);
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [_lrcImageView.layer renderInContext:context];
+        lrcImage = UIGraphicsGetImageFromCurrentImageContext();
+        _lastImage = lrcImage;
+        UIGraphicsEndImageContext();
+        
+    }else{
+        if (_lastImage) {
+            lrcImage = _lastImage;
+        }
+    }
+    
+    if (lrcImage) {
+        //设置显示的海报图片
+        info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:lrcImage];
+    }
+    
+    [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:info];
+    
+}
+
 #pragma mark ---定位定时器
 - (void)addLocTimer {
     if (![self.player isPlaying]) return;
@@ -593,18 +367,6 @@
 }
 
 - (void)loc {
-//    INTULocationManager *locMgr = [INTULocationManager sharedInstance];
-//    [locMgr subscribeToLocationUpdatesWithDesiredAccuracy:INTULocationAccuracyHouse
-//                                                    block:^(CLLocation *currentLocation, INTULocationAccuracy achievedAccuracy, INTULocationStatus status) {
-//                                                        if (status == INTULocationStatusSuccess) {
-//                                                            _currentLocation = currentLocation;
-//                                                            [self next:nil];
-//                                                            // A new updated location is available in currentLocation, and achievedAccuracy indicates how accurate this particular location is.
-//                                                        }
-//                                                        else {
-//                                                            // An error occurred, more info is available by looking at the specific status returned. The subscription has been kept alive.
-//                                                        }
-//                                                    }];
     INTULocationManager *locMgr = [INTULocationManager sharedInstance];
     [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyBlock
                                        timeout:30.0
@@ -614,6 +376,11 @@
                                                  // Request succeeded, meaning achievedAccuracy is at least the requested accuracy, and
                                                  // currentLocation contains the device's current location.
                                                  _currentLocation = currentLocation;
+                                                 [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
+                                                 [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
+                                                 [self removeCurrentTimer];
+                                                 [self removeLrcTimer];
+                                                 [self startPlayingMusic];
 //                                                 [self next:nil];
                                              }
                                              else if (status == INTULocationStatusTimedOut) {
@@ -621,6 +388,11 @@
                                                  // However, currentLocation contains the best location available (if any) as of right now,
                                                  // and achievedAccuracy has info on the accuracy/recency of the location in currentLocation.
                                                  _currentLocation = currentLocation;
+                                                 [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
+                                                 [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
+                                                 [self removeCurrentTimer];
+                                                 [self removeLrcTimer];
+                                                 [self startPlayingMusic];
 //                                                 [self next:nil];
                                              }
                                              else {
@@ -634,7 +406,7 @@
     self.locTimer = nil;
 }
 
-#pragma mark ----歌词定时器
+#pragma mark ----歌词定时器，更新歌词
 
 - (void)addLrcTimer
 {
@@ -695,84 +467,25 @@
     }
 }
 
-
 /**
  *  将控制器退下
  *
  */
 - (IBAction)exit:(id)sender {
-    
-//    UIWindow *windows = [UIApplication sharedApplication].keyWindow;
-//    windows.userInteractionEnabled = NO;
-//
-//    [UIView animateWithDuration:0.25 animations:^{
-//        self.view.y = self.view.height;
-//    }completion:^(BOOL finished) {
-//        self.view.hidden = YES;            //view看不到了，将之隐藏掉，可以减少性能的消耗
-//        [self removeCurrentTimer];
-//        [self removeLrcTimer];
-//        windows.userInteractionEnabled = YES;
-//    }];
     [self dismissViewControllerAnimated:YES completion:^{
         [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
     }];
 }
 
-/**
- *  拖动滑块，要做的事情
- *
- */
-- (IBAction)panSlider:(UIPanGestureRecognizer *)sender {
-    //得到挪动距离
-    CGPoint point = [sender translationInView:sender.view];
-    //将translation清空，免得重复叠加
-    [sender setTranslation:CGPointZero inView:sender.view];
-
-    CGFloat maxX = self.view.width - sender.view.width;
-    sender.view.x += point.x;
+- (IBAction)sliderValueChanged:(id)sender {
+    UISlider *slider = (id)sender;
+    CGFloat time = slider.value * self.player.duration;
+    [self.progressLabel setText:[self stringWithTime:time]];
     
-    if (sender.view.x < 0) {
-        sender.view.x = 0;
-    }
-    else if (sender.view.x > maxX){
-        sender.view.x = maxX;
-    }
-    CGFloat time = (sender.view.x / (self.view.width - sender.view.width)) * self.player.duration;
-    [self.showProgressLabel setTitle:[self stringWithTime:time] forState:UIControlStateNormal];
-//    [self.slider setTitle:[self stringWithTime:time] forState:UIControlStateNormal];
-//    self.progressView.width = sender.view.center.x;
-//    self.showProgressLabel.x = self.slider.x;
-    
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [self removeCurrentTimer];
-        [self removeLrcTimer];
-        self.showProgressLabel.hidden = NO;
-        self.showProgressLabel.y = self.showProgressLabel.superview.height - 15 - self.showProgressLabel.height;
-    }
-    else if (sender.state == UIGestureRecognizerStateEnded)
-    {
-        self.player.currentTime = time ;
-        [self addLocTimer];
-        [self addCurrentTimer];
-        [self addLrcTimer];
-        self.showProgressLabel.hidden = YES;
-    }
-}
-
-/**
- *  轻击progressView，使得滑块走到对应位置
- *
- */
-- (IBAction)tapProgressView:(UITapGestureRecognizer *)sender {
-    CGPoint point = [sender locationInView:sender.view];
-    
-    self.player.currentTime = (point.x / sender.view.width) * self.player.duration;
+    self.player.currentTime = time;
     
     [self updateCurrentTimer];
     [self updateLrcTimer];
-}
-
-- (IBAction)sliderValueChanged:(id)sender {
 }
 
 /**
@@ -821,50 +534,6 @@
     if (self.isInterruption) {
         self.isInterruption = NO;
         [self playOrPause:nil];
-    }
-}
-
-#pragma mark ----锁屏时候的设置，效果需要在真机上才可以看到
-- (void)updateLockedScreenMusic
-{
-    
-}
-
-#pragma mark - 远程控制事件监听
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (void)remoteControlReceivedWithEvent:(UIEvent *)event
-{
-    //    event.type; // 事件类型
-    //    event.subtype; // 事件的子类型
-    //    UIEventSubtypeRemoteControlPlay                 = 100,
-    //    UIEventSubtypeRemoteControlPause                = 101,
-    //    UIEventSubtypeRemoteControlStop                 = 102,
-    //    UIEventSubtypeRemoteControlTogglePlayPause      = 103,
-    //    UIEventSubtypeRemoteControlNextTrack            = 104,
-    //    UIEventSubtypeRemoteControlPreviousTrack        = 105,
-    //    UIEventSubtypeRemoteControlBeginSeekingBackward = 106,
-    //    UIEventSubtypeRemoteControlEndSeekingBackward   = 107,
-    //    UIEventSubtypeRemoteControlBeginSeekingForward  = 108,
-    //    UIEventSubtypeRemoteControlEndSeekingForward    = 109,
-    switch (event.subtype) {
-        case UIEventSubtypeRemoteControlPlay:
-        case UIEventSubtypeRemoteControlPause:
-            [self playOrPause:nil];
-            break;
-            
-        case UIEventSubtypeRemoteControlNextTrack:
-//            [self next:nil];
-            break;
-            
-        case UIEventSubtypeRemoteControlPreviousTrack:
-//            [self previous:nil];
-            
-        default:
-            break;
     }
 }
 
