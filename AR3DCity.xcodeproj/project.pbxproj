@@ -3062,7 +3062,7 @@
 					"$(SRCROOT)/../Unity3DPlugin/Libraries/libil2cpp/include",
 				);
 				INFOPLIST_FILE = AR3DCity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../Unity3DPlugin",
@@ -3130,7 +3130,7 @@
 					"$(SRCROOT)/../Unity3DPlugin/Libraries/libil2cpp/include",
 				);
 				INFOPLIST_FILE = AR3DCity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(SRCROOT)/../Unity3DPlugin",

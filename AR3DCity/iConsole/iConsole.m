@@ -111,22 +111,23 @@ static void exceptionHandler(NSException *exception)
 	NSUInteger touches = (TARGET_IPHONE_SIMULATOR ? _simulatorTouchesToShow: _deviceTouchesToShow);
 	if (touches > 0 && touches < 11)
 	{
-		text = [text stringByAppendingFormat:@"\nSwipe down with %zd finger%@ to hide console", touches, (touches != 1)? @"s": @""];
+//        text = [text stringByAppendingFormat:@"\nSwipe down with %zd finger%@ to hide console", touches, (touches != 1)? @"s": @""];
 	}
 	else if (TARGET_IPHONE_SIMULATOR ? _simulatorShakeToShow: _deviceShakeToShow)
 	{
-		text = [text stringByAppendingString:@"\nShake device to hide console"];
+//        text = [text stringByAppendingString:@"\nShake device to hide console"];
 	}
-	text = [text stringByAppendingString:@"\n--------------------------------------\n"];
+//    text = [text stringByAppendingString:@"\n--------------------------------------\n"];
 	text = [text stringByAppendingString:[[_log arrayByAddingObject:@">"] componentsJoinedByString:@"\n"]];
 	_consoleView.text = text;
 	
-	[_consoleView scrollRangeToVisible:NSMakeRange(_consoleView.text.length, 0)];
+//    [_consoleView scrollRangeToVisible:NSMakeRange(_consoleView.text.length, 0)];
 }
 
 - (void)resetLog
 {
 	self.log = [NSMutableArray array];
+    [[NSUserDefaults standardUserDefaults] setObject:_log forKey:@"iConsoleLog"];
 	[self setConsoleText];
 }
 
@@ -473,7 +474,7 @@ static void exceptionHandler(NSException *exception)
         _simulatorShakeToShow = YES;
         _deviceShakeToShow = YES;
         
-        self.infoString = @"iConsole: Copyright © 2010 Charcoal Design";
+        self.infoString = @"";
         self.inputPlaceholderString = @"Enter command...";
         self.logSubmissionEmail = nil;
         
