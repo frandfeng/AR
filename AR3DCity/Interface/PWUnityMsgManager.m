@@ -12,6 +12,7 @@
 #import "ZYPlayingViewController.h"
 #import "PWApplicationUtils.h"
 #import "AppDelegate.h"
+#import "iConsole.h"
 
 @implementation PWUnityMsgManager
 
@@ -33,13 +34,13 @@ static PWUnityMsgManager *sharedObject = nil;
 }
 
 - (void)sendMsg2UnityOfType:(NSString *)type andValue:(NSString *)value {
-    NSLog(@"发送给Unity消息 方法 %@, 参数 :%@",type, value);
+    [iConsole info:@"发送给Unity消息 方法 %@, 参数 :%@",type, value];
     UnitySendMessage(@"Entrance".UTF8String, type.UTF8String, value.UTF8String);
 }
 
 -(const char *)unityMsgDealing:(const char *) value {
     NSString *str =[PWU3DCodec NSStringCodec:value];
-    NSLog(@"收到unity消息 %@", str);
+    [iConsole info:@"收到unity消息 %@", str];
     NSDictionary *dic = [PWU3DCodec toArrayOrNSDictionary:[str dataUsingEncoding:NSASCIIStringEncoding]];
     if ([[dic allKeys] containsObject:@"method"]) {
         NSString *func = [dic objectForKey:@"method"];
@@ -90,7 +91,7 @@ static PWUnityMsgManager *sharedObject = nil;
         else if ([func isEqualToString:@"ReqIntelligentFun"]) {
             ZYPlayingViewController *playingVc = [[ZYPlayingViewController alloc] initWithNibName:@"ZYPlayingViewController" bundle:nil];
             [[PWApplicationUtils sharedInstance].activityViewController presentViewController:playingVc animated:YES completion:^{
-                [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
+//                [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
             }];
             [self sendMsg2UnityOfType:@"OnIntelligentFun" andValue:@"{\"params\":{}}"];
         }

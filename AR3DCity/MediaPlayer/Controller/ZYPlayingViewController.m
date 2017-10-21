@@ -19,6 +19,8 @@
 #import "ZYLrcLine.h"
 #import "AppDelegate.h"
 #import "INTULocationManager.h"
+#import "LocationManager.h"
+#import "iConsole.h"
 
 @interface ZYPlayingViewController ()  <AVAudioPlayerDelegate>
 
@@ -81,10 +83,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupLrcView];
-    _playingIndex = 0;
-    ZYMusic *currentMusic = [ZYMusicTool musics][_playingIndex];
-    [ZYMusicTool setPlayingMusic:currentMusic];
-    [self startPlayingMusic];
+//    _playingIndex = 0;
+//    ZYMusic *currentMusic = [ZYMusicTool musics][_playingIndex];
+//    [ZYMusicTool setPlayingMusic:currentMusic];
+//    [self startPlayingMusic];
+    [self addLocTimer];
     [self createRemoteCommandCenter];
 }
 
@@ -166,7 +169,6 @@
 - (void)startPlayingMusic
 {
     if (self.playingMusic == [ZYMusicTool playingMusic])  {
-        [self addLocTimer];
         [self addCurrentTimer];
         [self addLrcTimer];
         return;
@@ -183,7 +185,6 @@
     
     self.timeLabel.text = [self stringWithTime:self.player.duration];
     
-    [self addLocTimer];
     [self addCurrentTimer];
     [self addLrcTimer];
     //切换歌词
@@ -358,45 +359,74 @@
 
 #pragma mark ---定位定时器
 - (void)addLocTimer {
-    if (![self.player isPlaying]) return;
-    
     //在新增定时器之前，先移除之前的定时器
     [self removeLocTimer];
+    [self loc];
     self.locTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.locTimer forMode:NSRunLoopCommonModes];
 }
 
 - (void)loc {
+    LocationManager *locManager = [LocationManager sharedLocationManager];
+    __weak __typeof__(LocationManager *) weakLocManager = locManager;
+    __weak __typeof__(self) weakSelf = self;
+    
+    [locManager startLocation:^(NSArray<CLLocation *> *locations) {
+        if (locations!=nil&&locations.count>0) {
+            weakSelf.currentLocation = [locations firstObject];
+            [iConsole info:@"获取到地理位置 %@", weakSelf.currentLocation];
+            int index = [self getIndexOfMusicForLocation:_currentLocation];
+            if (index >= 0) {
+//                [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
+//                [self resetPlayingMusic];
+                ZYMusic *music = [ZYMusicTool musics][index];
+                [ZYMusicTool setPlayingMusic:music];
+                [self removeCurrentTimer];
+                [self removeLrcTimer];
+                [self startPlayingMusic];
+            }
+        }
+    }];
+}
+
+- (void)loc1 {
     INTULocationManager *locMgr = [INTULocationManager sharedInstance];
-    [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyBlock
-                                       timeout:30.0
+    [locMgr requestLocationWithDesiredAccuracy:INTULocationAccuracyHouse
+                                       timeout:0.0
                           delayUntilAuthorized:YES    // This parameter is optional, defaults to NO if omitted
                                          block:^(CLLocation *currentLocation, INTULocationAccuracy achievedAccuracy, INTULocationStatus status) {
                                              if (status == INTULocationStatusSuccess) {
                                                  // Request succeeded, meaning achievedAccuracy is at least the requested accuracy, and
                                                  // currentLocation contains the device's current location.
                                                  _currentLocation = currentLocation;
-                                                 [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
-                                                 [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
-                                                 [self removeCurrentTimer];
-                                                 [self removeLrcTimer];
-                                                 [self startPlayingMusic];
+                                                 int index = [self getIndexOfMusicForLocation:_currentLocation];
+                                                 if (index >= 0) {
+                                                     [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
+                                                     [self resetPlayingMusic];
+                                                     ZYMusic *music = [ZYMusicTool musics][index];
+                                                     [ZYMusicTool setPlayingMusic:music];
+                                                     [self removeCurrentTimer];
+                                                     [self removeLrcTimer];
+                                                     [self startPlayingMusic];
+                                                 }
 //                                                 [self next:nil];
                                              }
                                              else if (status == INTULocationStatusTimedOut) {
                                                  // Wasn't able to locate the user with the requested accuracy within the timeout interval.
                                                  // However, currentLocation contains the best location available (if any) as of right now,
                                                  // and achievedAccuracy has info on the accuracy/recency of the location in currentLocation.
-                                                 _currentLocation = currentLocation;
-                                                 [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
-                                                 [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
-                                                 [self removeCurrentTimer];
-                                                 [self removeLrcTimer];
-                                                 [self startPlayingMusic];
+//                                                 _currentLocation = currentLocation;
+//                                                 [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.musicId];
+//                                                 [ZYMusicTool setPlayingMusic:[ZYMusicTool nextMusic]];
+//                                                 [self removeCurrentTimer];
+//                                                 [self removeLrcTimer];
+//                                                 [self startPlayingMusic];
 //                                                 [self next:nil];
+                                                 [iConsole info:@"INTULocationStatusTimedOut"];
                                              }
                                              else {
                                                  // An error occurred, more info is available by looking at the specific status returned.
+                                                 [iConsole info:@"requestLocationWithDesiredAccuracy else"];
                                              }
                                          }];
 }
@@ -447,6 +477,28 @@
     return [NSString stringWithFormat:@"%02d:%02d",minute, second];
 }
 
+- (int)getIndexOfMusicForLocation:(CLLocation *)location {
+    for (int i=0; i<[ZYMusicTool musics].count; i++) {
+        ZYMusic *music = [ZYMusicTool musics][i];
+        NSArray *array = [music.location componentsSeparatedByString:@","];
+        if (array!=nil && array.count>1) {
+            CLLocation *placeLoc = [[CLLocation alloc] initWithLatitude:[array[1] doubleValue]  longitude:[array[0] doubleValue]];
+            if ([self distanceFromLocation:placeLoc andLoctaion:location]<10) {
+                [iConsole info:@"getIndexOfMusicForLocation %d", i];
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+- (CLLocationDistance)distanceFromLocation:(CLLocation *)firstLocation andLoctaion:(CLLocation *)secondLocation {
+    [iConsole info:@"first location %@", firstLocation];
+    [iConsole info:@"second location %@", secondLocation];
+    CLLocationDistance meters= [firstLocation distanceFromLocation:secondLocation];
+    [iConsole info:@"distance %lf", meters];
+    return meters;
+}
 
 #pragma mark ----控件方法
 /**
@@ -473,7 +525,7 @@
  */
 - (IBAction)exit:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^{
-        [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
+//        [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
     }];
 }
 
@@ -496,7 +548,6 @@
     if (self.playOrPauseButton.isSelected == NO) {
         self.playOrPauseButton.selected = YES;
         [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
-        [self addLocTimer];
         [self addCurrentTimer];
         [self addLrcTimer];
     }

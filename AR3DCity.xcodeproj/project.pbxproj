@@ -464,6 +464,11 @@
 		9162322D1F972806006F4D96 /* INTURequestIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232291F972806006F4D96 /* INTURequestIDGenerator.m */; };
 		9162322F1F972AE3006F4D96 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9162322E1F972ADF006F4D96 /* Accelerate.framework */; };
 		916232331F975835006F4D96 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 916232321F975835006F4D96 /* Data */; };
+		916232361F9878B6006F4D96 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232351F9878B6006F4D96 /* LocationManager.m */; };
+		9162323B1F9886F5006F4D96 /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323A1F9886F5006F4D96 /* iConsole.m */; };
+		9162323F1F9888C1006F4D96 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323E1F9888C1006F4D96 /* GTMStackTrace.m */; };
+		916232411F989350006F4D96 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 916232401F989350006F4D96 /* libc++abi.tbd */; };
+		916232561F99BFC4006F4D96 /* XMMovableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232551F99BFC4006F4D96 /* XMMovableButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1024,7 +1029,7 @@
 		9130727C1F96F0550091386E /* ShareSDKUnity3DBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareSDKUnity3DBridge.h; sourceTree = "<group>"; };
 		9130727D1F96F1B70091386E /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		913072871F971C570091386E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		915C503B1F963C06002EC05E /* AR3DCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AR3DCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		915C503B1F963C06002EC05E /* ARCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915C503E1F963C06002EC05E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		915C503F1F963C06002EC05E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		915C50471F963C06002EC05E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1102,6 +1107,16 @@
 		916232291F972806006F4D96 /* INTURequestIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTURequestIDGenerator.m; sourceTree = "<group>"; };
 		9162322E1F972ADF006F4D96 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		916232321F975835006F4D96 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Data; path = ../../../Unity3DPlugin/Data; sourceTree = "<group>"; };
+		916232341F9878B6006F4D96 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		916232351F9878B6006F4D96 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		916232371F98797A006F4D96 /* PluginSingletonMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PluginSingletonMacros.h; sourceTree = "<group>"; };
+		916232391F9886F5006F4D96 /* iConsole.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iConsole.h; sourceTree = "<group>"; };
+		9162323A1F9886F5006F4D96 /* iConsole.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iConsole.m; sourceTree = "<group>"; };
+		9162323D1F9888C1006F4D96 /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
+		9162323E1F9888C1006F4D96 /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
+		916232401F989350006F4D96 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
+		916232541F99BFC4006F4D96 /* XMMovableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMovableButton.h; sourceTree = "<group>"; };
+		916232551F99BFC4006F4D96 /* XMMovableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMMovableButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1184,6 +1199,7 @@
 				9130722A1F9640200091386E /* FBSDKMessengerShareKit.framework in Frameworks */,
 				9130721F1F9640200091386E /* SMSConnector.framework in Frameworks */,
 				9130721A1F9640200091386E /* MeiPaiConnector.framework in Frameworks */,
+				916232411F989350006F4D96 /* libc++abi.tbd in Frameworks */,
 				9130720D1F9640200091386E /* ShareSDKUI.framework in Frameworks */,
 				913072101F9640200091386E /* DingTalkConnector.framework in Frameworks */,
 			);
@@ -2006,6 +2022,7 @@
 		9130723C1F96428C0091386E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				916232401F989350006F4D96 /* libc++abi.tbd */,
 				9162322E1F972ADF006F4D96 /* Accelerate.framework */,
 				913072781F9648EC0091386E /* JavaScriptCore.framework */,
 				913072761F9648DB0091386E /* MessageUI.framework */,
@@ -2056,7 +2073,7 @@
 		915C503C1F963C06002EC05E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				915C503B1F963C06002EC05E /* AR3DCity.app */,
+				915C503B1F963C06002EC05E /* ARCity.app */,
 				915C50531F963C06002EC05E /* AR3DCityTests.xctest */,
 				915C505E1F963C06002EC05E /* AR3DCityUITests.xctest */,
 				915C50741F963CD4002EC05E /* UnityTool */,
@@ -2067,6 +2084,9 @@
 		915C503D1F963C06002EC05E /* AR3DCity */ = {
 			isa = PBXGroup;
 			children = (
+				916232531F99BFC4006F4D96 /* XMMovableButton */,
+				9162323C1F9888C1006F4D96 /* GTM */,
+				916232381F9886F5006F4D96 /* iConsole */,
 				9162321F1F972806006F4D96 /* INTULocationManager */,
 				916231C91F972297006F4D96 /* MediaPlayer */,
 				915C50901F963EE3002EC05E /* U3D */,
@@ -2204,6 +2224,9 @@
 		916231E91F972556006F4D96 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				916232341F9878B6006F4D96 /* LocationManager.h */,
+				916232351F9878B6006F4D96 /* LocationManager.m */,
+				916232371F98797A006F4D96 /* PluginSingletonMacros.h */,
 				916231EC1F972556006F4D96 /* ZYPlayingViewController.h */,
 				916231ED1F972556006F4D96 /* ZYPlayingViewController.m */,
 				916231EE1F972556006F4D96 /* ZYPlayingViewController.xib */,
@@ -2276,6 +2299,33 @@
 			path = INTULocationManager;
 			sourceTree = "<group>";
 		};
+		916232381F9886F5006F4D96 /* iConsole */ = {
+			isa = PBXGroup;
+			children = (
+				916232391F9886F5006F4D96 /* iConsole.h */,
+				9162323A1F9886F5006F4D96 /* iConsole.m */,
+			);
+			path = iConsole;
+			sourceTree = "<group>";
+		};
+		9162323C1F9888C1006F4D96 /* GTM */ = {
+			isa = PBXGroup;
+			children = (
+				9162323D1F9888C1006F4D96 /* GTMStackTrace.h */,
+				9162323E1F9888C1006F4D96 /* GTMStackTrace.m */,
+			);
+			path = GTM;
+			sourceTree = "<group>";
+		};
+		916232531F99BFC4006F4D96 /* XMMovableButton */ = {
+			isa = PBXGroup;
+			children = (
+				916232541F99BFC4006F4D96 /* XMMovableButton.h */,
+				916232551F99BFC4006F4D96 /* XMMovableButton.m */,
+			);
+			path = XMMovableButton;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2293,7 +2343,7 @@
 			);
 			name = AR3DCity;
 			productName = AR3DCity;
-			productReference = 915C503B1F963C06002EC05E /* AR3DCity.app */;
+			productReference = 915C503B1F963C06002EC05E /* ARCity.app */;
 			productType = "com.apple.product-type.application";
 		};
 		915C50521F963C06002EC05E /* AR3DCityTests */ = {
@@ -2669,6 +2719,7 @@
 				91306D681F963FD30091386E /* Bulk_Generics_6.cpp in Sources */,
 				91306D691F963FD30091386E /* Bulk_Generics_7.cpp in Sources */,
 				91306D771F963FD30091386E /* Bulk_System.Core_0.cpp in Sources */,
+				916232561F99BFC4006F4D96 /* XMMovableButton.m in Sources */,
 				91306D641F963FD30091386E /* Bulk_Generics_2.cpp in Sources */,
 				91306DD41F963FD40091386E /* VideoPlayer.mm in Sources */,
 				91306DBC1F963FD40091386E /* ActivityIndicator.mm in Sources */,
@@ -2691,6 +2742,7 @@
 				91306D9F1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_2Table.cpp in Sources */,
 				91306DB41F963FD30091386E /* Il2CppTypeDefinitions.cpp in Sources */,
 				9162320E1F972556006F4D96 /* NSObject+MJCoding.m in Sources */,
+				9162323F1F9888C1006F4D96 /* GTMStackTrace.m in Sources */,
 				91306D981F963FD30091386E /* Il2CppCompilerCalculateTypeValues_22Table.cpp in Sources */,
 				91306DA21F963FD30091386E /* Il2CppCompilerCalculateTypeValues_5Table.cpp in Sources */,
 				91306DA01F963FD30091386E /* Il2CppCompilerCalculateTypeValues_3Table.cpp in Sources */,
@@ -2744,12 +2796,14 @@
 				91306DB61F963FD30091386E /* UnityICallRegistration.cpp in Sources */,
 				91306D6B1F963FD30091386E /* Bulk_Generics_9.cpp in Sources */,
 				916232161F972556006F4D96 /* UIView+Extension.m in Sources */,
+				9162323B1F9886F5006F4D96 /* iConsole.m in Sources */,
 				91306D9C1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_26Table.cpp in Sources */,
 				91306D6D1F963FD30091386E /* Bulk_Mono.Security_0.cpp in Sources */,
 				91306DAF1F963FD30091386E /* Il2CppInvokerTable.cpp in Sources */,
 				91306D991F963FD30091386E /* Il2CppCompilerCalculateTypeValues_23Table.cpp in Sources */,
 				91306D5B1F963FD30091386E /* Bulk_FairyGUI_1.cpp in Sources */,
 				91306D8E1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_13Table.cpp in Sources */,
+				916232361F9878B6006F4D96 /* LocationManager.m in Sources */,
 				91306DCD1F963FD40091386E /* GlesHelper.mm in Sources */,
 				91306D7C1F963FD30091386E /* Bulk_UnityEngine.UI_0.cpp in Sources */,
 				916232081F972556006F4D96 /* DRNRealTimeBlurView.m in Sources */,
@@ -2983,6 +3037,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 27ZN797VLM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3027,7 +3082,8 @@
 					"-licucore",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCity;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ARCity;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				UNITY_RUNTIME_VERSION = 5.6.1f1;
 				UNITY_SCRIPTING_BACKEND = il2cpp;
@@ -3049,6 +3105,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 27ZN797VLM;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3093,7 +3150,8 @@
 					"-licucore",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jhqc.AR3DCity;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = ARCity;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				UNITY_RUNTIME_VERSION = 5.6.1f1;
 				UNITY_SCRIPTING_BACKEND = il2cpp;
