@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class AVAudioPlayer;
+
 @interface ZYPlayingViewController : UIViewController
+
+@property (nonatomic, strong) AVAudioPlayer *player;
 
 @end

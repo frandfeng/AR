@@ -18,6 +18,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
 #import "ZYLrcLine.h"
+#import "ZYPlayingViewController.h"
+#import "PWApplicationUtils.h"
 
 @interface AppDelegate () <AVAudioPlayerDelegate>
 
@@ -59,6 +61,7 @@
     [self addButton];
     [self addLocTimer];
     [self createRemoteCommandCenter];
+    _player = [[AVAudioPlayer alloc] init];
     return YES;
 }
 - (void)addButton {
@@ -71,7 +74,9 @@
     [self.unityController.window addSubview:_playButton];
 }
 - (void)playButtonTouched {
-    
+    ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
+    vc.player = _player;
+    [[PWApplicationUtils sharedInstance].activityViewController presentViewController:vc animated:YES completion:nil];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
     [self.unityController applicationWillResignActive:application];
