@@ -427,6 +427,18 @@
 		913072851F97097F0091386E /* PWU3DCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50881F963D38002EC05E /* PWU3DCodec.m */; };
 		913072861F970A0F0091386E /* PWApplicationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50831F963D38002EC05E /* PWApplicationUtils.m */; };
 		913072881F971C570091386E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 913072871F971C570091386E /* main.mm */; };
+		9146BF311F9D925C00D49527 /* CGPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */; };
+		9146BF321F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */; };
+		9146BF331F9D925C00D49527 /* JCAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF221F9D925C00D49527 /* JCAnnotationView.m */; };
+		9146BF341F9D925C00D49527 /* JCPDFTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF241F9D925C00D49527 /* JCPDFTiledView.m */; };
+		9146BF351F9D925C00D49527 /* JCTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF261F9D925C00D49527 /* JCTiledLayer.m */; };
+		9146BF361F9D925C00D49527 /* JCTiledPDFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */; };
+		9146BF371F9D925C00D49527 /* JCTiledScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */; };
+		9146BF381F9D925C00D49527 /* JCTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2E1F9D925C00D49527 /* JCTiledView.m */; };
+		9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */; };
+		9146BF431F9DE46200D49527 /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 9146BF421F9DE46200D49527 /* yiheyuan */; };
+		9146BF461F9DF68E00D49527 /* ARAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF451F9DF68E00D49527 /* ARAnnotation.m */; };
+		9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF481F9E041200D49527 /* ARAnnotationView.m */; };
 		915C50401F963C06002EC05E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C503F1F963C06002EC05E /* AppDelegate.m */; };
 		915C50481F963C06002EC05E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915C50471F963C06002EC05E /* Assets.xcassets */; };
 		915C504B1F963C06002EC05E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 915C50491F963C06002EC05E /* LaunchScreen.storyboard */; };
@@ -1029,6 +1041,32 @@
 		9130727C1F96F0550091386E /* ShareSDKUnity3DBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareSDKUnity3DBridge.h; sourceTree = "<group>"; };
 		9130727D1F96F1B70091386E /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		913072871F971C570091386E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
+		9146BF1C1F9D925C00D49527 /* CGPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPDFDocument.h; sourceTree = "<group>"; };
+		9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPDFDocument.m; sourceTree = "<group>"; };
+		9146BF1E1F9D925C00D49527 /* JCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotation.h; sourceTree = "<group>"; };
+		9146BF1F1F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationTapGestureRecognizer.h; sourceTree = "<group>"; };
+		9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationTapGestureRecognizer.m; sourceTree = "<group>"; };
+		9146BF211F9D925C00D49527 /* JCAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationView.h; sourceTree = "<group>"; };
+		9146BF221F9D925C00D49527 /* JCAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationView.m; sourceTree = "<group>"; };
+		9146BF231F9D925C00D49527 /* JCPDFTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPDFTiledView.h; sourceTree = "<group>"; };
+		9146BF241F9D925C00D49527 /* JCPDFTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPDFTiledView.m; sourceTree = "<group>"; };
+		9146BF251F9D925C00D49527 /* JCTiledLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledLayer.h; sourceTree = "<group>"; };
+		9146BF261F9D925C00D49527 /* JCTiledLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledLayer.m; sourceTree = "<group>"; };
+		9146BF271F9D925C00D49527 /* JCTiledPDFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledPDFScrollView.h; sourceTree = "<group>"; };
+		9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledPDFScrollView.m; sourceTree = "<group>"; };
+		9146BF291F9D925C00D49527 /* JCTiledScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollView.h; sourceTree = "<group>"; };
+		9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledScrollView.m; sourceTree = "<group>"; };
+		9146BF2B1F9D925C00D49527 /* JCTiledScrollViewImportAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewImportAll.h; sourceTree = "<group>"; };
+		9146BF2C1F9D925C00D49527 /* JCTiledScrollViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewModule.h; sourceTree = "<group>"; };
+		9146BF2D1F9D925C00D49527 /* JCTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledView.h; sourceTree = "<group>"; };
+		9146BF2E1F9D925C00D49527 /* JCTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledView.m; sourceTree = "<group>"; };
+		9146BF2F1F9D925C00D49527 /* JCVisibleAnnotationTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisibleAnnotationTuple.h; sourceTree = "<group>"; };
+		9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisibleAnnotationTuple.m; sourceTree = "<group>"; };
+		9146BF421F9DE46200D49527 /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
+		9146BF441F9DF68E00D49527 /* ARAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotation.h; sourceTree = "<group>"; };
+		9146BF451F9DF68E00D49527 /* ARAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotation.m; sourceTree = "<group>"; };
+		9146BF471F9E041200D49527 /* ARAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotationView.h; sourceTree = "<group>"; };
+		9146BF481F9E041200D49527 /* ARAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotationView.m; sourceTree = "<group>"; };
 		915C503B1F963C06002EC05E /* ARCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915C503E1F963C06002EC05E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		915C503F1F963C06002EC05E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -2058,6 +2096,46 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9146BF1B1F9D925C00D49527 /* TiledScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				9146BF1C1F9D925C00D49527 /* CGPDFDocument.h */,
+				9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */,
+				9146BF1E1F9D925C00D49527 /* JCAnnotation.h */,
+				9146BF1F1F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.h */,
+				9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */,
+				9146BF211F9D925C00D49527 /* JCAnnotationView.h */,
+				9146BF221F9D925C00D49527 /* JCAnnotationView.m */,
+				9146BF231F9D925C00D49527 /* JCPDFTiledView.h */,
+				9146BF241F9D925C00D49527 /* JCPDFTiledView.m */,
+				9146BF251F9D925C00D49527 /* JCTiledLayer.h */,
+				9146BF261F9D925C00D49527 /* JCTiledLayer.m */,
+				9146BF271F9D925C00D49527 /* JCTiledPDFScrollView.h */,
+				9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */,
+				9146BF291F9D925C00D49527 /* JCTiledScrollView.h */,
+				9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */,
+				9146BF2B1F9D925C00D49527 /* JCTiledScrollViewImportAll.h */,
+				9146BF2C1F9D925C00D49527 /* JCTiledScrollViewModule.h */,
+				9146BF2D1F9D925C00D49527 /* JCTiledView.h */,
+				9146BF2E1F9D925C00D49527 /* JCTiledView.m */,
+				9146BF2F1F9D925C00D49527 /* JCVisibleAnnotationTuple.h */,
+				9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */,
+				9146BF441F9DF68E00D49527 /* ARAnnotation.h */,
+				9146BF451F9DF68E00D49527 /* ARAnnotation.m */,
+				9146BF471F9E041200D49527 /* ARAnnotationView.h */,
+				9146BF481F9E041200D49527 /* ARAnnotationView.m */,
+			);
+			path = TiledScrollView;
+			sourceTree = "<group>";
+		};
+		9146BF3B1F9DC0B700D49527 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				9146BF421F9DE46200D49527 /* yiheyuan */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		915C50321F963C06002EC05E = {
 			isa = PBXGroup;
 			children = (
@@ -2084,12 +2162,14 @@
 		915C503D1F963C06002EC05E /* AR3DCity */ = {
 			isa = PBXGroup;
 			children = (
+				9146BF3B1F9DC0B700D49527 /* Resource */,
 				916232531F99BFC4006F4D96 /* XMMovableButton */,
 				9162323C1F9888C1006F4D96 /* GTM */,
 				916232381F9886F5006F4D96 /* iConsole */,
 				9162321F1F972806006F4D96 /* INTULocationManager */,
 				916231C91F972297006F4D96 /* MediaPlayer */,
 				915C50901F963EE3002EC05E /* U3D */,
+				9146BF1B1F9D925C00D49527 /* TiledScrollView */,
 				915C50811F963D38002EC05E /* Interface */,
 				915C503E1F963C06002EC05E /* AppDelegate.h */,
 				915C503F1F963C06002EC05E /* AppDelegate.m */,
@@ -2515,6 +2595,7 @@
 				913071851F963FEF0091386E /* ssdk_oks_classic_twitter.png in Resources */,
 				913070BF1F963FEF0091386E /* AndroidManifest.xml in Resources */,
 				9130720C1F9640200091386E /* ShareSDKUI.bundle in Resources */,
+				9146BF431F9DE46200D49527 /* yiheyuan in Resources */,
 				913070EE1F963FEF0091386E /* ShareSDK-KakaoStory-3.1.0.jar.meta in Resources */,
 				9130711A1F963FEF0091386E /* ShareSDK-WhatsApp-3.1.0.jar.meta in Resources */,
 				9130711C1F963FEF0091386E /* ShareSDK-Yixin-3.1.0.jar.meta in Resources */,
@@ -2688,6 +2769,7 @@
 			files = (
 				913072861F970A0F0091386E /* PWApplicationUtils.m in Sources */,
 				9162320B1F972556006F4D96 /* MJFoundation.m in Sources */,
+				9146BF341F9D925C00D49527 /* JCPDFTiledView.m in Sources */,
 				913072851F97097F0091386E /* PWU3DCodec.m in Sources */,
 				91306D741F963FD30091386E /* Bulk_mscorlib_5.cpp in Sources */,
 				91306DAC1F963FD30091386E /* Il2CppGenericMethodPointerTable.cpp in Sources */,
@@ -2696,8 +2778,10 @@
 				91306D8C1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_11Table.cpp in Sources */,
 				91306DC91F963FD40091386E /* DisplayManager.mm in Sources */,
 				91306DD91F963FD40091386E /* UnityAppController.mm in Sources */,
+				9146BF321F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m in Sources */,
 				91306DA71F963FD30091386E /* Il2CppCompilerCalculateTypeValuesTable.cpp in Sources */,
 				91306DD21F963FD40091386E /* UnityReplayKit.mm in Sources */,
+				9146BF461F9DF68E00D49527 /* ARAnnotation.m in Sources */,
 				91306DCB1F963FD40091386E /* Filesystem.mm in Sources */,
 				91306D8F1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_14Table.cpp in Sources */,
 				91306DB81F963FD30091386E /* AppDelegateListener.mm in Sources */,
@@ -2713,6 +2797,7 @@
 				91306D761F963FD30091386E /* Bulk_mscorlib_7.cpp in Sources */,
 				91306DA41F963FD30091386E /* Il2CppCompilerCalculateTypeValues_7Table.cpp in Sources */,
 				91306D881F963FD30091386E /* Il2CppAttributes.cpp in Sources */,
+				9146BF351F9D925C00D49527 /* JCTiledLayer.m in Sources */,
 				91306D8B1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_10Table.cpp in Sources */,
 				916232171F972556006F4D96 /* ZYLrcLine.m in Sources */,
 				91306DA61F963FD30091386E /* Il2CppCompilerCalculateTypeValues_9Table.cpp in Sources */,
@@ -2726,6 +2811,7 @@
 				91306D631F963FD30091386E /* Bulk_Generics_14.cpp in Sources */,
 				91306D9D1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_27Table.cpp in Sources */,
 				913071B41F963FEF0091386E /* RegisterMonoModules.cpp in Sources */,
+				9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */,
 				915C508F1F963D38002EC05E /* PWUnityMsgManager.m in Sources */,
 				91306D6E1F963FD30091386E /* Bulk_Mono.Security_1.cpp in Sources */,
 				91306DD01F963FD40091386E /* ObjCRuntime.mm in Sources */,
@@ -2818,12 +2904,14 @@
 				91306D521F963FD30091386E /* Bulk_Assembly-CSharp-firstpass_0.cpp in Sources */,
 				91306D591F963FD30091386E /* Bulk_Event_X_0.cpp in Sources */,
 				91306DC51F963FD40091386E /* CameraCapture.mm in Sources */,
+				9146BF371F9D925C00D49527 /* JCTiledScrollView.m in Sources */,
 				91306DD61F963FD40091386E /* UnityAdsUnityWrapper.mm in Sources */,
 				915C50401F963C06002EC05E /* AppDelegate.m in Sources */,
 				91306DC11F963FD40091386E /* UnityView.mm in Sources */,
 				91306DBA1F963FD40091386E /* RenderPluginDelegate.mm in Sources */,
 				91306D7D1F963FD30091386E /* Bulk_UnityEngine.UI_1.cpp in Sources */,
 				91306D9E1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_28Table.cpp in Sources */,
+				9146BF361F9D925C00D49527 /* JCTiledPDFScrollView.m in Sources */,
 				91306D7E1F963FD30091386E /* Bulk_UnityEngine_0.cpp in Sources */,
 				91306DAA1F963FD30091386E /* Il2CppGenericInstDefinitions.cpp in Sources */,
 				91306D921F963FD30091386E /* Il2CppCompilerCalculateTypeValues_17Table.cpp in Sources */,
@@ -2831,11 +2919,13 @@
 				91306DD71F963FD40091386E /* UnityAppController+Rendering.mm in Sources */,
 				91306DA51F963FD30091386E /* Il2CppCompilerCalculateTypeValues_8Table.cpp in Sources */,
 				913072881F971C570091386E /* main.mm in Sources */,
+				9146BF381F9D925C00D49527 /* JCTiledView.m in Sources */,
 				91306D8D1F963FD30091386E /* Il2CppCompilerCalculateTypeValues_12Table.cpp in Sources */,
 				91306DB01F963FD30091386E /* Il2CppMetadataRegistration.cpp in Sources */,
 				91306D841F963FD30091386E /* Bulk_Vuforia.UnityExtensions_1.cpp in Sources */,
 				91306D601F963FD30091386E /* Bulk_Generics_11.cpp in Sources */,
 				91306DB91F963FD40091386E /* LifeCycleListener.mm in Sources */,
+				9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */,
 				916232181F972556006F4D96 /* ZYMusic.m in Sources */,
 				91306DBE1F963FD40091386E /* OrientationSupport.mm in Sources */,
 				91306D651F963FD30091386E /* Bulk_Generics_3.cpp in Sources */,
@@ -2849,6 +2939,7 @@
 				91306D751F963FD30091386E /* Bulk_mscorlib_6.cpp in Sources */,
 				91306DB51F963FD30091386E /* UnityClassRegistration.cpp in Sources */,
 				91306DA11F963FD30091386E /* Il2CppCompilerCalculateTypeValues_4Table.cpp in Sources */,
+				9146BF331F9D925C00D49527 /* JCAnnotationView.m in Sources */,
 				91306DC71F963FD40091386E /* CVTextureCache.mm in Sources */,
 				9162322B1F972806006F4D96 /* INTULocationManager.m in Sources */,
 				916232091F972556006F4D96 /* UIImage+BoxBlur.m in Sources */,
@@ -2861,6 +2952,7 @@
 				91306D721F963FD30091386E /* Bulk_mscorlib_3.cpp in Sources */,
 				91306DBD1F963FD40091386E /* Keyboard.mm in Sources */,
 				91306D5D1F963FD30091386E /* Bulk_Generics_0.cpp in Sources */,
+				9146BF311F9D925C00D49527 /* CGPDFDocument.m in Sources */,
 				91306DD81F963FD40091386E /* UnityAppController+UnityInterface.mm in Sources */,
 				9162322C1F972806006F4D96 /* INTULocationRequest.m in Sources */,
 			);

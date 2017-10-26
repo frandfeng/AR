@@ -21,17 +21,19 @@
 #import "INTULocationManager.h"
 #import "LocationManager.h"
 #import "iConsole.h"
+#import "JCTiledScrollView.h"
+#import "JCTiledView.h"
+#import "ARAnnotation.h"
+#import "ARAnnotationView.h"
 
-@interface ZYPlayingViewController ()  <AVAudioPlayerDelegate>
-
-@property (nonatomic, strong) ZYMusic *playingMusic;
+@interface ZYPlayingViewController ()  <AVAudioPlayerDelegate, JCTileSource, JCTiledScrollViewDelegate>
 
 //显示播放进度条的定时器
 @property (nonatomic, strong) NSTimer *uiTimer;
 //判断歌曲播放过程中是否被电话等打断播放
 @property (nonatomic, assign) BOOL isInterruption;
 //歌曲图片
-@property (strong, nonatomic) IBOutlet UIImageView *iconView;
+@property (strong, nonatomic) JCTiledScrollView *mapScrollView;
 //歌曲名字
 @property (strong, nonatomic) IBOutlet UILabel *songLabel;
 //暂停\播放按钮
@@ -52,6 +54,7 @@
 @property (nonatomic, strong) UIImageView * lrcImageView;;
 //用来显示锁屏歌词
 @property (nonatomic, strong) UITextView * lockScreenTableView;
+@property (nonatomic, strong) ARAnnotation * currentLocAnnotation;
 
 
 //设置按钮，暂控制显示图片还是歌词
@@ -70,14 +73,116 @@
     BOOL _isDragging;
     UIImage * _lastImage;//最后一次锁屏之后的歌词海报
     int _playingIndex;
+    
+    CLLocation *leftTopLoc;
+    CLLocation *leftBottomLoc;
+    CLLocation *rightTopLoc;
+    CLLocation *rightBottomLoc;
+    int mapWidth;
+    int mapHeight;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _playingMusic = [ZYMusicTool playingMusic];
-    if (_playingMusic) {
-        [self startPlayingMusic];
+    [self addMapScrollView];
+    [self refreshMusicUI];
+    [self setCoordinate];
+    [self addAnnotations];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self addNotifications];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront];
+}
+
+- (void)addNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(location:) name:@"NSNotificationNameLocation" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startPlay:) name:@"NSNotificationNameStartPlay" object:nil];
+}
+
+- (void)removeNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NSNotificationNameLocation" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NSNotificationNameStartPlay" object:nil];
+}
+
+- (void)dealloc {
+    [self removeNotifications];
+}
+
+- (void)location:(NSNotification *)noti {
+    NSLog(@"%@ === %@ === %@", noti.object, noti.userInfo, noti.name);
+    CLLocation *location = noti.object;
+    if (_currentLocAnnotation) {
+        [_mapScrollView removeAnnotation:_currentLocAnnotation];
     }
+    ARAnnotation *annotation = [self getAnnotationByLocation:location];
+    annotation.index = -1;
+    [_mapScrollView addAnnotation:annotation];
+    NSLog(@"add current location x %lf, y %lf", annotation.contentPosition.x, annotation.contentPosition.y);
+}
+
+- (void)startPlay:(NSNotification *)noti {
+    [self refreshMusicUI];
+}
+
+- (void)addMapScrollView {
+    int picWidth = 4320;
+    int picHeight = 6000;
+    mapWidth = [UIScreen mainScreen].bounds.size.width;
+    mapHeight = picHeight * mapWidth / picWidth;
+    JCTiledScrollView *scrollView = [[JCTiledScrollView alloc] initWithFrame:self.view.frame contentSize:CGSizeMake(mapWidth, mapHeight)];
+    _mapScrollView = scrollView;
+    [self.topView insertSubview:_mapScrollView atIndex:0];
+    NSDictionary *viewsDictionary = @{@"mapScrollView":_mapScrollView};
+    [self.topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[mapScrollView]|" options:0 metrics:nil views:viewsDictionary]];
+    [self.topView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[mapScrollView]|" options:0 metrics:nil views:viewsDictionary]];
+    
+    _mapScrollView.translatesAutoresizingMaskIntoConstraints = false;
+    _mapScrollView.dataSource = self;
+    _mapScrollView.tiledScrollViewDelegate = self;
+    _mapScrollView.zoomScale = 1;
+    
+    _mapScrollView.tiledView.shouldAnnotateRect = true;
+    //最大缩放比例
+    _mapScrollView.levelsOfZoom = 3;
+    _mapScrollView.levelsOfDetail = 3;
+}
+
+- (void)setCoordinate {
+    //暂时设置办公室四个角
+    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.056323];
+    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.057339];
+    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.057339];
+    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.056323];
+}
+
+- (void)addAnnotations {
+    NSArray *musics = [ZYMusicTool musics];
+    for (int i=0; i<musics.count; i++) {
+        ZYMusic *music = musics[i];
+        NSArray *array = [music.location componentsSeparatedByString:@","];
+        if (array!=nil && array.count>1) {
+            CLLocation *placeLoc = [[CLLocation alloc] initWithLatitude:[array[1] doubleValue]  longitude:[array[0] doubleValue]];
+            ARAnnotation *annotation = [self getAnnotationByLocation:placeLoc];
+            annotation.index = i;
+            [_mapScrollView addAnnotation:annotation];
+            NSLog(@"add annotations x %lf, y %lf", annotation.contentPosition.x, annotation.contentPosition.y);
+        }
+    }
+}
+
+- (ARAnnotation *)getAnnotationByLocation:(CLLocation *)placeLoc {
+    CGFloat y = mapHeight * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
+    CGFloat x = mapWidth * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
+    ARAnnotation *annotation = [[ARAnnotation alloc] init];
+    annotation.contentPosition = CGPointMake(x, y);
+    return annotation;
 }
 
 - (NSTimeInterval)timeIntervalFromTime:(NSString *)time {
@@ -96,29 +201,45 @@
 }
 
 //开始播放音乐
-- (void)startPlayingMusic {
+- (void)refreshMusicUI {
     // 设置所需要的数据
-    self.playingMusic = [ZYMusicTool playingMusic];
-    self.iconView.image = [UIImage imageNamed:@"yiheyuan"];
-    self.songLabel.text = self.playingMusic.name;
-    
-    //开发播放音乐
-//    self.player = [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
-//    self.player.delegate = self;
-    
-    self.timeLabel.text = [self stringWithTime:self.player.duration];
-    
-    [self addUITimer];
-    self.playOrPauseButton.selected = YES;
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];;
+    if (playingMusic) {
+        self.songLabel.text = playingMusic.name;
+        if (player) {
+            self.timeLabel.text = [self stringWithTime:player.duration];
+            if (player.isPlaying) {
+                [self removeUITimer];
+                [self addUITimer];
+                self.playOrPauseButton.selected = YES;
+            } else {
+                double temp = player.currentTime / player.duration;
+                self.sliderView.value = temp;
+                float currentTime = player.currentTime;
+                self.progressLabel.text = [self stringWithTime:currentTime];
+                self.playOrPauseButton.selected = NO;
+            }
+        } else {
+            NSAssert(YES, @"_playingMusic not null but player null");
+        }
+    } else {
+        self.sliderView.value = 0;
+        self.progressLabel.text =  @"00:00";
+        self.timeLabel.text = @"00:00";
+        self.songLabel.text = @"--";
+        self.playOrPauseButton.selected = NO;
+    }
 }
 
 #pragma mark ----进度条定时器处理
 /**
  *  添加定时器，更新slider，播放进度和锁屏页面
  */
-- (void)addUITimer
-{
-    if (![self.player isPlaying]) return;
+- (void)addUITimer {
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
+    if (![player isPlaying]) return;
     
     //在新增定时器之前，先移除之前的定时器
     [self removeUITimer];
@@ -131,8 +252,7 @@
 /**
  *  移除定时器
  */
-- (void)removeUITimer
-{
+- (void)removeUITimer {
     [self.uiTimer invalidate];
     self.uiTimer = nil;
 }
@@ -140,16 +260,14 @@
 /**
  *  触发定时器
  */
-- (void)updateUI
-{
-    double temp = self.player.currentTime / self.player.duration;
+- (void)updateUI {
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
+    double temp = player.currentTime / player.duration;
     self.sliderView.value = temp;
-//    self.slider.x = temp * (self.view.width - self.slider.width);
     
-    float totalTime = self.player.duration;
-    float currentTime = self.player.currentTime;
+    float currentTime = player.currentTime;
     
-    self.timeLabel.text = [self stringWithTime:totalTime];
     self.progressLabel.text = [self stringWithTime:currentTime];
 }
 
@@ -158,8 +276,7 @@
  *  将时间转化为合适的字符串
  *
  */
-- (NSString *)stringWithTime:(NSTimeInterval)time
-{
+- (NSString *)stringWithTime:(NSTimeInterval)time {
     int minute = time / 60;
     int second = (int)time % 60;
     return [NSString stringWithFormat:@"%02d:%02d",minute, second];
@@ -186,10 +303,12 @@
 
 - (IBAction)sliderValueChanged:(id)sender {
     UISlider *slider = (id)sender;
-    CGFloat time = slider.value * self.player.duration;
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
+    CGFloat time = slider.value * player.duration;
     [self.progressLabel setText:[self stringWithTime:time]];
     
-    self.player.currentTime = time;
+    player.currentTime = time;
 }
 
 /**
@@ -197,16 +316,113 @@
  *
  */
 - (IBAction)playOrPause:(id)sender {
-    if (self.playOrPauseButton.isSelected == NO) {
-        self.playOrPauseButton.selected = YES;
-        [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
-        [self addUITimer];
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
+    if (player) {
+        if (self.playOrPauseButton.isSelected == NO) {
+            self.playOrPauseButton.selected = YES;
+            [player play];
+            [self addUITimer];
+        } else {
+            self.playOrPauseButton.selected = NO;
+            [player pause];
+            [self removeUITimer];
+        }
     }
-    else{
-        self.playOrPauseButton.selected = NO;
-        [[ZYAudioManager defaultManager] pauseMusic:self.playingMusic.musicId];
-        [self removeUITimer];
+}
+
+- (void)resetPlayingMusic {
+    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
+    [player stop];
+    NSLog(@"player stop %@", player);
+    player = nil;
+    playingMusic = nil;
+}
+
+  //MARK: TileSource
+- (UIImage * _Nullable)tiledScrollView:(JCTiledScrollView * _Nonnull)scrollView imageForRow:(NSInteger)row column:(NSInteger)column scale:(NSInteger)scale {
+    NSString *imageName = [NSString stringWithFormat:@"yiheyuan/yiheyuan_%dx_%d_%d.png", (int)scale, (int)row, (int)column];
+    UIImage *image = [UIImage imageNamed:imageName];
+    NSLog(@"imageName %@", imageName);
+    if (!image) {
+        NSLog(@"image null named %@", imageName);
     }
+    return image;
+}
+  //MARK: JCTiledScrollViewDelegate
+- (JCAnnotationView *)tiledScrollView:(JCTiledScrollView *)scrollView viewForAnnotation:(id<JCAnnotation>)annotation {
+    ARAnnotationView *annotationView = (ARAnnotationView *)[scrollView dequeueReusableAnnotationViewWithReuseIdentifier:@"ReuseIdentifier"];
+    if (!annotationView) {
+        annotationView = [[ARAnnotationView alloc] initWithFrame:CGRectZero annotation:annotation reuseIdentifier:@"ReuseIdentifier"];
+    }
+    int index = ((ARAnnotation *)annotation).index;
+    if (index>=0) {
+        ZYMusic *music = [ZYMusicTool musics][index];
+        annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
+        annotationView.label.text = music.name;
+    } else {
+        annotationView.imageView.image = [UIImage imageNamed:@"loction"];
+        annotationView.label.text = @"";
+    }
+    [annotationView sizeToFit];
+    annotationView.annotation = annotation;
+    NSLog(@"init annotation %d, point %f %f", ((ARAnnotation*)annotation).index, annotation.contentPosition.x, annotation.contentPosition.y);
+    return annotationView;
+}
+
+- (void)tiledScrollViewDidZoom:(JCTiledScrollView *)scrollView {
+    //update UI
+}
+- (void)tiledScrollViewDidScroll:(JCTiledScrollView *)scrollView {
+    //update UI
+}
+
+//- (void)tiledScrollView:(JCTiledScrollView *)scrollView annotationWillDisappear:(id<JCAnnotation>)annotation;
+//- (void)tiledScrollView:(JCTiledScrollView *)scrollView annotationDidDisappear:(id<JCAnnotation>)annotation;
+//- (void)tiledScrollView:(JCTiledScrollView *)scrollView annotationWillAppear:(id<JCAnnotation>)annotation;
+//- (void)tiledScrollView:(JCTiledScrollView *)scrollView annotationDidAppear:(id<JCAnnotation>)annotation;
+- (void)tiledScrollView:(JCTiledScrollView *)scrollView didSelectAnnotationView:(JCAnnotationView *)view {
+    NSArray *musics = [ZYMusicTool musics];
+    ARAnnotation *annotation = view.annotation;
+    int index = annotation.index;
+    NSLog(@"annotation touched index %d", index);
+    if (index<0) return;
+    ZYMusic *music = musics[index];
+    if (music!=nil) {
+        
+//        AVAudioPlayer *player = .player;
+//        ZYMusic *playingMusic = ((AppDelegate *)[UIApplication sharedApplication].delegate).playingMusic;
+//        NSLog(@"annotation touched name %@", music.name);
+//        [self resetPlayingMusic];
+        
+        [ZYMusicTool setPlayingMusic:music];
+//        playingMusic = music;
+        //开发播放音乐
+//        player = [[ZYAudioManager defaultManager] playingMusic:playingMusic.musicId];
+//        player.delegate = (id<AVAudioPlayerDelegate>)[UIApplication sharedApplication].delegate;
+        
+        
+        [((AppDelegate *)[UIApplication sharedApplication].delegate) startPlayingMusic];
+        [self refreshMusicUI];
+        
+//        self.player.delegate = self;
+        
+        //    self.timeLabel.text = [self stringWithTime:self.player.duration];
+        
+//        [self addUITimer];
+    }
+}
+//- (void)tiledScrollView:(JCTiledScrollView *)scrollView didDeselectAnnotationView:(JCAnnotationView *)view;
+
+- (void)tiledScrollView:(JCTiledScrollView *)scrollView didReceiveSingleTap:(UIGestureRecognizer *)gestureRecognizer {
+    
+}
+- (void)tiledScrollView:(JCTiledScrollView *)scrollView didReceiveDoubleTap:(UIGestureRecognizer *)gestureRecognizer {
+    
+}
+- (void)tiledScrollView:(JCTiledScrollView *)scrollView didReceiveTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
+    
 }
 
 @end

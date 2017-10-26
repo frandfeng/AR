@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class UnityAppController;
 @class XMMovableButton;
+@class ZYMusic;
+@class AVAudioPlayer;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+
 @property (strong, nonatomic) UIWindow *unityWindow;
 @property (strong, nonatomic) UnityAppController *unityController;
 @property (strong, nonatomic) XMMovableButton *playButton;
+
+- (void)startPlayingMusic;
+- (void)bringButtonToFront;
+- (void)hideButton;
+
 @end
 

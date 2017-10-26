@@ -63,8 +63,12 @@ static ZYAudioManager *_instance = nil;
 }
 
 //播放音乐
-- (AVAudioPlayer *)playingMusic:(NSString *)filename
+- (AVAudioPlayer *)player:(NSString *)filename
 {
+    return self.musicPlayers[filename];
+}
+
+- (void)playMusic:(NSString *)filename {
     if (filename == nil || filename.length == 0)  return nil;
     
     AVAudioPlayer *player = self.musicPlayers[filename];      //先查询对象是否缓存了
@@ -82,9 +86,9 @@ static ZYAudioManager *_instance = nil;
     }
     
     if (![player isPlaying]) {                 //如果没有正在播放，那么开始播放，如果正在播放，那么不需要改变什么
+        player.currentTime = 0;
         [player play];
     }
-    return player;
 }
 
 - (void)pauseMusic:(NSString *)filename

@@ -12,7 +12,8 @@
 + (instancetype)defaultManager;
 
 //播放音乐
-- (AVAudioPlayer *)playingMusic:(NSString *)filename;
+- (AVAudioPlayer *)player:(NSString *)filename;
+- (void)playMusic:(NSString *)filename;
 - (void)pauseMusic:(NSString *)filename;
 - (void)stopMusic:(NSString *)filename;
 

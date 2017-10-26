@@ -20,6 +20,7 @@
 #import "ZYLrcLine.h"
 #import "ZYPlayingViewController.h"
 #import "PWApplicationUtils.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate () <AVAudioPlayerDelegate>
 
@@ -61,7 +62,6 @@
     [self addButton];
     [self addLocTimer];
     [self createRemoteCommandCenter];
-    _player = [[AVAudioPlayer alloc] init];
     return YES;
 }
 - (void)addButton {
@@ -69,13 +69,13 @@
     [_playButton setFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 60, 60)];
     _playButton.layer.cornerRadius = 30;
     _playButton.layer.masksToBounds=YES;
-    [_playButton setImage:[UIImage imageNamed:@"smart_nav"] forState:UIControlStateNormal];
+//    [_playButton setImage:[UIImage imageNamed:@"smart_nav"] forState:UIControlStateNormal];
+    [_playButton setBackgroundImage:[UIImage imageNamed:@"smart_nav"] forState:UIControlStateNormal];
     [_playButton addTarget:self action:@selector(playButtonTouched) forControlEvents:UIControlEventTouchUpInside];
     [self.unityController.window addSubview:_playButton];
 }
 - (void)playButtonTouched {
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
-    vc.player = _player;
     [[PWApplicationUtils sharedInstance].activityViewController presentViewController:vc animated:YES completion:nil];
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -98,11 +98,14 @@
     [self.unityController.window bringSubviewToFront:_playButton];
 }
 
+- (void)hideButton {
+    [self.unityController.window sendSubviewToBack:_playButton];
+}
+
 #pragma mark ---定位定时器
 - (void)addLocTimer {
     //在新增定时器之前，先移除之前的定时器
     [self removeLocTimer];
-    [self loc];
     self.locTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.locTimer forMode:NSRunLoopCommonModes];
 }
@@ -120,12 +123,12 @@
     [locManager startLocation:^(NSArray<CLLocation *> *locations) {
         if (locations!=nil&&locations.count>0) {
             weakSelf.currentLocation = [locations firstObject];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_currentLocation userInfo:nil];
             [iConsole info:@"获取到地理位置 %lf, %lf", weakSelf.currentLocation.coordinate.latitude, weakSelf.currentLocation.coordinate.longitude];
             int index = [self getIndexOfMusicForLocation:_currentLocation];
             if (index >= 0) {
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
-                [self removeUITimer];
                 [self startPlayingMusic];
             }
         }
@@ -192,10 +195,10 @@
     }];
 }
 
-//开始播放音乐
-- (void)startPlayingMusic
-{
-    if (self.playingMusic == [ZYMusicTool playingMusic])  {
+//开始播放音乐,播放前需要先设置要播放的音乐[ZYMusicTool playingMusic]
+- (void)startPlayingMusic {
+    [self resetPlayingMusic];
+    if (self.playingMusic == [ZYMusicTool playingMusic]) {
         [iConsole log:@"相同的景点，不需要播放新音频"];
         return;
     }
@@ -207,7 +210,8 @@
 //    self.songLabel.text = self.playingMusic.name;
     
     //开发播放音乐
-    self.player = [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
+    [[ZYAudioManager defaultManager] playMusic:self.playingMusic.musicId];
+    self.player = [[ZYAudioManager defaultManager] player:self.playingMusic.musicId];
     self.player.delegate = self;
     
 //    self.timeLabel.text = [self stringWithTime:self.player.duration];
@@ -221,8 +225,7 @@
 /**
  *  添加定时器，更新滑块进度，锁屏页面进度
  */
-- (void)addUITimer
-{
+- (void)addUITimer {
     if (![self.player isPlaying]) return;
     
     //在新增定时器之前，先移除之前的定时器
@@ -284,7 +287,7 @@
 
 
 //展示锁屏歌曲信息：图片、歌词、进度、演唱者
-- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andLyricsPoster:(BOOL)isShow{
+- (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andLyricsPoster:(BOOL)isShow {
     
     // 播放信息中心
     MPNowPlayingInfoCenter *center = [MPNowPlayingInfoCenter defaultCenter];
@@ -395,16 +398,14 @@
 
 #pragma mark ----AVAudioPlayerDelegate
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     //    [self next:nil];
 }
 /**
  *  当电话给过来时，进行相应的操作
  *
  */
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
-{
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
     if ([self.player isPlaying]) {
         [self playOrPause:NO];
         self.isInterruption = YES;
@@ -414,12 +415,21 @@
  *  打断结束，做相应的操作
  *
  */
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player
-{
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player {
     if (self.isInterruption) {
         self.isInterruption = NO;
         [self playOrPause:YES];
     }
+}
+
+#pragma mark ----音乐控制
+//重置播放的歌曲
+- (void)resetPlayingMusic {
+    [[ZYAudioManager defaultManager] stopMusic:self.playingMusic.name];
+    [self removeUITimer];
+    [self.player stop];
+    self.player = nil;
+    _playingMusic = nil;
 }
 
 /**
@@ -427,12 +437,14 @@
  *
  */
 - (IBAction)playOrPause:(BOOL)isPlay {
-    if (isPlay) {
-        [[ZYAudioManager defaultManager] playingMusic:self.playingMusic.musicId];
-        [self addUITimer];
-    } else {
-        [[ZYAudioManager defaultManager] pauseMusic:self.playingMusic.musicId];
-        [self removeUITimer];
+    if (_player) {
+        if (isPlay) {
+            [_player pause];
+            [self addUITimer];
+        } else {
+            [_player play];
+            [self removeUITimer];
+        }
     }
 }
 

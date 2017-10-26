@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ZYPlayingViewController">
             <connections>
                 <outlet property="bottomView" destination="3dw-Ib-Yb5" id="JXb-Eo-9iS"/>
-                <outlet property="iconView" destination="kTN-0G-jAp" id="LY2-wB-fNe"/>
                 <outlet property="lyricOrPhotoBtn" destination="GhW-Be-8tq" id="0Ya-67-Oy0"/>
                 <outlet property="playOrPauseButton" destination="WXb-Xt-7Au" id="DhG-4g-3Dn"/>
                 <outlet property="progressLabel" destination="gtR-mx-zcy" id="AG8-iX-g5j"/>
@@ -31,9 +30,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M4u-b5-UNB" userLabel="顶部">
                     <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yiheyuan" translatesAutoresizingMaskIntoConstraints="NO" id="kTN-0G-jAp" userLabel="歌曲图片">
-                            <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
-                        </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_top" translatesAutoresizingMaskIntoConstraints="NO" id="iMt-pp-hGb">
                             <rect key="frame" x="0.0" y="0.0" width="667" height="100"/>
                             <constraints>
@@ -66,15 +62,11 @@
                         <constraint firstItem="RhU-y1-h35" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" constant="20" id="8bg-nT-nqh"/>
                         <constraint firstItem="OC4-UN-Y0l" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" constant="10" id="C7S-m8-ZUZ"/>
                         <constraint firstAttribute="trailing" secondItem="OC4-UN-Y0l" secondAttribute="trailing" id="DqK-TA-LLF"/>
-                        <constraint firstItem="kTN-0G-jAp" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" id="IhY-7o-Bg3"/>
                         <constraint firstItem="RhU-y1-h35" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" constant="20" id="Yah-wK-UXY"/>
                         <constraint firstItem="OC4-UN-Y0l" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" id="cGO-hL-rIN"/>
-                        <constraint firstAttribute="bottom" secondItem="kTN-0G-jAp" secondAttribute="bottom" id="fiG-5H-LpZ"/>
-                        <constraint firstItem="kTN-0G-jAp" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" id="prg-AK-Sev"/>
                         <constraint firstItem="iMt-pp-hGb" firstAttribute="leading" secondItem="M4u-b5-UNB" secondAttribute="leading" id="psJ-FU-UQS"/>
                         <constraint firstItem="iMt-pp-hGb" firstAttribute="top" secondItem="M4u-b5-UNB" secondAttribute="top" id="rbK-GL-esF"/>
                         <constraint firstAttribute="trailing" secondItem="iMt-pp-hGb" secondAttribute="trailing" id="uJd-aE-O1A"/>
-                        <constraint firstAttribute="trailing" secondItem="kTN-0G-jAp" secondAttribute="trailing" id="zWA-pG-g8J"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_bottom" translatesAutoresizingMaskIntoConstraints="NO" id="l2N-dk-pCS">
@@ -176,6 +168,5 @@
         <image name="btn_pause" width="120" height="120"/>
         <image name="btn_play" width="120" height="120"/>
         <image name="btn_setting" width="72" height="72"/>
-        <image name="yiheyuan" width="1920" height="1080"/>
     </resources>
 </document>
