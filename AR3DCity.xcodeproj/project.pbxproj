@@ -436,7 +436,6 @@
 		9146BF371F9D925C00D49527 /* JCTiledScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */; };
 		9146BF381F9D925C00D49527 /* JCTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2E1F9D925C00D49527 /* JCTiledView.m */; };
 		9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */; };
-		9146BF431F9DE46200D49527 /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 9146BF421F9DE46200D49527 /* yiheyuan */; };
 		9146BF461F9DF68E00D49527 /* ARAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF451F9DF68E00D49527 /* ARAnnotation.m */; };
 		9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF481F9E041200D49527 /* ARAnnotationView.m */; };
 		915C50401F963C06002EC05E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C503F1F963C06002EC05E /* AppDelegate.m */; };
@@ -480,7 +479,8 @@
 		9162323B1F9886F5006F4D96 /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323A1F9886F5006F4D96 /* iConsole.m */; };
 		9162323F1F9888C1006F4D96 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323E1F9888C1006F4D96 /* GTMStackTrace.m */; };
 		916232411F989350006F4D96 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 916232401F989350006F4D96 /* libc++abi.tbd */; };
-		916232561F99BFC4006F4D96 /* XMMovableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232551F99BFC4006F4D96 /* XMMovableButton.m */; };
+		91B531BB1FA1C56F00DE895B /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 91B531BA1FA1C56F00DE895B /* yiheyuan */; };
+		91B531D11FA1E44000DE895B /* XMMovableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B531D01FA1E44000DE895B /* XMMovableButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1062,7 +1062,6 @@
 		9146BF2E1F9D925C00D49527 /* JCTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledView.m; sourceTree = "<group>"; };
 		9146BF2F1F9D925C00D49527 /* JCVisibleAnnotationTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisibleAnnotationTuple.h; sourceTree = "<group>"; };
 		9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisibleAnnotationTuple.m; sourceTree = "<group>"; };
-		9146BF421F9DE46200D49527 /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
 		9146BF441F9DF68E00D49527 /* ARAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotation.h; sourceTree = "<group>"; };
 		9146BF451F9DF68E00D49527 /* ARAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotation.m; sourceTree = "<group>"; };
 		9146BF471F9E041200D49527 /* ARAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotationView.h; sourceTree = "<group>"; };
@@ -1153,8 +1152,9 @@
 		9162323D1F9888C1006F4D96 /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
 		9162323E1F9888C1006F4D96 /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
 		916232401F989350006F4D96 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
-		916232541F99BFC4006F4D96 /* XMMovableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMovableButton.h; sourceTree = "<group>"; };
-		916232551F99BFC4006F4D96 /* XMMovableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMMovableButton.m; sourceTree = "<group>"; };
+		91B531BA1FA1C56F00DE895B /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
+		91B531CF1FA1E44000DE895B /* XMMovableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMovableButton.h; sourceTree = "<group>"; };
+		91B531D01FA1E44000DE895B /* XMMovableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMMovableButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2131,7 +2131,7 @@
 		9146BF3B1F9DC0B700D49527 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				9146BF421F9DE46200D49527 /* yiheyuan */,
+				91B531BA1FA1C56F00DE895B /* yiheyuan */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -2163,8 +2163,8 @@
 			isa = PBXGroup;
 			children = (
 				9146BF3B1F9DC0B700D49527 /* Resource */,
-				916232531F99BFC4006F4D96 /* XMMovableButton */,
 				9162323C1F9888C1006F4D96 /* GTM */,
+				91B531CE1FA1E44000DE895B /* XMMovableButton */,
 				916232381F9886F5006F4D96 /* iConsole */,
 				9162321F1F972806006F4D96 /* INTULocationManager */,
 				916231C91F972297006F4D96 /* MediaPlayer */,
@@ -2397,11 +2397,11 @@
 			path = GTM;
 			sourceTree = "<group>";
 		};
-		916232531F99BFC4006F4D96 /* XMMovableButton */ = {
+		91B531CE1FA1E44000DE895B /* XMMovableButton */ = {
 			isa = PBXGroup;
 			children = (
-				916232541F99BFC4006F4D96 /* XMMovableButton.h */,
-				916232551F99BFC4006F4D96 /* XMMovableButton.m */,
+				91B531CF1FA1E44000DE895B /* XMMovableButton.h */,
+				91B531D01FA1E44000DE895B /* XMMovableButton.m */,
 			);
 			path = XMMovableButton;
 			sourceTree = "<group>";
@@ -2595,7 +2595,7 @@
 				913071851F963FEF0091386E /* ssdk_oks_classic_twitter.png in Resources */,
 				913070BF1F963FEF0091386E /* AndroidManifest.xml in Resources */,
 				9130720C1F9640200091386E /* ShareSDKUI.bundle in Resources */,
-				9146BF431F9DE46200D49527 /* yiheyuan in Resources */,
+				91B531BB1FA1C56F00DE895B /* yiheyuan in Resources */,
 				913070EE1F963FEF0091386E /* ShareSDK-KakaoStory-3.1.0.jar.meta in Resources */,
 				9130711A1F963FEF0091386E /* ShareSDK-WhatsApp-3.1.0.jar.meta in Resources */,
 				9130711C1F963FEF0091386E /* ShareSDK-Yixin-3.1.0.jar.meta in Resources */,
@@ -2790,6 +2790,7 @@
 				9162320D1F972556006F4D96 /* MJType.m in Sources */,
 				91306D5A1F963FD30091386E /* Bulk_FairyGUI_0.cpp in Sources */,
 				91306D571F963FD30091386E /* Bulk_Assembly-UnityScript_0.cpp in Sources */,
+				91B531D11FA1E44000DE895B /* XMMovableButton.m in Sources */,
 				9162321A1F972556006F4D96 /* ZYImageTool.m in Sources */,
 				91306D731F963FD30091386E /* Bulk_mscorlib_4.cpp in Sources */,
 				91306D5F1F963FD30091386E /* Bulk_Generics_10.cpp in Sources */,
@@ -2804,7 +2805,6 @@
 				91306D681F963FD30091386E /* Bulk_Generics_6.cpp in Sources */,
 				91306D691F963FD30091386E /* Bulk_Generics_7.cpp in Sources */,
 				91306D771F963FD30091386E /* Bulk_System.Core_0.cpp in Sources */,
-				916232561F99BFC4006F4D96 /* XMMovableButton.m in Sources */,
 				91306D641F963FD30091386E /* Bulk_Generics_2.cpp in Sources */,
 				91306DD41F963FD40091386E /* VideoPlayer.mm in Sources */,
 				91306DBC1F963FD40091386E /* ActivityIndicator.mm in Sources */,

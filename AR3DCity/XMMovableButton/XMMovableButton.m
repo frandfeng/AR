@@ -8,25 +8,51 @@
 
 #import "XMMovableButton.h"
 
+static int kLineWidth = 3;
+
 @interface XMMovableButton()
 
 //是否移动
 @property (nonatomic,assign) BOOL isMoved;
+@property (nonatomic,strong) UIImageView *picImageView;
+@property (nonatomic,strong) CAShapeLayer *outLayer;
+@property (nonatomic,strong) CAShapeLayer *progressLayer;
 
 @end
 
 @implementation XMMovableButton
 
--(instancetype)init{
-    
-    if (self=[super init]) {
-        
-        self.backgroundColor=[UIColor whiteColor];
-        
-        self.alpha=0.8;
+-(instancetype)initWithFrame:(CGRect)frame {
+    if (self=[super initWithFrame:frame]) {
+        self.layer.cornerRadius = frame.size.width / 2;
+        self.layer.masksToBounds = YES;
+        self.picImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        [self addSubview:self.picImageView];
+
+
+        self.outLayer = [CAShapeLayer layer];
+        CGRect rect = {kLineWidth / 2, kLineWidth / 2,
+            frame.size.width - kLineWidth, frame.size.height - kLineWidth};
+        UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:rect];
+        self.outLayer.strokeColor = [UIColor whiteColor].CGColor;
+        self.outLayer.lineWidth = kLineWidth;
+        self.outLayer.fillColor =  [UIColor clearColor].CGColor;
+        self.outLayer.lineCap = kCALineCapRound;
+        self.outLayer.path = path.CGPath;
+        [self.layer addSublayer:self.outLayer];
+
+
+        self.progressLayer = [CAShapeLayer layer];
+        self.progressLayer.fillColor = [UIColor clearColor].CGColor;
+        self.progressLayer.strokeColor = [UIColor colorWithRed:87/255.0 green:177/255.0 blue:249/255.0 alpha:1.0].CGColor;
+        self.progressLayer.lineWidth = kLineWidth;
+        self.progressLayer.lineCap = kCALineCapRound;
+        self.progressLayer.path = path.CGPath;
+        [self.layer addSublayer:self.progressLayer];
+
+//        self.transform = CGAffineTransformMakeRotation(-M_PI_2);
+//        self.picImageView.transform = CGAffineTransformMakeRotation(M_PI_2);
     }
-    
-    
     return self;
 }
 
@@ -55,8 +81,8 @@
     CGFloat xMin = self.frame.size.width  * 0.5f;
     CGFloat xMax = screenWidth  - xMin;
     
-    CGFloat yMin = self.frame.size.height * 0.5f+64;
-    CGFloat yMax = screenHeight - self.frame.size.height * 0.5f - 49;
+    CGFloat yMin = self.frame.size.height * 0.5f;
+    CGFloat yMax = screenHeight - self.frame.size.height * 0.5f;
     
     if (center.x > xMax) center.x = xMax;
     if (center.x < xMin) center.x = xMin;
@@ -94,7 +120,21 @@
 //    }];
     
     //关闭高亮状态
-    [self setHighlighted:NO];
+//    [self setHighlighted:NO];
+}
+
+- (void)updateProgressWithNumber:(NSUInteger)number {
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    [CATransaction setAnimationDuration:1];
+    float progress = number / 100.0;
+    self.picImageView.transform = CGAffineTransformMakeRotation(M_PI*progress*10);
+    self.progressLayer.strokeEnd =  progress;
+    [CATransaction commit];
+}
+
+- (void)setImageURL:(NSString *)url {
+    _picImageView.image = [UIImage imageNamed:url];
 }
 
 @end

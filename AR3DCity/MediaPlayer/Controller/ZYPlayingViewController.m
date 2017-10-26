@@ -342,7 +342,12 @@
 
   //MARK: TileSource
 - (UIImage * _Nullable)tiledScrollView:(JCTiledScrollView * _Nonnull)scrollView imageForRow:(NSInteger)row column:(NSInteger)column scale:(NSInteger)scale {
-    NSString *imageName = [NSString stringWithFormat:@"yiheyuan/yiheyuan_%dx_%d_%d.png", (int)scale, (int)row, (int)column];
+    // Ideally we have @3/6/12/24 tiles, but if not we need to change the original image size. See skippingGirlImageSize
+    NSInteger tileScale = scale;
+    if (scale % 3 == 0) {
+        tileScale = (scale * 10) / 15;
+    }
+    NSString *imageName = [NSString stringWithFormat:@"yiheyuan/yiheyuan_%dx_%d_%d.png", (int)tileScale, (int)row, (int)column];
     UIImage *image = [UIImage imageNamed:imageName];
     NSLog(@"imageName %@", imageName);
     if (!image) {

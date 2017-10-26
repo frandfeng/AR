@@ -64,17 +64,15 @@
     [self createRemoteCommandCenter];
     return YES;
 }
+
 - (void)addButton {
-    _playButton = [[XMMovableButton alloc] init];
-    [_playButton setFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 60, 60)];
-    _playButton.layer.cornerRadius = 30;
-    _playButton.layer.masksToBounds=YES;
-//    [_playButton setImage:[UIImage imageNamed:@"smart_nav"] forState:UIControlStateNormal];
-    [_playButton setBackgroundImage:[UIImage imageNamed:@"smart_nav"] forState:UIControlStateNormal];
-    [_playButton addTarget:self action:@selector(playButtonTouched) forControlEvents:UIControlEventTouchUpInside];
+    _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 70, 70)];
+    [_playButton setImageURL:@"smart_nav"];
+    [_playButton updateProgressWithNumber:0];
+    [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
     [self.unityController.window addSubview:_playButton];
 }
-- (void)playButtonTouched {
+- (void)playButtonTouched:(UITapGestureRecognizer *)gestureRecognizer {
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
     [[PWApplicationUtils sharedInstance].activityViewController presentViewController:vc animated:YES completion:nil];
 }
@@ -197,11 +195,11 @@
 
 //开始播放音乐,播放前需要先设置要播放的音乐[ZYMusicTool playingMusic]
 - (void)startPlayingMusic {
-    [self resetPlayingMusic];
     if (self.playingMusic == [ZYMusicTool playingMusic]) {
         [iConsole log:@"相同的景点，不需要播放新音频"];
         return;
     }
+    [self resetPlayingMusic];
     [iConsole log:@"开始播放新音频"];
     
     // 设置所需要的数据
@@ -255,7 +253,8 @@
     float totalTime = self.player.duration;
     float currentTime = self.player.currentTime;
     
-    [self.playButton setTitle:[NSString stringWithFormat:@"%d", (int)(temp*100)] forState:UIControlStateNormal];
+//    [self.playButton setTitle:[NSString stringWithFormat:@"%d", (int)(temp*100)] forState:UIControlStateNormal];
+    [_playButton updateProgressWithNumber:temp*100];
 //    self.timeLabel.text = [self stringWithTime:totalTime];
 //    self.progressLabel.text = [self stringWithTime:currentTime];
     

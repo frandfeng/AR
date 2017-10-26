@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XMMovableButton : UIButton
+@interface XMMovableButton : UIView
+
+// 设置图片
+- (void)setImageURL:(NSString *)url;
+// 更新进度
+- (void)updateProgressWithNumber:(NSUInteger)number;
 
 @end
