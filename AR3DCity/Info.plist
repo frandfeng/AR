@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This string is required to gain permission to access location services on iOS 8+ and should describe how your app uses location services. Set this string in the Info.plist</string>
-	<key>NSLocationUsageDescription</key>
-	<string>This string is optional but recommended on iOS 6 &amp; 7 and should describe how your app uses location services. Set this string in the Info.plist</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This string is required to gain permission to access location services on iOS 8+ when the app in the background and should describe how your app uses location services. Set this string in the Info.plist</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -28,6 +22,12 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access required for target detection and tracking</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This string is required to gain permission to access location services on iOS 8+ when the app in the background and should describe how your app uses location services. Set this string in the Info.plist</string>
+	<key>NSLocationUsageDescription</key>
+	<string>This string is optional but recommended on iOS 6 &amp; 7 and should describe how your app uses location services. Set this string in the Info.plist</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This string is required to gain permission to access location services on iOS 8+ and should describe how your app uses location services. Set this string in the Info.plist</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
@@ -41,7 +41,6 @@
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>

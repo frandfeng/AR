@@ -86,15 +86,30 @@ static const CGFloat kDefaultTileSize = 256.0f;
   NSInteger row = (NSInteger) round((CGRectGetMinY(scaleRect) / self.tileSize.height));
   
   UIImage *tileImage = [(id<JCTiledBitmapViewDelegate>)self.delegate tiledView:self imageForRow:row column:col scale:tileScale];
-  if (tileImage != nil)
-  {
+    if (tileImage==nil) {
+        tileImage = [self createImageWithColor:[UIColor colorWithRed:154/255.0 green:154/255.0 blue:154/255.0 alpha:1.0]];
+    }
+//  if (tileImage != nil)
+//  {
     [tileImage drawInRect:rect];
-  }
+//  } else {
+//  }
 
   if (self.shouldAnnotateRect)
   {
 //    [self annotateRect:rect inContext:ctx];
   }
+}
+- (UIImage*) createImageWithColor: (UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
 }
 
 // MARK: Debug

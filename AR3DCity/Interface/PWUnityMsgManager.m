@@ -95,6 +95,15 @@ static PWUnityMsgManager *sharedObject = nil;
             }];
             [self sendMsg2UnityOfType:@"OnIntelligentFun" andValue:@"{\"params\":{}}"];
         }
+        else if([func isEqualToString:@"ReqCallLog"]) {
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"logStr"]) {
+                    NSString *logStr = paramsDic[@"logStr"];
+                    [iConsole log:@"UNITY LOG: %@", logStr];
+                }
+            }
+        }
     }
     return [PWU3DCodec U3DCodec:@"false"];
 }

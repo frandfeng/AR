@@ -438,6 +438,7 @@
 		9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */; };
 		9146BF461F9DF68E00D49527 /* ARAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF451F9DF68E00D49527 /* ARAnnotation.m */; };
 		9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF481F9E041200D49527 /* ARAnnotationView.m */; };
+		9156BC791FA31DD800CC2E8C /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 9156BC781FA31DD800CC2E8C /* yiheyuan */; };
 		915C50401F963C06002EC05E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C503F1F963C06002EC05E /* AppDelegate.m */; };
 		915C50481F963C06002EC05E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915C50471F963C06002EC05E /* Assets.xcassets */; };
 		915C504B1F963C06002EC05E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 915C50491F963C06002EC05E /* LaunchScreen.storyboard */; };
@@ -479,7 +480,6 @@
 		9162323B1F9886F5006F4D96 /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323A1F9886F5006F4D96 /* iConsole.m */; };
 		9162323F1F9888C1006F4D96 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323E1F9888C1006F4D96 /* GTMStackTrace.m */; };
 		916232411F989350006F4D96 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 916232401F989350006F4D96 /* libc++abi.tbd */; };
-		91B531BB1FA1C56F00DE895B /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 91B531BA1FA1C56F00DE895B /* yiheyuan */; };
 		91B531D11FA1E44000DE895B /* XMMovableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B531D01FA1E44000DE895B /* XMMovableButton.m */; };
 /* End PBXBuildFile section */
 
@@ -1066,6 +1066,7 @@
 		9146BF451F9DF68E00D49527 /* ARAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotation.m; sourceTree = "<group>"; };
 		9146BF471F9E041200D49527 /* ARAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotationView.h; sourceTree = "<group>"; };
 		9146BF481F9E041200D49527 /* ARAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotationView.m; sourceTree = "<group>"; };
+		9156BC781FA31DD800CC2E8C /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
 		915C503B1F963C06002EC05E /* ARCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915C503E1F963C06002EC05E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		915C503F1F963C06002EC05E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1152,7 +1153,6 @@
 		9162323D1F9888C1006F4D96 /* GTMStackTrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMStackTrace.h; sourceTree = "<group>"; };
 		9162323E1F9888C1006F4D96 /* GTMStackTrace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMStackTrace.m; sourceTree = "<group>"; };
 		916232401F989350006F4D96 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
-		91B531BA1FA1C56F00DE895B /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
 		91B531CF1FA1E44000DE895B /* XMMovableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMovableButton.h; sourceTree = "<group>"; };
 		91B531D01FA1E44000DE895B /* XMMovableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMMovableButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2131,7 +2131,7 @@
 		9146BF3B1F9DC0B700D49527 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				91B531BA1FA1C56F00DE895B /* yiheyuan */,
+				9156BC781FA31DD800CC2E8C /* yiheyuan */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -2585,6 +2585,7 @@
 				913070FA1F963FEF0091386E /* ShareSDK-Pinterest-3.1.0.jar.meta in Resources */,
 				913071611F963FEF0091386E /* ssdk_oks_classic_kaixin.png in Resources */,
 				9130715B1F963FEF0091386E /* ssdk_oks_classic_googleplus.png in Resources */,
+				9156BC791FA31DD800CC2E8C /* yiheyuan in Resources */,
 				913071181F963FEF0091386E /* ShareSDK-Wechat-Moments-3.1.0.jar.meta in Resources */,
 				913071A31F963FEF0091386E /* ssdk_oks_color_drawables.xml in Resources */,
 				913071421F963FEF0091386E /* ssdk_oks_classic_alipaymoments.png.meta in Resources */,
@@ -2595,7 +2596,6 @@
 				913071851F963FEF0091386E /* ssdk_oks_classic_twitter.png in Resources */,
 				913070BF1F963FEF0091386E /* AndroidManifest.xml in Resources */,
 				9130720C1F9640200091386E /* ShareSDKUI.bundle in Resources */,
-				91B531BB1FA1C56F00DE895B /* yiheyuan in Resources */,
 				913070EE1F963FEF0091386E /* ShareSDK-KakaoStory-3.1.0.jar.meta in Resources */,
 				9130711A1F963FEF0091386E /* ShareSDK-WhatsApp-3.1.0.jar.meta in Resources */,
 				9130711C1F963FEF0091386E /* ShareSDK-Yixin-3.1.0.jar.meta in Resources */,

@@ -214,6 +214,8 @@
     
 //    self.timeLabel.text = [self stringWithTime:self.player.duration];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameStartPlay" object:nil];
+    
     [self addUITimer];
     //切换歌词
     //    self.lrcView.fileName = self.playingMusic.lrcname;
@@ -399,6 +401,7 @@
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     //    [self next:nil];
+    [self removeUITimer];
 }
 /**
  *  当电话给过来时，进行相应的操作

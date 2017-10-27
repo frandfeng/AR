@@ -150,16 +150,16 @@
     
     _mapScrollView.tiledView.shouldAnnotateRect = true;
     //最大缩放比例
-    _mapScrollView.levelsOfZoom = 3;
-    _mapScrollView.levelsOfDetail = 3;
+    _mapScrollView.levelsOfZoom = 2;
+    _mapScrollView.levelsOfDetail = 2;
 }
 
 - (void)setCoordinate {
     //暂时设置办公室四个角
-    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.056323];
-    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.057339];
-    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.057339];
-    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.056323];
+    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554452 longitude:104.056548];
+    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554756 longitude:104.057096];
+    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.554736 longitude:104.057224];
+    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.554115 longitude:104.056748];
 }
 
 - (void)addAnnotations {
@@ -344,9 +344,9 @@
 - (UIImage * _Nullable)tiledScrollView:(JCTiledScrollView * _Nonnull)scrollView imageForRow:(NSInteger)row column:(NSInteger)column scale:(NSInteger)scale {
     // Ideally we have @3/6/12/24 tiles, but if not we need to change the original image size. See skippingGirlImageSize
     NSInteger tileScale = scale;
-    if (scale % 3 == 0) {
-        tileScale = (scale * 10) / 15;
-    }
+//    if (scale % 3 == 0) {
+//        tileScale = (scale * 2) / 3;
+//    }
     NSString *imageName = [NSString stringWithFormat:@"yiheyuan/yiheyuan_%dx_%d_%d.png", (int)tileScale, (int)row, (int)column];
     UIImage *image = [UIImage imageNamed:imageName];
     NSLog(@"imageName %@", imageName);

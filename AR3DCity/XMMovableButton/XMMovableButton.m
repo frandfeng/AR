@@ -105,6 +105,18 @@ static int kLineWidth = 3;
         //如果没有移动，则调用父类方法，触发button的点击事件
         [super touchesEnded:touches withEvent:event];
     }
+    CGPoint center = self.center;
+    //限制移动范围
+    CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
+    
+    CGFloat xMin = self.frame.size.width  * 0.5f;
+    CGFloat xMax = screenWidth  - xMin;
+    
+    if (center.x < xMax/2) center.x = xMin;
+    if (center.x > xMax/2) center.x = xMax;
+    
+    self.center = center;
+    
     self.isMoved = NO;
     
 //    if (!self.dockable) return;
