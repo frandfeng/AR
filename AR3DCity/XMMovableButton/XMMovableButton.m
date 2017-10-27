@@ -17,6 +17,7 @@ static int kLineWidth = 3;
 @property (nonatomic,strong) UIImageView *picImageView;
 @property (nonatomic,strong) CAShapeLayer *outLayer;
 @property (nonatomic,strong) CAShapeLayer *progressLayer;
+@property (nonatomic,assign) float progress;
 
 @end
 
@@ -115,7 +116,9 @@ static int kLineWidth = 3;
     if (center.x < xMax/2) center.x = xMin;
     if (center.x > xMax/2) center.x = xMax;
     
-    self.center = center;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.center = center;
+    }];
     
     self.isMoved = NO;
     
@@ -136,13 +139,21 @@ static int kLineWidth = 3;
 }
 
 - (void)updateProgressWithNumber:(NSUInteger)number {
-    [CATransaction begin];
-    [CATransaction setAnimationTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
-    [CATransaction setAnimationDuration:1];
+    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        float progress = number / 100.0;
+        self.picImageView.transform = CGAffineTransformMakeRotation(M_PI*progress*10);
+        self.progressLayer.strokeEnd =  progress;
+    } completion:nil];
     float progress = number / 100.0;
-    self.picImageView.transform = CGAffineTransformMakeRotation(M_PI*progress*10);
-    self.progressLayer.strokeEnd =  progress;
-    [CATransaction commit];
+    CABasicAnimation *pathAnima = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    pathAnima.duration = 1.0f;
+    pathAnima.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    pathAnima.fromValue = [NSNumber numberWithFloat:_progress];
+    _progress = progress;
+    pathAnima.toValue = [NSNumber numberWithFloat:_progress];
+    pathAnima.fillMode = kCAFillModeForwards;
+    pathAnima.removedOnCompletion = NO;
+    [self.progressLayer addAnimation:pathAnima forKey:@"strokeEndAnimation"];
 }
 
 - (void)setImageURL:(NSString *)url {

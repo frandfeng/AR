@@ -156,10 +156,10 @@
 
 - (void)setCoordinate {
     //暂时设置办公室四个角
-    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554452 longitude:104.056548];
-    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554756 longitude:104.057096];
-    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.554736 longitude:104.057224];
-    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.554115 longitude:104.056748];
+    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.056323];
+    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.057339];
+    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.057339];
+    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.056323];
 }
 
 - (void)addAnnotations {
