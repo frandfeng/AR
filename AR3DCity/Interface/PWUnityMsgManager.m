@@ -13,6 +13,8 @@
 #import "PWApplicationUtils.h"
 #import "AppDelegate.h"
 #import "iConsole.h"
+#import "LocationManager.h"
+#import <CoreLocation/CoreLocation.h>
 
 @implementation PWUnityMsgManager
 
@@ -34,13 +36,13 @@ static PWUnityMsgManager *sharedObject = nil;
 }
 
 - (void)sendMsg2UnityOfType:(NSString *)type andValue:(NSString *)value {
-    [iConsole info:@"发送给Unity消息 方法 %@, 参数 :%@",type, value];
+    [iConsole info:@"原生发送给Unity消息 方法 %@, 参数 :%@",type, value];
     UnitySendMessage(@"Entrance".UTF8String, type.UTF8String, value.UTF8String);
 }
 
 -(const char *)unityMsgDealing:(const char *) value {
     NSString *str =[PWU3DCodec NSStringCodec:value];
-    [iConsole info:@"收到unity消息 %@", str];
+    [iConsole info:@"原生收到Unity消息 %@", str];
     NSDictionary *dic = [PWU3DCodec toArrayOrNSDictionary:[str dataUsingEncoding:NSASCIIStringEncoding]];
     if ([[dic allKeys] containsObject:@"method"]) {
         NSString *func = [dic objectForKey:@"method"];
@@ -53,7 +55,39 @@ static PWUnityMsgManager *sharedObject = nil;
          IOS->U3D："Entrance","OnGPSStateResult",{"params":[{"isOpened":true}]}
          */
         if ([func isEqualToString:@"ReqGPSState"]) {
-            [self sendMsg2UnityOfType:@"OnGPSStateResult" andValue:@"{\"params\":{\"isOpened\":true}}"];
+            CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+            NSString *statusStr = @"";
+            switch (status) {
+                case kCLAuthorizationStatusNotDetermined: {
+                    NSLog(@"用户还没有设置是否授权定位服务");
+                    statusStr = @"kCLAuthorizationStatusNotDetermined";
+                }
+                    break;
+                case kCLAuthorizationStatusRestricted: {
+                    NSLog(@"用户定位服务受限制（非用户主观）");
+                    statusStr = @"kCLAuthorizationStatusNotDetermined";
+                }
+                    break;
+                case kCLAuthorizationStatusDenied: {
+                    NSLog(@"用户禁止使用定位服务");
+                    statusStr = @"kCLAuthorizationStatusDenied";
+                }
+                    break;
+                case kCLAuthorizationStatusAuthorizedAlways: {
+                    NSLog(@"用户允许使用定位服务（包括后台运行）");
+                    statusStr = @"kCLAuthorizationStatusAuthorizedAlways";
+                }
+                    break;
+                case kCLAuthorizationStatusAuthorizedWhenInUse: {
+                    NSLog(@"用户允许在使用程序时使用定位服务");
+                    statusStr = @"kCLAuthorizationStatusAuthorizedAlways";
+                }
+                    break;
+                default:
+                    break;
+            }
+            [self sendMsg2UnityOfType:@"OnGPSStateResult" andValue:[NSString stringWithFormat:@"{\"params\":{\"state\":\"%@\"}}", statusStr]];
+            return [PWU3DCodec U3DCodec:@"true"];
         }
         /**
          GPS定位（OnGPSInfoResult是回调函数）
@@ -65,7 +99,14 @@ static PWUnityMsgManager *sharedObject = nil;
          IOS->U3D："Entrance","OnGPSStateResult",{"params":[{"longitude":10.1},{"latitude":10.1}]}
          */
         else if ([func isEqualToString:@"ReqGPSInfo"]) {
-            [self sendMsg2UnityOfType:@"OnGPSInfoResult" andValue:@"{\"params\":{\"longitude\":10.2,\"latitude\":10.1}}"];
+            LocationManager *locManager = [LocationManager sharedLocationManager];
+            [locManager startLocation:^(NSArray<CLLocation *> *locations) {
+                if (locations!=nil&&locations.count>0) {
+                    CLLocation *currentLoc = [locations firstObject];
+                    [self sendMsg2UnityOfType:@"OnGPSInfoResult" andValue:[NSString stringWithFormat:@"{\"params\":{\"longitude\":%lf,\"latitude\":%lf}}", currentLoc.coordinate.longitude, currentLoc.coordinate.latitude]];
+                }
+            }];
+            return [PWU3DCodec U3DCodec:@"true"];
         }
         /**
          打电话
@@ -85,22 +126,13 @@ static PWUnityMsgManager *sharedObject = nil;
                 }
             }
         }
-        /**
-         打开智能导游窗口和关闭智能导游窗口（OnIntelligentFun是回调函数）
-         */
-        else if ([func isEqualToString:@"ReqIntelligentFun"]) {
-            ZYPlayingViewController *playingVc = [[ZYPlayingViewController alloc] initWithNibName:@"ZYPlayingViewController" bundle:nil];
-            [[PWApplicationUtils sharedInstance].activityViewController presentViewController:playingVc animated:YES completion:^{
-//                [(AppDelegate *)[UIApplication sharedApplication].delegate hideUnityWindow];
-            }];
-            [self sendMsg2UnityOfType:@"OnIntelligentFun" andValue:@"{\"params\":{}}"];
-        }
         else if([func isEqualToString:@"ReqCallLog"]) {
             if ([[dic allKeys] containsObject:@"params"]) {
                 NSDictionary *paramsDic = [dic objectForKey:@"params"];
-                if ([[paramsDic allKeys] containsObject:@"logStr"]) {
-                    NSString *logStr = paramsDic[@"logStr"];
+                if ([[paramsDic allKeys] containsObject:@"logString"]) {
+                    NSString *logStr = paramsDic[@"logString"];
                     [iConsole log:@"UNITY LOG: %@", logStr];
+                    return [PWU3DCodec U3DCodec:@"true"];
                 }
             }
         }

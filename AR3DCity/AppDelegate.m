@@ -137,7 +137,6 @@
 
 - (void)loc {
     LocationManager *locManager = [LocationManager sharedLocationManager];
-    __weak __typeof__(LocationManager *) weakLocManager = locManager;
     __weak __typeof__(self) weakSelf = self;
     
     [iConsole info:@"开始请求位置信息。。。"];
@@ -426,6 +425,7 @@
     //    [self next:nil];
     [_playButton updateProgressWithNumber:0];
     [self removeUITimer];
+    //TODO:关闭锁屏页面
 }
 /**
  *  当电话给过来时，进行相应的操作

@@ -25,6 +25,7 @@
 #import "JCTiledView.h"
 #import "ARAnnotation.h"
 #import "ARAnnotationView.h"
+#import "PWUnityMsgManager.h"
 
 @interface ZYPlayingViewController ()  <AVAudioPlayerDelegate, JCTileSource, JCTiledScrollViewDelegate>
 
@@ -89,6 +90,7 @@
     [self setCoordinate];
     [self addAnnotations];
     [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton];
+    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -113,6 +115,7 @@
 
 - (void)dealloc {
     [self removeNotifications];
+    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"false\"}}"];
 }
 
 - (void)location:(NSNotification *)noti {
