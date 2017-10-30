@@ -61,12 +61,20 @@ public class UnityEdit : NSObject {
 //            print("替换attribute失败");
 //        }
         
-        let res2 : Bool = editGetAppController();
+        let res2 : Bool = editGetAppControllerH();
         if res2 {
-            print("替换GetAppController成功");
+            print("替换GetAppController.h成功");
         } else {
-            print("替换GetAppController失败");
+            print("替换GetAppController.h失败");
         }
+        let res3 : Bool = editGetAppControllerM();
+        if res3 {
+            print("替换GetAppController.mm成功");
+        } else {
+            print("替换GetAppController.mm失败");
+        }
+        //去掉Setwindow
+        //去掉readonly
     }
     
     /// 将Native中的.h文件移动到一个暂时的文件夹中
@@ -277,7 +285,7 @@ public class UnityEdit : NSObject {
     }
     
     /// 修改GetAppController中的代码
-    static func editGetAppController() -> Bool {
+    static func editGetAppControllerH() -> Bool {
         let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/UnityAppController.h";
         var content : String = UnityUtil.read(path: path);
         if !content.contains("#import \"AppDelegate.h\"") {
@@ -285,6 +293,19 @@ public class UnityEdit : NSObject {
             content = content.replacingOccurrences(of: "#import <QuartzCore/CADisplayLink.h>", with: "#import <QuartzCore/CADisplayLink.h>\n#import \"AppDelegate.h\"");
             //替换GetAppController函数
             content = content.replacingOccurrences(of: "(UnityAppController*)[UIApplication sharedApplication].delegate", with: "[(AppDelegate*)[UIApplication sharedApplication].delegate unityController]")
+            content = content.replacingOccurrences(of: "@property (readonly, copy, nonatomic) UIViewController*     rootViewController;", with: "@property (copy, nonatomic) UIViewController*     rootViewController;")
+            let res = UnityUtil.writeString(aStr: content, toFile: path);
+            return res;
+        } else {
+            return false;
+        }
+    }
+    
+    static func editGetAppControllerM() -> Bool {
+        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/UnityAppController.mm";
+        var content : String = UnityUtil.read(path: path);
+        if content.contains("- (void)setWindow:(id)object        {}") {
+            content = content.replacingOccurrences(of: "- (void)setWindow:(id)object        {}", with: "- (void)setWindow:(id)object        {_window = object;}");
             let res = UnityUtil.writeString(aStr: content, toFile: path);
             return res;
         } else {

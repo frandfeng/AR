@@ -43,7 +43,7 @@ static PWUnityMsgManager *sharedObject = nil;
 -(const char *)unityMsgDealing:(const char *) value {
     NSString *str =[PWU3DCodec NSStringCodec:value];
     [iConsole info:@"原生收到Unity消息 %@", str];
-    NSDictionary *dic = [PWU3DCodec toArrayOrNSDictionary:[str dataUsingEncoding:NSASCIIStringEncoding]];
+    NSDictionary *dic = [PWU3DCodec toArrayOrNSDictionary:[str dataUsingEncoding:NSUTF8StringEncoding]];
     if ([[dic allKeys] containsObject:@"method"]) {
         NSString *func = [dic objectForKey:@"method"];
         /**
@@ -99,7 +99,7 @@ static PWUnityMsgManager *sharedObject = nil;
          IOS->U3D："Entrance","OnGPSStateResult",{"params":[{"longitude":10.1},{"latitude":10.1}]}
          */
         else if ([func isEqualToString:@"ReqGPSInfo"]) {
-            LocationManager *locManager = [LocationManager sharedLocationManager];
+            LocationManager *locManager = [[LocationManager alloc] init];
             [locManager startLocation:^(NSArray<CLLocation *> *locations) {
                 if (locations!=nil&&locations.count>0) {
                     CLLocation *currentLoc = [locations firstObject];
