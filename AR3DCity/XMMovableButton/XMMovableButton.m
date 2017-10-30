@@ -17,6 +17,7 @@ static int kLineWidth = 3;
 @property (nonatomic,strong) UIImageView *picImageView;
 @property (nonatomic,strong) CAShapeLayer *outLayer;
 @property (nonatomic,strong) CAShapeLayer *progressLayer;
+@property (nonatomic,strong) CAShapeLayer *circleLayer;
 @property (nonatomic,assign) float progress;
 
 @end
@@ -50,6 +51,22 @@ static int kLineWidth = 3;
         self.progressLayer.lineCap = kCALineCapRound;
         self.progressLayer.path = path.CGPath;
         [self.layer addSublayer:self.progressLayer];
+        
+        
+        self.circleLayer = [CAShapeLayer layer];
+        CGRect rect1 = {frame.size.width/4 + kLineWidth, frame.size.height/4 + kLineWidth,
+            frame.size.width/2-kLineWidth*2, frame.size.height/2-kLineWidth*2};
+        UIBezierPath *path1 = [UIBezierPath bezierPathWithOvalInRect:rect1];
+        self.circleLayer.strokeColor = [UIColor whiteColor].CGColor;
+        self.circleLayer.lineWidth = kLineWidth;
+        self.circleLayer.fillColor =  [UIColor clearColor].CGColor;
+        self.circleLayer.lineCap = kCALineCapRound;
+        self.circleLayer.path = path1.CGPath;
+        
+//        self.layer.shadowColor = [UIColor greenColor].CGColor;//阴影颜色
+//        self.layer.shadowOffset = CGSizeMake(0, 0);//偏移距离
+//        self.layer.shadowOpacity = 0.5;//不透明度
+//        self.layer.shadowRadius = frame.size.width;//半径
 
 //        self.transform = CGAffineTransformMakeRotation(-M_PI_2);
 //        self.picImageView.transform = CGAffineTransformMakeRotation(M_PI_2);
@@ -139,6 +156,11 @@ static int kLineWidth = 3;
 }
 
 - (void)updateProgressWithNumber:(NSUInteger)number {
+    if (number==0 && [self.circleLayer superlayer]) {
+        [self.circleLayer removeFromSuperlayer];
+    } else if (number!=0 && ![self.circleLayer superlayer]) {
+        [self.layer addSublayer:self.circleLayer];
+    }
     [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         float progress = number / 100.0;
         self.picImageView.transform = CGAffineTransformMakeRotation(M_PI*progress*10);
@@ -156,8 +178,8 @@ static int kLineWidth = 3;
     [self.progressLayer addAnimation:pathAnima forKey:@"strokeEndAnimation"];
 }
 
-- (void)setImageURL:(NSString *)url {
-    _picImageView.image = [UIImage imageNamed:url];
+- (void)setImagePic:(UIImage *)image {
+    _picImageView.image = image;
 }
 
 @end

@@ -67,7 +67,7 @@
 
 - (void)addButton {
     _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70)];
-    [_playButton setImageURL:@"smart_nav"];
+    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
     [_playButton updateProgressWithNumber:0];
     [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
     _playButton.hidden = YES;
@@ -279,6 +279,29 @@
     
 //    [self.playButton setTitle:[NSString stringWithFormat:@"%d", (int)(temp*100)] forState:UIControlStateNormal];
     [_playButton updateProgressWithNumber:temp*100];
+    if (self.player.currentTime<1) {
+        NSString *icon = self.playingMusic.icon;
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"Data/Raw/Texture2d/%@", icon] ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:filePath];
+        CGSize size =image.size;
+        
+        float imageSize;
+        
+        NSLog(@"size==height%f====width%f",size.height,size.width);
+        
+        if(size.height>= size.width) {
+            
+            imageSize = size.width;
+            
+        }else{
+            
+            imageSize = size.height;
+            
+        }
+        UIImage *squareImage = [self getSquareImage:image RangeCGRect:CGRectMake(0, 0, imageSize, imageSize) centerBool:YES];
+        [_playButton setImagePic:[self getClearRectImage:squareImage]];
+    }
+    
 //    self.timeLabel.text = [self stringWithTime:totalTime];
 //    self.progressLabel.text = [self stringWithTime:currentTime];
     
@@ -308,6 +331,145 @@
     [self showLockScreenTotaltime:totalTime andCurrentTime:currentTime andLyricsPoster:isShowLyricsPoster];
 }
 
+-(UIImage*)getSquareImage:(UIImage *)image RangeCGRect:(CGRect)range centerBool:(BOOL)centerBool{
+    
+    /*如若centerBool为Yes则是由中心点取mCGRect范围的图片*/
+    
+    float imgWidth = image.size.width;
+    
+    float imgHeight = image.size.height;
+    
+    float viewWidth =range.size.width;
+    
+    float viewHidth =range.size.height;
+    
+    CGRect rect;
+    
+    if(centerBool)
+        
+        rect =CGRectMake((imgWidth-viewWidth)/2,(imgHeight-viewHidth)/2,viewWidth,viewHidth);
+    
+    else{
+        
+        if(viewHidth)
+           
+        {
+            
+            if(imgWidth<= imgHeight){
+                
+                rect=CGRectMake(0,0,imgWidth, imgWidth*viewHidth/viewWidth);
+                
+            }else{
+                
+                float width = viewWidth*imgHeight/viewHidth;
+                
+                float x = (imgWidth - width)/2;
+                
+                if(x >0){
+                    
+                    rect =CGRectMake(x,0, width, imgHeight);
+                    
+                }else{
+                    
+                    rect=CGRectMake(0,0,imgWidth, imgWidth*viewHidth/viewWidth);
+                    
+                }
+                
+            }
+            
+        }else{
+            
+            if(imgWidth<= imgHeight){
+                
+                float height = viewHidth*imgWidth/viewWidth;
+                
+                if(height < imgHeight){
+                    
+                    rect =CGRectMake(0,0,imgWidth, height);
+                    
+                }else
+                    
+                {
+                    
+                    rect =CGRectMake(0,0,viewWidth*imgHeight/viewHidth,imgHeight);
+                    
+                }
+                
+            }else
+                
+            {
+                
+                float width = viewWidth*imgHeight/viewHidth;
+                
+                if(width < imgWidth)
+                    
+                {
+                    
+                    float x = (imgWidth - width)/2;
+                    
+                    rect =CGRectMake(x,0,width, imgHeight);
+                    
+                }else
+                    
+                {
+                    
+                    rect =CGRectMake(0,0,imgWidth, imgHeight);
+                    
+                }
+                
+            }
+            
+        }
+           
+           }
+           
+           CGImageRef SquareImageRef = CGImageCreateWithImageInRect(image.CGImage,rect);
+           
+           CGRect SquareImageBounds =CGRectMake(0,0,CGImageGetWidth(SquareImageRef),CGImageGetHeight(SquareImageRef));
+           
+           UIGraphicsBeginImageContext(SquareImageBounds.size);
+           
+           CGContextRef context =UIGraphicsGetCurrentContext();
+           
+           CGContextDrawImage(context,SquareImageBounds,SquareImageRef);
+           
+           UIImage* SquareImage = [UIImage imageWithCGImage:SquareImageRef];
+           
+           UIGraphicsEndImageContext();
+           
+           return SquareImage;
+           
+           }
+
+
+- (UIImage*)getClearRectImage:(UIImage*)image{
+    
+    UIGraphicsBeginImageContextWithOptions(image.size,NO,0.0f);
+    
+    CGContextRef ctx =UIGraphicsGetCurrentContext();
+    
+    //默认绘制的内容尺寸和图片一样大,从某一点开始绘制
+    
+    [image drawAtPoint:CGPointZero];
+    
+    CGFloat bigRaduis = image.size.width/5;
+    
+    CGRect cirleRect =CGRectMake(image.size.width/2-bigRaduis, image.size.height/2-bigRaduis, bigRaduis*2, bigRaduis*2);
+    //CGContextAddArc(ctx,image.size.width/2-bigRaduis,image.size.height/2-bigRaduis, bigRaduis, 0.0, 2*M_PI, 0);
+    
+    CGContextAddEllipseInRect(ctx,cirleRect);
+    
+    CGContextClip(ctx);
+    
+    CGContextClearRect(ctx,cirleRect);
+    
+    UIImage*newImage =UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+    
+}
 
 //展示锁屏歌曲信息：图片、歌词、进度、演唱者
 - (void)showLockScreenTotaltime:(float)totalTime andCurrentTime:(float)currentTime andLyricsPoster:(BOOL)isShow {
@@ -320,9 +482,9 @@
     // 专辑名称
     info[MPMediaItemPropertyAlbumTitle] = self.playingMusic.name;
     // 歌手
-    info[MPMediaItemPropertyArtist] = self.playingMusic.musicId;
+//    info[MPMediaItemPropertyArtist] = self.playingMusic.musicId;
     // 歌曲名称
-    info[MPMediaItemPropertyTitle] = [NSString stringWithFormat:@"%f,@%f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude];
+//    info[MPMediaItemPropertyTitle] = [NSString stringWithFormat:@"%f,@%f", _currentLocation.coordinate.latitude, _currentLocation.coordinate.longitude];
     // 设置图片
     //    info[MPMediaItemPropertyArtwork] = [[MPMediaItemArtwork alloc] initWithImage:[UIImage imageNamed:self.playingMusic.icon]];
     // 设置持续时间（歌曲的总时间）
@@ -424,6 +586,7 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     //    [self next:nil];
     [_playButton updateProgressWithNumber:0];
+    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
     [self removeUITimer];
     //TODO:关闭锁屏页面
 }
@@ -466,10 +629,10 @@
     if (_player) {
         if (isPlay) {
             [_player pause];
-            [self addUITimer];
+            [self removeUITimer];
         } else {
             [_player play];
-            [self removeUITimer];
+            [self addUITimer];
         }
     }
 }

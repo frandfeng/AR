@@ -11,7 +11,7 @@
 @interface XMMovableButton : UIView
 
 // 设置图片
-- (void)setImageURL:(NSString *)url;
+- (void)setImagePic:(UIImage *)image;
 // 更新进度
 - (void)updateProgressWithNumber:(NSUInteger)number;
 
