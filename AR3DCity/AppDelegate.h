@@ -12,12 +12,14 @@
 @class XMMovableButton;
 @class ZYMusic;
 @class AVAudioPlayer;
+@class CLLocation;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *unityWindow;
 @property (strong, nonatomic) UnityAppController *unityController;
 @property (strong, nonatomic) XMMovableButton *playButton;
+@property (nonatomic, strong) CLLocation *currentLocation;
 
 - (void)startPlayingMusic;
 - (void)bringButtonToFront;

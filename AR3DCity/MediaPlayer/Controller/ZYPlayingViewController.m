@@ -26,6 +26,7 @@
 #import "ARAnnotation.h"
 #import "ARAnnotationView.h"
 #import "PWUnityMsgManager.h"
+#import "PWApplicationUtils.h"
 
 @interface ZYPlayingViewController ()  <AVAudioPlayerDelegate, JCTileSource, JCTiledScrollViewDelegate>
 
@@ -106,11 +107,13 @@
 - (void)addNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(location:) name:@"NSNotificationNameLocation" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startPlay:) name:@"NSNotificationNameStartPlay" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopPlay:) name:@"NSNotificationNameStopPlay" object:nil];
 }
 
 - (void)removeNotifications {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NSNotificationNameLocation" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NSNotificationNameStartPlay" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"NSNotificationNameStopPlay" object:nil];
 }
 
 - (void)dealloc {
@@ -123,15 +126,23 @@
     CLLocation *location = noti.object;
     if (_currentLocAnnotation) {
         [_mapScrollView removeAnnotation:_currentLocAnnotation];
+        NSLog(@"remove current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
     }
-    ARAnnotation *annotation = [self getAnnotationByLocation:location];
-    annotation.index = -1;
-    [_mapScrollView addAnnotation:annotation];
-    NSLog(@"add current location x %lf, y %lf", annotation.contentPosition.x, annotation.contentPosition.y);
+    _currentLocAnnotation = [self getAnnotationByLocation:location];
+    _currentLocAnnotation.index = -1;
+    [_mapScrollView addAnnotation:_currentLocAnnotation];
+    NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
+    [_mapScrollView refreshAnnotations];
 }
 
 - (void)startPlay:(NSNotification *)noti {
     [self refreshMusicUI];
+    [_mapScrollView refreshAnnotations];
+}
+
+- (void)stopPlay:(NSNotification *)noti {
+    [self removeUITimer];
+    [_mapScrollView refreshAnnotations];
 }
 
 - (void)addMapScrollView {
@@ -367,11 +378,27 @@
     int index = ((ARAnnotation *)annotation).index;
     if (index>=0) {
         ZYMusic *music = [ZYMusicTool musics][index];
-        annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
-        annotationView.label.text = music.name;
+        ZYMusic *playingMusic = [ZYMusicTool playingMusic];
+        CLLocation *location = ((AppDelegate *)[UIApplication sharedApplication].delegate).currentLocation;
+        int nearestMark = [PWApplicationUtils getIndexOfMusicForLocation:location];
+        if (music == playingMusic) {
+            if (index == nearestMark) {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_orig"];
+            } else {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
+            }
+        } else {
+            if (index == nearestMark) {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_orig"];
+            } else {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
+            }
+        }
+        
+//        annotationView.label.text = music.name;
     } else {
         annotationView.imageView.image = [UIImage imageNamed:@"loction"];
-        annotationView.label.text = @"";
+//        annotationView.label.text = @"";
     }
     [annotationView sizeToFit];
     annotationView.annotation = annotation;
@@ -413,6 +440,7 @@
         
         [((AppDelegate *)[UIApplication sharedApplication].delegate) startPlayingMusic];
         [self refreshMusicUI];
+        [_mapScrollView refreshAnnotations];
         
 //        self.player.delegate = self;
         
@@ -431,6 +459,11 @@
 }
 - (void)tiledScrollView:(JCTiledScrollView *)scrollView didReceiveTwoFingerTap:(UIGestureRecognizer *)gestureRecognizer {
     
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskLandscapeRight;
 }
 
 @end

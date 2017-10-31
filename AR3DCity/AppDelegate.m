@@ -33,7 +33,6 @@
 
 //定位的定时器
 @property (nonatomic, strong) NSTimer *locTimer;
-@property (nonatomic, strong) CLLocation *currentLocation;
 
 //更新UI的定时器
 @property (nonatomic, strong) NSTimer *uiTimer;
@@ -62,6 +61,7 @@
     [self addButton];
     [self addLocTimer];
     [self createRemoteCommandCenter];
+    _currentLocation = [[CLLocation alloc] init];
     return YES;
 }
 
@@ -145,7 +145,7 @@
             weakSelf.currentLocation = [locations firstObject];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_currentLocation userInfo:nil];
             [iConsole info:@"获取到地理位置 %lf, %lf", weakSelf.currentLocation.coordinate.latitude, weakSelf.currentLocation.coordinate.longitude];
-            int index = [self getIndexOfMusicForLocation:_currentLocation];
+            int index = [PWApplicationUtils getIndexOfMusicForLocation:_currentLocation];
             if (index >= 0) {
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
@@ -153,40 +153,6 @@
             }
         }
     }];
-}
-
-- (int)getIndexOfMusicForLocation:(CLLocation *)location {
-    int index = -1;
-    int distance = 10000000;
-    for (int i=0; i<[ZYMusicTool musics].count; i++) {
-        ZYMusic *music = [ZYMusicTool musics][i];
-        NSArray *array = [music.location componentsSeparatedByString:@","];
-        if (array!=nil && array.count>1) {
-            CLLocation *placeLoc = [[CLLocation alloc] initWithLatitude:[array[1] doubleValue]  longitude:[array[0] doubleValue]];
-            int distanceTemp = [self distanceFromLocation:placeLoc andLoctaion:location];
-            if (distanceTemp<distance) {
-                distance = distanceTemp;
-                index = i;
-            }
-        }
-    }
-    ZYMusic *music = nil;
-    if (index>=0 && distance<30) {
-        music = [ZYMusicTool musics][index];
-        [iConsole log:@"离我 30m 以内最近的景点是'%@', 距离为 %d m", music.name, distance];
-    } else if (index>=0) {
-        music = [ZYMusicTool musics][index];
-        index = -1;
-        [iConsole log:@"离我最近的景点是'%@', 距离为%dm", music.name, distance];
-    } else {
-        [iConsole log:@"没有找到附近的景点信息"];
-    }
-    return index;
-}
-
-- (CLLocationDistance)distanceFromLocation:(CLLocation *)firstLocation andLoctaion:(CLLocation *)secondLocation {
-    CLLocationDistance meters= [firstLocation distanceFromLocation:secondLocation];
-    return meters;
 }
 
 //锁屏界面开启和监控远程控制事件
@@ -298,8 +264,8 @@
             imageSize = size.height;
             
         }
-        UIImage *squareImage = [self getSquareImage:image RangeCGRect:CGRectMake(0, 0, imageSize, imageSize) centerBool:YES];
-        [_playButton setImagePic:[self getClearRectImage:squareImage]];
+        UIImage *squareImage = [PWApplicationUtils getSquareImage:image RangeCGRect:CGRectMake(0, 0, imageSize, imageSize) centerBool:YES];
+        [_playButton setImagePic:[PWApplicationUtils getClearRectImage:squareImage]];
     }
     
 //    self.timeLabel.text = [self stringWithTime:totalTime];
@@ -329,146 +295,6 @@
     }
     //展示锁屏歌曲信息，上面监听屏幕锁屏和点亮状态的目的是为了提高效率
     [self showLockScreenTotaltime:totalTime andCurrentTime:currentTime andLyricsPoster:isShowLyricsPoster];
-}
-
--(UIImage*)getSquareImage:(UIImage *)image RangeCGRect:(CGRect)range centerBool:(BOOL)centerBool{
-    
-    /*如若centerBool为Yes则是由中心点取mCGRect范围的图片*/
-    
-    float imgWidth = image.size.width;
-    
-    float imgHeight = image.size.height;
-    
-    float viewWidth =range.size.width;
-    
-    float viewHidth =range.size.height;
-    
-    CGRect rect;
-    
-    if(centerBool)
-        
-        rect =CGRectMake((imgWidth-viewWidth)/2,(imgHeight-viewHidth)/2,viewWidth,viewHidth);
-    
-    else{
-        
-        if(viewHidth)
-           
-        {
-            
-            if(imgWidth<= imgHeight){
-                
-                rect=CGRectMake(0,0,imgWidth, imgWidth*viewHidth/viewWidth);
-                
-            }else{
-                
-                float width = viewWidth*imgHeight/viewHidth;
-                
-                float x = (imgWidth - width)/2;
-                
-                if(x >0){
-                    
-                    rect =CGRectMake(x,0, width, imgHeight);
-                    
-                }else{
-                    
-                    rect=CGRectMake(0,0,imgWidth, imgWidth*viewHidth/viewWidth);
-                    
-                }
-                
-            }
-            
-        }else{
-            
-            if(imgWidth<= imgHeight){
-                
-                float height = viewHidth*imgWidth/viewWidth;
-                
-                if(height < imgHeight){
-                    
-                    rect =CGRectMake(0,0,imgWidth, height);
-                    
-                }else
-                    
-                {
-                    
-                    rect =CGRectMake(0,0,viewWidth*imgHeight/viewHidth,imgHeight);
-                    
-                }
-                
-            }else
-                
-            {
-                
-                float width = viewWidth*imgHeight/viewHidth;
-                
-                if(width < imgWidth)
-                    
-                {
-                    
-                    float x = (imgWidth - width)/2;
-                    
-                    rect =CGRectMake(x,0,width, imgHeight);
-                    
-                }else
-                    
-                {
-                    
-                    rect =CGRectMake(0,0,imgWidth, imgHeight);
-                    
-                }
-                
-            }
-            
-        }
-           
-           }
-           
-           CGImageRef SquareImageRef = CGImageCreateWithImageInRect(image.CGImage,rect);
-           
-           CGRect SquareImageBounds =CGRectMake(0,0,CGImageGetWidth(SquareImageRef),CGImageGetHeight(SquareImageRef));
-           
-           UIGraphicsBeginImageContext(SquareImageBounds.size);
-           
-           CGContextRef context =UIGraphicsGetCurrentContext();
-           
-           CGContextDrawImage(context,SquareImageBounds,SquareImageRef);
-           
-           UIImage* SquareImage = [UIImage imageWithCGImage:SquareImageRef];
-           
-           UIGraphicsEndImageContext();
-           
-           return SquareImage;
-           
-           }
-
-
-- (UIImage*)getClearRectImage:(UIImage*)image{
-    
-    UIGraphicsBeginImageContextWithOptions(image.size,NO,0.0f);
-    
-    CGContextRef ctx =UIGraphicsGetCurrentContext();
-    
-    //默认绘制的内容尺寸和图片一样大,从某一点开始绘制
-    
-    [image drawAtPoint:CGPointZero];
-    
-    CGFloat bigRaduis = image.size.width/5;
-    
-    CGRect cirleRect =CGRectMake(image.size.width/2-bigRaduis, image.size.height/2-bigRaduis, bigRaduis*2, bigRaduis*2);
-    //CGContextAddArc(ctx,image.size.width/2-bigRaduis,image.size.height/2-bigRaduis, bigRaduis, 0.0, 2*M_PI, 0);
-    
-    CGContextAddEllipseInRect(ctx,cirleRect);
-    
-    CGContextClip(ctx);
-    
-    CGContextClearRect(ctx,cirleRect);
-    
-    UIImage*newImage =UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return newImage;
-    
 }
 
 //展示锁屏歌曲信息：图片、歌词、进度、演唱者
@@ -588,6 +414,7 @@
     [_playButton updateProgressWithNumber:0];
     [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
     [self removeUITimer];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameStopPlay" object:nil];
     //TODO:关闭锁屏页面
 }
 /**
