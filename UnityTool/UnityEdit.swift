@@ -61,20 +61,27 @@ public class UnityEdit : NSObject {
 //            print("替换attribute失败");
 //        }
         
+        //修改getAppController，去掉rootViewController的readOnly
         let res2 : Bool = editGetAppControllerH();
         if res2 {
-            print("替换GetAppController.h成功");
+            print("修改GetAppController.h成功");
         } else {
-            print("替换GetAppController.h失败");
+            print("修改GetAppController.h失败");
         }
+        //修改设置window的方法
         let res3 : Bool = editGetAppControllerM();
         if res3 {
-            print("替换GetAppController.mm成功");
+            print("修改GetAppController.mm成功");
         } else {
-            print("替换GetAppController.mm失败");
+            print("修改GetAppController.mm失败");
         }
-        //去掉Setwindow
-        //去掉readonly
+        //IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)
+        let res4 : Bool = editVuforia();
+        if res4 {
+            print("修改VuforiaNativeRendererController成功");
+        } else {
+            print("修改VuforiaNativeRendererController失败");
+        }
     }
     
     /// 将Native中的.h文件移动到一个暂时的文件夹中
@@ -311,6 +318,19 @@ public class UnityEdit : NSObject {
         } else {
             return false;
         }
+    }
+    
+    static func editVuforia() -> Bool {
+        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Libraries/Plugins/iOS/VuforiaNativeRendererController.mm";
+        var content : String = UnityUtil.read(path: path);
+        if content.contains("IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)") {
+            content = content.replacingOccurrences(of: "IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)", with: "//IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)");
+            let res = UnityUtil.writeString(aStr: content, toFile: path);
+            return res;
+        } else {
+            return false;
+        }
+        
     }
     
 }

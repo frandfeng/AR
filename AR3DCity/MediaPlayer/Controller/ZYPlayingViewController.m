@@ -220,7 +220,7 @@
     ZYMusic *playingMusic = [ZYMusicTool playingMusic];
     AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];;
     if (playingMusic) {
-        self.songLabel.text = playingMusic.name;
+        self.songLabel.text = [NSString stringWithFormat:@"正在播放：%@", playingMusic.name];
         if (player) {
             self.timeLabel.text = [self stringWithTime:player.duration];
             if (player.isPlaying) {
@@ -241,7 +241,7 @@
         self.sliderView.value = 0;
         self.progressLabel.text =  @"00:00";
         self.timeLabel.text = @"00:00";
-        self.songLabel.text = @"--";
+        self.songLabel.text = @"";
         self.playOrPauseButton.selected = NO;
     }
 }
@@ -463,7 +463,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskLandscapeRight;
+    return UIInterfaceOrientationMaskLandscapeRight|UIInterfaceOrientationMaskLandscapeLeft;
 }
 
 @end

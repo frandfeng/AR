@@ -58,7 +58,6 @@
     self.unityController.rootViewController = nil;
     self.unityController.window.rootViewController = tempVc;
     [self.unityController.window makeKeyAndVisible];
-    [self addButton];
     [self addLocTimer];
     [self createRemoteCommandCenter];
     _currentLocation = [[CLLocation alloc] init];
@@ -66,12 +65,38 @@
 }
 
 - (void)addButton {
+    if (_playButton) return;
     _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70)];
     [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
     [_playButton updateProgressWithNumber:0];
     [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
-    _playButton.hidden = YES;
-    [self.unityController.window insertSubview:_playButton atIndex:0];
+//    [self.unityController.window insertSubview:_playButton atIndex:0];
+    [self.unityController.window addSubview:_playButton];
+    
+    _playButton.alpha = 0;
+    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//    [self.unityController.window bringSubviewToFront:_playButton];
+    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
+        _playButton.alpha = 1;
+        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+    } completion:^(BOOL finished) {
+//        [self.unityController.window bringSubviewToFront:_playButton];
+        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
+            _playButton.alpha = 1;
+            _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+        } completion:^(BOOL finished) {
+            [self.unityController.window bringSubviewToFront:_playButton];
+        }];
+        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            _playButton.transform = CGAffineTransformMakeRotation(M_PI);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+                _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
+            } completion:nil];
+        }];
+    }];
 }
 - (void)playButtonTouched:(UITapGestureRecognizer *)gestureRecognizer {
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
@@ -88,28 +113,38 @@
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [self.unityController applicationDidBecomeActive:application];
-    [self performSelector:@selector(buttonAnimatedToFront) withObject:nil afterDelay:10.0];
+    [self addButton];
+//    [self buttonAnimatedToFront];
+//    [self performSelector:@selector(buttonAnimatedToFront) withObject:nil afterDelay:10.0];
+    
 }
-- (void)buttonAnimatedToFront {
-    _playButton.hidden = NO;
-    _playButton.alpha = 0;
-    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-    [self.unityController.window bringSubviewToFront:_playButton];
-    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
-        _playButton.alpha = 1;
-        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-    } completion:^(BOOL finished) {
-        [self.unityController.window bringSubviewToFront:_playButton];
-    }];
-    [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        _playButton.transform = CGAffineTransformMakeRotation(M_PI);
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-            _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
-        } completion:nil];
-    }];
-}
+//- (void)buttonAnimatedToFront {
+//    _playButton.hidden = NO;
+//    _playButton.alpha = 0;
+//    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//    [self.unityController.window bringSubviewToFront:_playButton];
+//    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+////        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
+//        _playButton.alpha = 1;
+//        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//    } completion:^(BOOL finished) {
+//        [self.unityController.window bringSubviewToFront:_playButton];
+//        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//            //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
+//            _playButton.alpha = 1;
+//            _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//        } completion:^(BOOL finished) {
+//            [self.unityController.window bringSubviewToFront:_playButton];
+//        }];
+//        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//            _playButton.transform = CGAffineTransformMakeRotation(M_PI);
+//        } completion:^(BOOL finished) {
+//            [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//                _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
+//            } completion:nil];
+//        }];
+//    }];
+//}
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self.unityController applicationWillTerminate:application];
 }
