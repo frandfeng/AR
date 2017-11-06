@@ -1558,7 +1558,8 @@
 				91C791A21FAF1DF4007259F4 /* Libraries */,
 				91C7948A1FAF1DF6007259F4 /* SDK */,
 			);
-			path = U3D;
+			name = U3D;
+			path = ../../Unity3DPlugin;
 			sourceTree = "<group>";
 		};
 		916231C91F972297006F4D96 /* MediaPlayer */ = {
