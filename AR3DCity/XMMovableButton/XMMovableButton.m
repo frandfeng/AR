@@ -54,8 +54,8 @@ static int kLineWidth = 3;
         
         
         self.circleLayer = [CAShapeLayer layer];
-        CGRect rect1 = {frame.size.width/4 + kLineWidth, frame.size.height/4 + kLineWidth,
-            frame.size.width/2-kLineWidth*2, frame.size.height/2-kLineWidth*2};
+        CGRect rect1 = {frame.size.width/3, frame.size.height/3,
+            frame.size.width/3, frame.size.height/3};
         UIBezierPath *path1 = [UIBezierPath bezierPathWithOvalInRect:rect1];
         self.circleLayer.strokeColor = [UIColor whiteColor].CGColor;
         self.circleLayer.lineWidth = kLineWidth;
