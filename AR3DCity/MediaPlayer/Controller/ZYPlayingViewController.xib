@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,9 +31,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_top" translatesAutoresizingMaskIntoConstraints="NO" id="iMt-pp-hGb">
-                            <rect key="frame" x="0.0" y="0.0" width="667" height="100"/>
+                            <rect key="frame" x="0.0" y="0.0" width="667" height="60"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="100" id="CDK-gd-Ib7"/>
+                                <constraint firstAttribute="height" constant="60" id="CDK-gd-Ib7"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OC4-UN-Y0l">
@@ -70,9 +70,9 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="back_bottom" translatesAutoresizingMaskIntoConstraints="NO" id="l2N-dk-pCS">
-                    <rect key="frame" x="0.0" y="275" width="667" height="100"/>
+                    <rect key="frame" x="0.0" y="315" width="667" height="60"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="100" id="u0n-zb-7T7"/>
+                        <constraint firstAttribute="height" constant="60" id="u0n-zb-7T7"/>
                     </constraints>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3dw-Ib-Yb5" userLabel="底部">

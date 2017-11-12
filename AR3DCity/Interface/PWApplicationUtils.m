@@ -65,6 +65,15 @@ static PWApplicationUtils *sharedObject = nil;
     }
 }
 
++ (int)getIndexOfMusicForBeacon:(CLBeacon *)beacon {
+    for (int i=0; i<[ZYMusicTool musics].count; i++) {
+        ZYMusic *music = [ZYMusicTool musics][i];
+        if ([music.uuid isEqualToString:beacon.proximityUUID.UUIDString]) {
+            return i;
+        }
+    }
+}
+
 + (int)getIndexOfMusicForLocation:(CLLocation *)location {
     int index = -1;
     int distance = 10000000;

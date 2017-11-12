@@ -18,7 +18,6 @@
 #import <notify.h>
 #import "ZYLrcLine.h"
 #import "AppDelegate.h"
-#import "INTULocationManager.h"
 #import "LocationManager.h"
 #import "iConsole.h"
 #import "JCTiledScrollView.h"
@@ -58,6 +57,8 @@
 @property (nonatomic, strong) UITextView * lockScreenTableView;
 @property (nonatomic, strong) ARAnnotation * currentLocAnnotation;
 
+@property (nonatomic, assign) CGSize contentSize;
+
 
 //设置按钮，暂控制显示图片还是歌词
 - (IBAction)lyricOrPhoto:(id)sender;
@@ -69,6 +70,9 @@
 - (IBAction)sliderValueChanged:(id)sender;
 
 @end
+
+static NSString * const imagePicName = @"zhinengdaoyouditu.jpg";
+static int const displayScale = 4;
 
 @implementation ZYPlayingViewController {
     id _playerTimeObserver;
@@ -86,6 +90,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initDatas];
     [self addMapScrollView];
     [self refreshMusicUI];
     [self setCoordinate];
@@ -102,6 +107,13 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront];
+}
+
+- (void)initDatas {
+    UIImage *image = [UIImage imageNamed:imagePicName];
+    _contentSize = CGSizeMake(image.size.width/[UIScreen mainScreen].scale/displayScale, image.size.height/[UIScreen mainScreen].scale/displayScale);
+    mapWidth = image.size.width;
+    mapHeight = image.size.height;
 }
 
 - (void)addNotifications {
@@ -123,16 +135,16 @@
 
 - (void)location:(NSNotification *)noti {
     NSLog(@"%@ === %@ === %@", noti.object, noti.userInfo, noti.name);
-    CLLocation *location = noti.object;
-    if (_currentLocAnnotation) {
-        [_mapScrollView removeAnnotation:_currentLocAnnotation];
-        NSLog(@"remove current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
-    }
-    _currentLocAnnotation = [self getAnnotationByLocation:location];
-    _currentLocAnnotation.index = -1;
-    [_mapScrollView addAnnotation:_currentLocAnnotation];
-    NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
-    [_mapScrollView refreshAnnotations];
+//    CLBeacon *beacon = noti.object;
+//    if (_currentLocAnnotation) {
+//        [_mapScrollView removeAnnotation:_currentLocAnnotation];
+//        NSLog(@"remove current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
+//    }
+//    _currentLocAnnotation = [self getAnnotationByBeacon:beacon];
+//    _currentLocAnnotation.index = -1;
+//    [_mapScrollView addAnnotation:_currentLocAnnotation];
+//    NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
+//    [_mapScrollView refreshAnnotations];
 }
 
 - (void)startPlay:(NSNotification *)noti {
@@ -146,11 +158,7 @@
 }
 
 - (void)addMapScrollView {
-    int picWidth = 4320;
-    int picHeight = 6000;
-    mapWidth = [UIScreen mainScreen].bounds.size.width;
-    mapHeight = picHeight * mapWidth / picWidth;
-    JCTiledScrollView *scrollView = [[JCTiledScrollView alloc] initWithFrame:self.view.frame contentSize:CGSizeMake(mapWidth, mapHeight)];
+    JCTiledScrollView *scrollView = [[JCTiledScrollView alloc] initWithFrame:self.view.frame contentSize:_contentSize];
     _mapScrollView = scrollView;
     [self.topView insertSubview:_mapScrollView atIndex:0];
     NSDictionary *viewsDictionary = @{@"mapScrollView":_mapScrollView};
@@ -192,8 +200,16 @@
 }
 
 - (ARAnnotation *)getAnnotationByLocation:(CLLocation *)placeLoc {
-    CGFloat y = mapHeight * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
-    CGFloat x = mapWidth * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
+    CGFloat y = mapHeight / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
+    CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
+    ARAnnotation *annotation = [[ARAnnotation alloc] init];
+    annotation.contentPosition = CGPointMake(x, y);
+    return annotation;
+}
+
+- (ARAnnotation *)getAnnotationByBeacon:(CLLocation *)placeLoc {
+    CGFloat y = mapHeight / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
+    CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
     ARAnnotation *annotation = [[ARAnnotation alloc] init];
     annotation.contentPosition = CGPointMake(x, y);
     return annotation;
@@ -356,12 +372,9 @@
 
   //MARK: TileSource
 - (UIImage * _Nullable)tiledScrollView:(JCTiledScrollView * _Nonnull)scrollView imageForRow:(NSInteger)row column:(NSInteger)column scale:(NSInteger)scale {
-    // Ideally we have @3/6/12/24 tiles, but if not we need to change the original image size. See skippingGirlImageSize
-    NSInteger tileScale = scale;
-//    if (scale % 3 == 0) {
-//        tileScale = (scale * 2) / 3;
-//    }
-    NSString *imageName = [NSString stringWithFormat:@"yiheyuan/yiheyuan_%dx_%d_%d.png", (int)tileScale, (int)row, (int)column];
+    NSString *filePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    scale = displayScale * [UIScreen mainScreen].scale / scale;
+    NSString *imageName = [NSString stringWithFormat:@"%@/yiheyuan-%02dx-%02d-%02d.png",filePath, scale, (int)row, (int)column];
     UIImage *image = [UIImage imageNamed:imageName];
     NSLog(@"imageName %@", imageName);
     if (!image) {
@@ -379,22 +392,22 @@
     if (index>=0) {
         ZYMusic *music = [ZYMusicTool musics][index];
         ZYMusic *playingMusic = [ZYMusicTool playingMusic];
-        CLLocation *location = ((AppDelegate *)[UIApplication sharedApplication].delegate).currentLocation;
-        int nearestMark = [PWApplicationUtils getIndexOfMusicForLocation:location];
-        if (music == playingMusic) {
-            if (index == nearestMark) {
+//        CLLocation *location = ((AppDelegate *)[UIApplication sharedApplication].delegate).currentLocation;
+//        int nearestMark = [PWApplicationUtils getIndexOfMusicForLocation:location];
+//        if (music == playingMusic) {
+//            if (index == nearestMark) {
                 annotationView.imageView.image = [UIImage imageNamed:@"music_playing_orig"];
-            } else {
-                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
-            }
-        } else {
-            if (index == nearestMark) {
-                annotationView.imageView.image = [UIImage imageNamed:@"music_orig"];
-            } else {
-                annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
-            }
-        }
-        
+//            } else {
+//                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
+//            }
+//        } else {
+//            if (index == nearestMark) {
+//                annotationView.imageView.image = [UIImage imageNamed:@"music_orig"];
+//            } else {
+//                annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
+//            }
+//        }
+//
 //        annotationView.label.text = music.name;
     } else {
         annotationView.imageView.image = [UIImage imageNamed:@"loction"];

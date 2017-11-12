@@ -485,18 +485,8 @@
 		913072851F97097F0091386E /* PWU3DCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50881F963D38002EC05E /* PWU3DCodec.m */; };
 		913072861F970A0F0091386E /* PWApplicationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50831F963D38002EC05E /* PWApplicationUtils.m */; };
 		913072881F971C570091386E /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 913072871F971C570091386E /* main.mm */; };
-		9146BF311F9D925C00D49527 /* CGPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */; };
-		9146BF321F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */; };
-		9146BF331F9D925C00D49527 /* JCAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF221F9D925C00D49527 /* JCAnnotationView.m */; };
-		9146BF341F9D925C00D49527 /* JCPDFTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF241F9D925C00D49527 /* JCPDFTiledView.m */; };
-		9146BF351F9D925C00D49527 /* JCTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF261F9D925C00D49527 /* JCTiledLayer.m */; };
-		9146BF361F9D925C00D49527 /* JCTiledPDFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */; };
-		9146BF371F9D925C00D49527 /* JCTiledScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */; };
-		9146BF381F9D925C00D49527 /* JCTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF2E1F9D925C00D49527 /* JCTiledView.m */; };
-		9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */; };
 		9146BF461F9DF68E00D49527 /* ARAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF451F9DF68E00D49527 /* ARAnnotation.m */; };
 		9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9146BF481F9E041200D49527 /* ARAnnotationView.m */; };
-		9156BC791FA31DD800CC2E8C /* yiheyuan in Resources */ = {isa = PBXBuildFile; fileRef = 9156BC781FA31DD800CC2E8C /* yiheyuan */; };
 		915C50401F963C06002EC05E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C503F1F963C06002EC05E /* AppDelegate.m */; };
 		915C50481F963C06002EC05E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 915C50471F963C06002EC05E /* Assets.xcassets */; };
 		915C50581F963C06002EC05E /* AR3DCityTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 915C50571F963C06002EC05E /* AR3DCityTests.m */; };
@@ -526,16 +516,22 @@
 		9162321C1F972556006F4D96 /* ZYLrcCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232021F972556006F4D96 /* ZYLrcCell.m */; };
 		9162321D1F972556006F4D96 /* ZYLrcView.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232041F972556006F4D96 /* ZYLrcView.m */; };
 		9162321E1F972556006F4D96 /* ZYMusicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232061F972556006F4D96 /* ZYMusicCell.m */; };
-		9162322A1F972806006F4D96 /* INTUHeadingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232211F972806006F4D96 /* INTUHeadingRequest.m */; };
-		9162322B1F972806006F4D96 /* INTULocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232241F972806006F4D96 /* INTULocationManager.m */; };
-		9162322C1F972806006F4D96 /* INTULocationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232261F972806006F4D96 /* INTULocationRequest.m */; };
-		9162322D1F972806006F4D96 /* INTURequestIDGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232291F972806006F4D96 /* INTURequestIDGenerator.m */; };
 		9162322F1F972AE3006F4D96 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9162322E1F972ADF006F4D96 /* Accelerate.framework */; };
 		916232361F9878B6006F4D96 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 916232351F9878B6006F4D96 /* LocationManager.m */; };
 		9162323B1F9886F5006F4D96 /* iConsole.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323A1F9886F5006F4D96 /* iConsole.m */; };
 		9162323F1F9888C1006F4D96 /* GTMStackTrace.m in Sources */ = {isa = PBXBuildFile; fileRef = 9162323E1F9888C1006F4D96 /* GTMStackTrace.m */; };
 		916232411F989350006F4D96 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 916232401F989350006F4D96 /* libc++abi.tbd */; };
 		91B531D11FA1E44000DE895B /* XMMovableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B531D01FA1E44000DE895B /* XMMovableButton.m */; };
+		91C3CC3C1FB69F700062D769 /* zhinengdaoyouditu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 91C3CC3B1FB69F700062D769 /* zhinengdaoyouditu.jpg */; };
+		91C3CC521FB69FF20062D769 /* JCAnnotationTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC491FB69FF00062D769 /* JCAnnotationTapGestureRecognizer.m */; };
+		91C3CC531FB69FF20062D769 /* JCTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4A1FB69FF10062D769 /* JCTiledView.m */; };
+		91C3CC541FB69FF20062D769 /* CGPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4B1FB69FF10062D769 /* CGPDFDocument.m */; };
+		91C3CC551FB69FF20062D769 /* JCAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4C1FB69FF10062D769 /* JCAnnotationView.m */; };
+		91C3CC561FB69FF20062D769 /* JCTiledScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4D1FB69FF10062D769 /* JCTiledScrollView.m */; };
+		91C3CC571FB69FF20062D769 /* JCPDFTiledView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4E1FB69FF10062D769 /* JCPDFTiledView.m */; };
+		91C3CC581FB69FF20062D769 /* JCTiledLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC4F1FB69FF20062D769 /* JCTiledLayer.m */; };
+		91C3CC591FB69FF20062D769 /* JCTiledPDFScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC501FB69FF20062D769 /* JCTiledPDFScrollView.m */; };
+		91C3CC5A1FB69FF20062D769 /* JCVisibleAnnotationTuple.m in Sources */ = {isa = PBXBuildFile; fileRef = 91C3CC511FB69FF20062D769 /* JCVisibleAnnotationTuple.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1110,32 +1106,10 @@
 		913072781F9648EC0091386E /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		9130727D1F96F1B70091386E /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		913072871F971C570091386E /* main.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
-		9146BF1C1F9D925C00D49527 /* CGPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPDFDocument.h; sourceTree = "<group>"; };
-		9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPDFDocument.m; sourceTree = "<group>"; };
-		9146BF1E1F9D925C00D49527 /* JCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotation.h; sourceTree = "<group>"; };
-		9146BF1F1F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationTapGestureRecognizer.h; sourceTree = "<group>"; };
-		9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationTapGestureRecognizer.m; sourceTree = "<group>"; };
-		9146BF211F9D925C00D49527 /* JCAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationView.h; sourceTree = "<group>"; };
-		9146BF221F9D925C00D49527 /* JCAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationView.m; sourceTree = "<group>"; };
-		9146BF231F9D925C00D49527 /* JCPDFTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPDFTiledView.h; sourceTree = "<group>"; };
-		9146BF241F9D925C00D49527 /* JCPDFTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPDFTiledView.m; sourceTree = "<group>"; };
-		9146BF251F9D925C00D49527 /* JCTiledLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledLayer.h; sourceTree = "<group>"; };
-		9146BF261F9D925C00D49527 /* JCTiledLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledLayer.m; sourceTree = "<group>"; };
-		9146BF271F9D925C00D49527 /* JCTiledPDFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledPDFScrollView.h; sourceTree = "<group>"; };
-		9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledPDFScrollView.m; sourceTree = "<group>"; };
-		9146BF291F9D925C00D49527 /* JCTiledScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollView.h; sourceTree = "<group>"; };
-		9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledScrollView.m; sourceTree = "<group>"; };
-		9146BF2B1F9D925C00D49527 /* JCTiledScrollViewImportAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewImportAll.h; sourceTree = "<group>"; };
-		9146BF2C1F9D925C00D49527 /* JCTiledScrollViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewModule.h; sourceTree = "<group>"; };
-		9146BF2D1F9D925C00D49527 /* JCTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledView.h; sourceTree = "<group>"; };
-		9146BF2E1F9D925C00D49527 /* JCTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledView.m; sourceTree = "<group>"; };
-		9146BF2F1F9D925C00D49527 /* JCVisibleAnnotationTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisibleAnnotationTuple.h; sourceTree = "<group>"; };
-		9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisibleAnnotationTuple.m; sourceTree = "<group>"; };
 		9146BF441F9DF68E00D49527 /* ARAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotation.h; sourceTree = "<group>"; };
 		9146BF451F9DF68E00D49527 /* ARAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotation.m; sourceTree = "<group>"; };
 		9146BF471F9E041200D49527 /* ARAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARAnnotationView.h; sourceTree = "<group>"; };
 		9146BF481F9E041200D49527 /* ARAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARAnnotationView.m; sourceTree = "<group>"; };
-		9156BC781FA31DD800CC2E8C /* yiheyuan */ = {isa = PBXFileReference; lastKnownFileType = folder; path = yiheyuan; sourceTree = "<group>"; };
 		915C503B1F963C06002EC05E /* ARCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		915C503E1F963C06002EC05E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		915C503F1F963C06002EC05E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -1200,16 +1174,6 @@
 		916232041F972556006F4D96 /* ZYLrcView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYLrcView.m; sourceTree = "<group>"; };
 		916232051F972556006F4D96 /* ZYMusicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYMusicCell.h; sourceTree = "<group>"; };
 		916232061F972556006F4D96 /* ZYMusicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYMusicCell.m; sourceTree = "<group>"; };
-		916232201F972806006F4D96 /* INTUHeadingRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTUHeadingRequest.h; sourceTree = "<group>"; };
-		916232211F972806006F4D96 /* INTUHeadingRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTUHeadingRequest.m; sourceTree = "<group>"; };
-		916232221F972806006F4D96 /* INTULocationManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "INTULocationManager+Internal.h"; sourceTree = "<group>"; };
-		916232231F972806006F4D96 /* INTULocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTULocationManager.h; sourceTree = "<group>"; };
-		916232241F972806006F4D96 /* INTULocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTULocationManager.m; sourceTree = "<group>"; };
-		916232251F972806006F4D96 /* INTULocationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTULocationRequest.h; sourceTree = "<group>"; };
-		916232261F972806006F4D96 /* INTULocationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTULocationRequest.m; sourceTree = "<group>"; };
-		916232271F972806006F4D96 /* INTULocationRequestDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTULocationRequestDefines.h; sourceTree = "<group>"; };
-		916232281F972806006F4D96 /* INTURequestIDGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INTURequestIDGenerator.h; sourceTree = "<group>"; };
-		916232291F972806006F4D96 /* INTURequestIDGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = INTURequestIDGenerator.m; sourceTree = "<group>"; };
 		9162322E1F972ADF006F4D96 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		916232341F9878B6006F4D96 /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
 		916232351F9878B6006F4D96 /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
@@ -1221,6 +1185,28 @@
 		916232401F989350006F4D96 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		91B531CF1FA1E44000DE895B /* XMMovableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMMovableButton.h; sourceTree = "<group>"; };
 		91B531D01FA1E44000DE895B /* XMMovableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMMovableButton.m; sourceTree = "<group>"; };
+		91C3CC3B1FB69F700062D769 /* zhinengdaoyouditu.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = zhinengdaoyouditu.jpg; sourceTree = "<group>"; };
+		91C3CC3D1FB69FDE0062D769 /* JCPDFTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCPDFTiledView.h; sourceTree = "<group>"; };
+		91C3CC3E1FB69FDF0062D769 /* JCAnnotationTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationTapGestureRecognizer.h; sourceTree = "<group>"; };
+		91C3CC3F1FB69FDF0062D769 /* JCTiledLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledLayer.h; sourceTree = "<group>"; };
+		91C3CC401FB69FDF0062D769 /* JCTiledPDFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledPDFScrollView.h; sourceTree = "<group>"; };
+		91C3CC411FB69FDF0062D769 /* JCTiledScrollViewImportAll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewImportAll.h; sourceTree = "<group>"; };
+		91C3CC421FB69FE00062D769 /* JCVisibleAnnotationTuple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCVisibleAnnotationTuple.h; sourceTree = "<group>"; };
+		91C3CC431FB69FE00062D769 /* JCAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotation.h; sourceTree = "<group>"; };
+		91C3CC441FB69FE00062D769 /* JCTiledScrollViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollViewModule.h; sourceTree = "<group>"; };
+		91C3CC451FB69FE00062D769 /* CGPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGPDFDocument.h; sourceTree = "<group>"; };
+		91C3CC461FB69FE00062D769 /* JCTiledScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledScrollView.h; sourceTree = "<group>"; };
+		91C3CC471FB69FE00062D769 /* JCTiledView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCTiledView.h; sourceTree = "<group>"; };
+		91C3CC481FB69FE00062D769 /* JCAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCAnnotationView.h; sourceTree = "<group>"; };
+		91C3CC491FB69FF00062D769 /* JCAnnotationTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationTapGestureRecognizer.m; sourceTree = "<group>"; };
+		91C3CC4A1FB69FF10062D769 /* JCTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledView.m; sourceTree = "<group>"; };
+		91C3CC4B1FB69FF10062D769 /* CGPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGPDFDocument.m; sourceTree = "<group>"; };
+		91C3CC4C1FB69FF10062D769 /* JCAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCAnnotationView.m; sourceTree = "<group>"; };
+		91C3CC4D1FB69FF10062D769 /* JCTiledScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledScrollView.m; sourceTree = "<group>"; };
+		91C3CC4E1FB69FF10062D769 /* JCPDFTiledView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCPDFTiledView.m; sourceTree = "<group>"; };
+		91C3CC4F1FB69FF20062D769 /* JCTiledLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledLayer.m; sourceTree = "<group>"; };
+		91C3CC501FB69FF20062D769 /* JCTiledPDFScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCTiledPDFScrollView.m; sourceTree = "<group>"; };
+		91C3CC511FB69FF20062D769 /* JCVisibleAnnotationTuple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCVisibleAnnotationTuple.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2222,27 +2208,27 @@
 		9146BF1B1F9D925C00D49527 /* TiledScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				9146BF1C1F9D925C00D49527 /* CGPDFDocument.h */,
-				9146BF1D1F9D925C00D49527 /* CGPDFDocument.m */,
-				9146BF1E1F9D925C00D49527 /* JCAnnotation.h */,
-				9146BF1F1F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.h */,
-				9146BF201F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m */,
-				9146BF211F9D925C00D49527 /* JCAnnotationView.h */,
-				9146BF221F9D925C00D49527 /* JCAnnotationView.m */,
-				9146BF231F9D925C00D49527 /* JCPDFTiledView.h */,
-				9146BF241F9D925C00D49527 /* JCPDFTiledView.m */,
-				9146BF251F9D925C00D49527 /* JCTiledLayer.h */,
-				9146BF261F9D925C00D49527 /* JCTiledLayer.m */,
-				9146BF271F9D925C00D49527 /* JCTiledPDFScrollView.h */,
-				9146BF281F9D925C00D49527 /* JCTiledPDFScrollView.m */,
-				9146BF291F9D925C00D49527 /* JCTiledScrollView.h */,
-				9146BF2A1F9D925C00D49527 /* JCTiledScrollView.m */,
-				9146BF2B1F9D925C00D49527 /* JCTiledScrollViewImportAll.h */,
-				9146BF2C1F9D925C00D49527 /* JCTiledScrollViewModule.h */,
-				9146BF2D1F9D925C00D49527 /* JCTiledView.h */,
-				9146BF2E1F9D925C00D49527 /* JCTiledView.m */,
-				9146BF2F1F9D925C00D49527 /* JCVisibleAnnotationTuple.h */,
-				9146BF301F9D925C00D49527 /* JCVisibleAnnotationTuple.m */,
+				91C3CC431FB69FE00062D769 /* JCAnnotation.h */,
+				91C3CC411FB69FDF0062D769 /* JCTiledScrollViewImportAll.h */,
+				91C3CC441FB69FE00062D769 /* JCTiledScrollViewModule.h */,
+				91C3CC451FB69FE00062D769 /* CGPDFDocument.h */,
+				91C3CC4B1FB69FF10062D769 /* CGPDFDocument.m */,
+				91C3CC3E1FB69FDF0062D769 /* JCAnnotationTapGestureRecognizer.h */,
+				91C3CC491FB69FF00062D769 /* JCAnnotationTapGestureRecognizer.m */,
+				91C3CC481FB69FE00062D769 /* JCAnnotationView.h */,
+				91C3CC4C1FB69FF10062D769 /* JCAnnotationView.m */,
+				91C3CC3D1FB69FDE0062D769 /* JCPDFTiledView.h */,
+				91C3CC4E1FB69FF10062D769 /* JCPDFTiledView.m */,
+				91C3CC3F1FB69FDF0062D769 /* JCTiledLayer.h */,
+				91C3CC4F1FB69FF20062D769 /* JCTiledLayer.m */,
+				91C3CC401FB69FDF0062D769 /* JCTiledPDFScrollView.h */,
+				91C3CC501FB69FF20062D769 /* JCTiledPDFScrollView.m */,
+				91C3CC461FB69FE00062D769 /* JCTiledScrollView.h */,
+				91C3CC4D1FB69FF10062D769 /* JCTiledScrollView.m */,
+				91C3CC471FB69FE00062D769 /* JCTiledView.h */,
+				91C3CC4A1FB69FF10062D769 /* JCTiledView.m */,
+				91C3CC421FB69FE00062D769 /* JCVisibleAnnotationTuple.h */,
+				91C3CC511FB69FF20062D769 /* JCVisibleAnnotationTuple.m */,
 				9146BF441F9DF68E00D49527 /* ARAnnotation.h */,
 				9146BF451F9DF68E00D49527 /* ARAnnotation.m */,
 				9146BF471F9E041200D49527 /* ARAnnotationView.h */,
@@ -2254,7 +2240,7 @@
 		9146BF3B1F9DC0B700D49527 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				9156BC781FA31DD800CC2E8C /* yiheyuan */,
+				91C3CC3B1FB69F700062D769 /* zhinengdaoyouditu.jpg */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -2289,7 +2275,6 @@
 				9162323C1F9888C1006F4D96 /* GTM */,
 				91B531CE1FA1E44000DE895B /* XMMovableButton */,
 				916232381F9886F5006F4D96 /* iConsole */,
-				9162321F1F972806006F4D96 /* INTULocationManager */,
 				916231C91F972297006F4D96 /* MediaPlayer */,
 				915C50901F963EE3002EC05E /* U3D */,
 				9146BF1B1F9D925C00D49527 /* TiledScrollView */,
@@ -2486,23 +2471,6 @@
 				916232061F972556006F4D96 /* ZYMusicCell.m */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		9162321F1F972806006F4D96 /* INTULocationManager */ = {
-			isa = PBXGroup;
-			children = (
-				916232201F972806006F4D96 /* INTUHeadingRequest.h */,
-				916232211F972806006F4D96 /* INTUHeadingRequest.m */,
-				916232221F972806006F4D96 /* INTULocationManager+Internal.h */,
-				916232231F972806006F4D96 /* INTULocationManager.h */,
-				916232241F972806006F4D96 /* INTULocationManager.m */,
-				916232251F972806006F4D96 /* INTULocationRequest.h */,
-				916232261F972806006F4D96 /* INTULocationRequest.m */,
-				916232271F972806006F4D96 /* INTULocationRequestDefines.h */,
-				916232281F972806006F4D96 /* INTURequestIDGenerator.h */,
-				916232291F972806006F4D96 /* INTURequestIDGenerator.m */,
-			);
-			path = INTULocationManager;
 			sourceTree = "<group>";
 		};
 		916232381F9886F5006F4D96 /* iConsole */ = {
@@ -2738,7 +2706,6 @@
 				912914251FB15DD0003F1E46 /* ssdk_oks_classic_check_checked.png in Resources */,
 				9129148D1FB15DD0003F1E46 /* values-en.meta in Resources */,
 				9129140E1FB15DD0003F1E46 /* ssdk_weibo_common_shadow_top.9.png in Resources */,
-				9156BC791FA31DD800CC2E8C /* yiheyuan in Resources */,
 				9129146C1FB15DD0003F1E46 /* ssdk_oks_classic_wechatfavorite.png.meta in Resources */,
 				9129142D1FB15DD0003F1E46 /* ssdk_oks_classic_dropbox.png in Resources */,
 				9129141D1FB15DD0003F1E46 /* ssdk_logo.png in Resources */,
@@ -2830,6 +2797,7 @@
 				9129141F1FB15DD0003F1E46 /* ssdk_oks_classic_alipay.png in Resources */,
 				912914C21FB15DD0003F1E46 /* RennSDK.bundle in Resources */,
 				912913AA1FB15DD0003F1E46 /* ShareSDK-Alipay-3.1.0.jar.meta in Resources */,
+				91C3CC3C1FB69F700062D769 /* zhinengdaoyouditu.jpg in Resources */,
 				912914481FB15DD0003F1E46 /* ssdk_oks_classic_laiwang.png.meta in Resources */,
 				912914801FB15DD0003F1E46 /* drawable.meta in Resources */,
 				9129147F1FB15DD0003F1E46 /* drawable-xhdpi.meta in Resources */,
@@ -2901,7 +2869,6 @@
 				912915951FB15DE4003F1E46 /* Bulk_DOTween_0.cpp in Sources */,
 				912915BA1FB15DE4003F1E46 /* Bulk_UnityEngine.UI_1.cpp in Sources */,
 				9129159E1FB15DE4003F1E46 /* Bulk_Generics_12.cpp in Sources */,
-				9146BF341F9D925C00D49527 /* JCPDFTiledView.m in Sources */,
 				913072851F97097F0091386E /* PWU3DCodec.m in Sources */,
 				912915C11FB15DE4003F1E46 /* Bulk_Vuforia.UnityExtensions_1.cpp in Sources */,
 				912915A21FB15DE4003F1E46 /* Bulk_Generics_3.cpp in Sources */,
@@ -2912,7 +2879,6 @@
 				912915C21FB15DE4003F1E46 /* Bulk_Vuforia.UnityExtensions_2.cpp in Sources */,
 				912915901FB15DE4003F1E46 /* Bulk_Assembly-CSharp_0.cpp in Sources */,
 				912915D21FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_1Table.cpp in Sources */,
-				9146BF321F9D925C00D49527 /* JCAnnotationTapGestureRecognizer.m in Sources */,
 				912915911FB15DE4003F1E46 /* Bulk_Assembly-CSharp_1.cpp in Sources */,
 				912915C41FB15DE4003F1E46 /* GenericMethods1.cpp in Sources */,
 				912915E51FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValuesTable.cpp in Sources */,
@@ -2923,7 +2889,6 @@
 				912915E21FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_7Table.cpp in Sources */,
 				912916021FB15DE4003F1E46 /* AVCapture.mm in Sources */,
 				912915F21FB15DE4003F1E46 /* Il2CppTypeDefinitions.cpp in Sources */,
-				9162322A1F972806006F4D96 /* INTUHeadingRequest.m in Sources */,
 				912915AB1FB15DE4003F1E46 /* Bulk_Mono.Security_1.cpp in Sources */,
 				912914981FB15DD0003F1E46 /* RegisterMonoModules.cpp in Sources */,
 				912915941FB15DE4003F1E46 /* Bulk_Assembly-UnityScript_0.cpp in Sources */,
@@ -2947,17 +2912,16 @@
 				912916091FB15DE4003F1E46 /* Filesystem.mm in Sources */,
 				912914971FB15DD0003F1E46 /* RegisterFeatures.cpp in Sources */,
 				9129159D1FB15DE4003F1E46 /* Bulk_Generics_11.cpp in Sources */,
-				9146BF351F9D925C00D49527 /* JCTiledLayer.m in Sources */,
 				912915BF1FB15DE4003F1E46 /* Bulk_Vuforia.UnityExtensions.iOS_0.cpp in Sources */,
 				9129159F1FB15DE4003F1E46 /* Bulk_Generics_13.cpp in Sources */,
 				916232171F972556006F4D96 /* ZYLrcLine.m in Sources */,
 				912915CF1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_17Table.cpp in Sources */,
 				912915FC1FB15DE4003F1E46 /* OrientationSupport.mm in Sources */,
 				912915BD1FB15DE4003F1E46 /* Bulk_UnityEngine_2.cpp in Sources */,
+				91C3CC581FB69FF20062D769 /* JCTiledLayer.m in Sources */,
 				912916131FB15DE4003F1E46 /* WWWConnection.mm in Sources */,
 				912915D61FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_23Table.cpp in Sources */,
 				912915DC1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_29Table.cpp in Sources */,
-				9146BF391F9D925C00D49527 /* JCVisibleAnnotationTuple.m in Sources */,
 				912915B61FB15DE4003F1E46 /* Bulk_System_1.cpp in Sources */,
 				915C508F1F963D38002EC05E /* PWUnityMsgManager.m in Sources */,
 				912915B21FB15DE4003F1E46 /* Bulk_mscorlib_6.cpp in Sources */,
@@ -2975,12 +2939,13 @@
 				912915E31FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_8Table.cpp in Sources */,
 				912915EE1FB15DE4003F1E46 /* Il2CppMetadataRegistration.cpp in Sources */,
 				912915F41FB15DE4003F1E46 /* UnityICallRegistration.cpp in Sources */,
+				91C3CC521FB69FF20062D769 /* JCAnnotationTapGestureRecognizer.m in Sources */,
 				912916141FB15DE4003F1E46 /* UnityAdsUnityWrapper.mm in Sources */,
 				912915A71FB15DE4003F1E46 /* Bulk_Generics_8.cpp in Sources */,
 				912915C01FB15DE4003F1E46 /* Bulk_Vuforia.UnityExtensions_0.cpp in Sources */,
 				912914941FB15DD0003F1E46 /* ShareSDKUnity3DBridge.m in Sources */,
-				9162322D1F972806006F4D96 /* INTURequestIDGenerator.m in Sources */,
 				912915BE1FB15DE4003F1E46 /* Bulk_UnityEngine_3.cpp in Sources */,
+				91C3CC531FB69FF20062D769 /* JCTiledView.m in Sources */,
 				916232101F972556006F4D96 /* NSObject+MJKeyValue.m in Sources */,
 				912915E81FB15DE4003F1E46 /* Il2CppGenericInstDefinitions.cpp in Sources */,
 				912915D51FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_22Table.cpp in Sources */,
@@ -2989,7 +2954,9 @@
 				916232131F972556006F4D96 /* ZYPlayingViewController.m in Sources */,
 				912916171FB15DE4003F1E46 /* UnityAppController.mm in Sources */,
 				9162321B1F972556006F4D96 /* ZYMusicTool.m in Sources */,
+				91C3CC5A1FB69FF20062D769 /* JCVisibleAnnotationTuple.m in Sources */,
 				912916071FB15DE4003F1E46 /* DisplayManager.mm in Sources */,
+				91C3CC571FB69FF20062D769 /* JCPDFTiledView.m in Sources */,
 				912915F01FB15DE4003F1E46 /* Il2CppMethodPointerTable.cpp in Sources */,
 				912915B11FB15DE4003F1E46 /* Bulk_mscorlib_5.cpp in Sources */,
 				912915D41FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_21Table.cpp in Sources */,
@@ -3004,6 +2971,7 @@
 				912915BB1FB15DE4003F1E46 /* Bulk_UnityEngine_0.cpp in Sources */,
 				9129160E1FB15DE4003F1E46 /* ObjCRuntime.mm in Sources */,
 				912915DD1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_2Table.cpp in Sources */,
+				91C3CC551FB69FF20062D769 /* JCAnnotationView.m in Sources */,
 				912916001FB15DE4003F1E46 /* UnityViewControllerBaseiOS.mm in Sources */,
 				912915F61FB15DE4003F1E46 /* AppDelegateListener.mm in Sources */,
 				912915EF1FB15DE4003F1E46 /* Il2CppMetadataUsage.cpp in Sources */,
@@ -3031,6 +2999,7 @@
 				912916111FB15DE4003F1E46 /* UnityReplayKit_Scripting.mm in Sources */,
 				912915A61FB15DE4003F1E46 /* Bulk_Generics_7.cpp in Sources */,
 				912915AE1FB15DE4003F1E46 /* Bulk_mscorlib_2.cpp in Sources */,
+				91C3CC561FB69FF20062D769 /* JCTiledScrollView.m in Sources */,
 				912915B71FB15DE4003F1E46 /* Bulk_Task_X_0.cpp in Sources */,
 				912915D11FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_19Table.cpp in Sources */,
 				916232081F972556006F4D96 /* DRNRealTimeBlurView.m in Sources */,
@@ -3040,12 +3009,11 @@
 				912916161FB15DE4003F1E46 /* UnityAppController+UnityInterface.mm in Sources */,
 				912915CC1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_14Table.cpp in Sources */,
 				912914951FB15DD0003F1E46 /* VuforiaNativeRendererController.mm in Sources */,
-				9146BF371F9D925C00D49527 /* JCTiledScrollView.m in Sources */,
+				91C3CC541FB69FF20062D769 /* CGPDFDocument.m in Sources */,
 				912915C51FB15DE4003F1E46 /* Il2CppAttributes.cpp in Sources */,
 				912915F11FB15DE4003F1E46 /* Il2CppReversePInvokeWrapperTable.cpp in Sources */,
 				915C50401F963C06002EC05E /* AppDelegate.m in Sources */,
 				912915AC1FB15DE4003F1E46 /* Bulk_mscorlib_0.cpp in Sources */,
-				9146BF361F9D925C00D49527 /* JCTiledPDFScrollView.m in Sources */,
 				912915F91FB15DE4003F1E46 /* UnityViewControllerListener.mm in Sources */,
 				9129160F1FB15DE4003F1E46 /* OnDemandResources.mm in Sources */,
 				912915981FB15DE4003F1E46 /* Bulk_FairyGUI_1.cpp in Sources */,
@@ -3053,10 +3021,10 @@
 				9129160A1FB15DE4003F1E46 /* FullScreenVideoPlayer.mm in Sources */,
 				912915AD1FB15DE4003F1E46 /* Bulk_mscorlib_1.cpp in Sources */,
 				913072881F971C570091386E /* main.mm in Sources */,
-				9146BF381F9D925C00D49527 /* JCTiledView.m in Sources */,
 				912915E11FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_6Table.cpp in Sources */,
 				9146BF491F9E041200D49527 /* ARAnnotationView.m in Sources */,
 				9129159A1FB15DE4003F1E46 /* Bulk_Generics_0.cpp in Sources */,
+				91C3CC591FB69FF20062D769 /* JCTiledPDFScrollView.m in Sources */,
 				912915E41FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_9Table.cpp in Sources */,
 				916232181F972556006F4D96 /* ZYMusic.m in Sources */,
 				912915DE1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_3Table.cpp in Sources */,
@@ -3064,13 +3032,11 @@
 				912916041FB15DE4003F1E46 /* CMVideoSampling.mm in Sources */,
 				912916151FB15DE4003F1E46 /* UnityAppController+Rendering.mm in Sources */,
 				912915CB1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_13Table.cpp in Sources */,
-				9146BF331F9D925C00D49527 /* JCAnnotationView.m in Sources */,
 				912915F51FB15DE4003F1E46 /* UnresolvedVirtualCallStubs.cpp in Sources */,
 				912915FF1FB15DE4003F1E46 /* UnityView.mm in Sources */,
 				912915CA1FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_12Table.cpp in Sources */,
 				912915B41FB15DE4003F1E46 /* Bulk_System.Core_0.cpp in Sources */,
 				912915961FB15DE4003F1E46 /* Bulk_Event_X_0.cpp in Sources */,
-				9162322B1F972806006F4D96 /* INTULocationManager.m in Sources */,
 				9129160B1FB15DE4003F1E46 /* GlesHelper.mm in Sources */,
 				916232091F972556006F4D96 /* UIImage+BoxBlur.m in Sources */,
 				912915EB1FB15DE4003F1E46 /* Il2CppGenericMethodTable.cpp in Sources */,
@@ -3080,11 +3046,9 @@
 				912915B51FB15DE4003F1E46 /* Bulk_System_0.cpp in Sources */,
 				916232071F972556006F4D96 /* Colours.m in Sources */,
 				912915A01FB15DE4003F1E46 /* Bulk_Generics_14.cpp in Sources */,
-				9146BF311F9D925C00D49527 /* CGPDFDocument.m in Sources */,
 				912914931FB15DD0003F1E46 /* PWU3DBridge.mm in Sources */,
 				912915C91FB15DE4003F1E46 /* Il2CppCompilerCalculateTypeValues_11Table.cpp in Sources */,
 				912915B31FB15DE4003F1E46 /* Bulk_mscorlib_7.cpp in Sources */,
-				9162322C1F972806006F4D96 /* INTULocationRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

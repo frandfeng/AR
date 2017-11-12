@@ -11,7 +11,6 @@
 #import "iConsole.h"
 #import "ZYPlayingViewController.h"
 #import "XMMovableButton.h"
-#import "LocationManager.h"
 #import "ZYMusic.h"
 #import "ZYMusicTool.h"
 #import "ZYAudioManager.h"
@@ -21,8 +20,10 @@
 #import "ZYPlayingViewController.h"
 #import "PWApplicationUtils.h"
 #import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
+#import <Foundation/Foundation.h>
 
-@interface AppDelegate () <AVAudioPlayerDelegate>
+@interface AppDelegate () <AVAudioPlayerDelegate, CLLocationManagerDelegate>
 
 //正在播放的音频
 @property (nonatomic, strong) ZYMusic *playingMusic;
@@ -44,6 +45,10 @@
 //用来显示锁屏歌词
 @property (nonatomic, strong) UITextView *lockScreenTableView;
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) NSMutableArray *knowBeacons;
+@property (nonatomic, strong) NSMutableArray *beaconRegions;
+
 @end
 
 @implementation AppDelegate
@@ -60,8 +65,86 @@
     [self.unityController.window makeKeyAndVisible];
     [self addLocTimer];
     [self createRemoteCommandCenter];
-    _currentLocation = [[CLLocation alloc] init];
+//    _currentLocation = [[CLLocation alloc] init];
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    if (CLLocationManager.authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
+    _knowBeacons = [NSMutableArray array];
+    _beaconRegions = [NSMutableArray array];
+    NSArray *musics = [ZYMusicTool musics];
+    for (ZYMusic *music in musics) {
+        if (music.uuid && ![music.uuid isEqualToString:@""])  {
+            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:music.uuid];
+            CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:music.identifier];
+            [_beaconRegions addObject:beaconRegion];
+            [_locationManager startRangingBeaconsInRegion:beaconRegion];
+            NSLog(@"start ranging uuid: %@, identifier: %@", music.uuid, music.identifier);
+        }
+    }
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self cutImageAndSave];
+    });
     return YES;
+}
+
+- (void)cutImageAndSave{
+    NSString *filePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    NSString *imageName = [NSString stringWithFormat:@"%@/yiheyuan-01x-00-00.png",filePath];
+    UIImage *tileImage = [UIImage imageWithContentsOfFile:imageName];
+    NSLog(@"%@",imageName);
+    if (tileImage) return;
+    
+    UIImage *image = [UIImage imageNamed:@"zhinengdaoyouditu.jpg"];
+    for (int i=-1; i<2; i++) {
+        int scale = 2 << i;
+        if (i==-1) {
+            scale = 1;
+        }
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width/scale, image.size.height/scale)];
+        imageView.image = image;
+        //    [self.view addSubview:imageView];
+        CGFloat WH = 256;
+        CGSize size = imageView.frame.size;
+        
+        //ceil 向上取整
+        NSInteger rows = ceil(size.height / WH);
+        NSInteger cols = ceil(size.width / WH);
+        NSLog(@"cut images scale:%d, rows:%d, cols:%d", scale, (int)rows, (int)cols);
+        for (NSInteger y = 0; y < rows; ++y) {
+            for (NSInteger x = 0; x < cols; ++x) {
+                @autoreleasepool {
+                    UIImage *subImage = [self captureView:imageView frame:CGRectMake(x*WH, y*WH, WH, WH)];
+                    NSString *path = [NSString stringWithFormat:@"%@/yiheyuan-%02dx-%02ld-%02ld.png",filePath,scale,y,x];
+                    [UIImagePNGRepresentation(subImage) writeToFile:path atomically:YES];
+                    NSLog(@"save path: %@", path);
+                }
+                if (y==rows-1 && x==cols-1) {
+                    NSLog(@"cutImageAndSave finish");
+                }
+            }
+        }
+    }
+}
+
+
+/** 切图 */
+- (UIImage*)captureView:(UIView *)theView frame:(CGRect)fra{
+    //开启图形上下文 将heView的所有内容渲染到图形上下文中
+    UIGraphicsBeginImageContext(theView.frame.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [theView.layer renderInContext:context];
+    
+    //获取图片
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    CGImageRef ref = CGImageCreateWithImageInRect(img.CGImage, fra);
+    UIImage *i = [UIImage imageWithCGImage:ref];
+    CGImageRelease(ref);
+    
+    return i;
 }
 
 - (void)addButton {
@@ -162,7 +245,7 @@
 - (void)addLocTimer {
     //在新增定时器之前，先移除之前的定时器
     [self removeLocTimer];
-    self.locTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
+    self.locTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.locTimer forMode:NSRunLoopCommonModes];
 }
 - (void)removeLocTimer {
@@ -170,24 +253,77 @@
     self.locTimer = nil;
 }
 
-- (void)loc {
-    LocationManager *locManager = [LocationManager sharedLocationManager];
-    __weak __typeof__(self) weakSelf = self;
-    
-    [iConsole info:@"开始请求位置信息。。。"];
-    [locManager startLocation:^(NSArray<CLLocation *> *locations) {
-        if (locations!=nil&&locations.count>0) {
-            weakSelf.currentLocation = [locations firstObject];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_currentLocation userInfo:nil];
-            [iConsole info:@"获取到地理位置 %lf, %lf", weakSelf.currentLocation.coordinate.latitude, weakSelf.currentLocation.coordinate.longitude];
-            int index = [PWApplicationUtils getIndexOfMusicForLocation:_currentLocation];
+- (void)locationManager:(CLLocationManager *)manager
+        didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
+    [iConsole log:@"all beacons %@", beacons];
+    BOOL exist = NO;
+    for (CLBeacon *beacon in beacons) {
+        if (beacon.proximity != CLProximityUnknown) {
+            for (int i=0; i<_knowBeacons.count; i++) {
+                CLBeacon *knowBeacon = _knowBeacons[i];
+                if ([beacon.proximityUUID.UUIDString isEqualToString:knowBeacon.proximityUUID.UUIDString]) {
+                    _knowBeacons[i] = beacon;
+                    exist = YES;
+                    break;
+                }
+            }
+            if (!exist) {
+                exist = NO;
+                [_knowBeacons addObject:beacon];
+            }
+        }
+    }
+    for (CLBeacon *beacon in _knowBeacons) {
+        if (_nearestBeacon==nil) {
+            _nearestBeacon = beacon;
+        } else if (_nearestBeacon.accuracy > beacon.accuracy) {
+            _nearestBeacon = beacon;
+        }
+    }
+    if (_nearestBeacon!=nil) {
+        if (_nearestBeacon.accuracy<2) {
+            [iConsole log:@"nearest beacon %@", _nearestBeacon];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
+            int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
             if (index >= 0) {
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
                 [self startPlayingMusic];
             }
         }
-    }];
+    }
+    
+    
+//    weakSelf.currentLocation = [locations firstObject];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_currentLocation userInfo:nil];
+//    [iConsole info:@"获取到地理位置 %lf, %lf", weakSelf.currentLocation.coordinate.latitude, weakSelf.currentLocation.coordinate.longitude];
+//    int index = [PWApplicationUtils getIndexOfMusicForLocation:_currentLocation];
+//    if (index >= 0) {
+//        ZYMusic *music = [ZYMusicTool musics][index];
+//        [ZYMusicTool setPlayingMusic:music];
+//        [self startPlayingMusic];
+//    }
+}
+
+- (void)loc {
+//    LocationManager *locManager = [LocationManager sharedLocationManager];
+//    __weak __typeof__(self) weakSelf = self;
+//
+//    [iConsole info:@"开始请求位置信息。。。"];
+//    [locManager startLocation:^(NSArray<CLLocation *> *locations) {
+//        if (locations!=nil&&locations.count>0) {
+//            weakSelf.currentLocation = [locations firstObject];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_currentLocation userInfo:nil];
+//            [iConsole info:@"获取到地理位置 %lf, %lf", weakSelf.currentLocation.coordinate.latitude, weakSelf.currentLocation.coordinate.longitude];
+//            int index = [PWApplicationUtils getIndexOfMusicForLocation:_currentLocation];
+//            if (index >= 0) {
+//                ZYMusic *music = [ZYMusicTool musics][index];
+//                [ZYMusicTool setPlayingMusic:music];
+//                [self startPlayingMusic];
+//            }
+//        }
+//    }];
+    
 }
 
 //锁屏界面开启和监控远程控制事件

@@ -13,13 +13,15 @@
 @class ZYMusic;
 @class AVAudioPlayer;
 @class CLLocation;
+@class CLBeacon;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *unityWindow;
 @property (strong, nonatomic) UnityAppController *unityController;
 @property (strong, nonatomic) XMMovableButton *playButton;
-@property (nonatomic, strong) CLLocation *currentLocation;
+//@property (nonatomic, strong) CLLocation *currentLocation;
+@property (nonatomic, strong) CLBeacon *nearestBeacon;
 
 - (void)startPlayingMusic;
 - (void)bringButtonToFront;

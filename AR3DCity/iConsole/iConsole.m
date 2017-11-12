@@ -121,7 +121,7 @@ static void exceptionHandler(NSException *exception)
 	text = [text stringByAppendingString:[[_log arrayByAddingObject:@">"] componentsJoinedByString:@"\n"]];
 	_consoleView.text = text;
 	
-//    [_consoleView scrollRangeToVisible:NSMakeRange(_consoleView.text.length, 0)];
+    [_consoleView scrollRangeToVisible:NSMakeRange(_consoleView.text.length, 0)];
 }
 
 - (void)resetLog
@@ -191,6 +191,7 @@ static void exceptionHandler(NSException *exception)
 			angle = M_PI_2;
 			break;
 	}
+    angle = 0;
 	return CGAffineTransformMakeRotation(angle);
 }
 

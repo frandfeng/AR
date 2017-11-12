@@ -10,11 +10,13 @@
 #import <UIKit/UIKit.h>
 
 @class CLLocation;
+@class CLBeacon;
 
 @interface PWApplicationUtils : NSObject
 
 + (instancetype)sharedInstance;
 + (int)getIndexOfMusicForLocation:(CLLocation *)location;
++ (int)getIndexOfMusicForBeacon:(CLBeacon *)beacon;
 + (UIImage*)getSquareImage:(UIImage *)image RangeCGRect:(CGRect)range centerBool:(BOOL)centerBool;
 + (UIImage*)getClearRectImage:(UIImage*)image;
 - (UIViewController *)activityViewController;

@@ -28,6 +28,18 @@
  */
 @property (copy, nonatomic) NSString *location;
 /**
+ *  平面位置
+ */
+@property (copy, nonatomic) NSString *locXY;
+/**
+ *  对应设备的uuid
+ */
+@property (copy, nonatomic) NSString *uuid;
+/**
+ *  对应设备的标识符
+ */
+@property (copy, nonatomic) NSString *identifier;
+/**
  *  景点图标
  */
 @property (copy, nonatomic) NSString *icon;
