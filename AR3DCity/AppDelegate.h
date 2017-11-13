@@ -22,10 +22,15 @@
 @property (strong, nonatomic) XMMovableButton *playButton;
 //@property (nonatomic, strong) CLLocation *currentLocation;
 @property (nonatomic, strong) CLBeacon *nearestBeacon;
+//判断歌曲播放过程中是否被电话等打断播放
+@property (nonatomic, assign) BOOL isInterruptionByUnity;
+//判断歌曲播放过程中是否被电话等打断播放
+@property (nonatomic, assign) BOOL isInterruptionByUser;
 
 - (void)startPlayingMusic;
-- (void)bringButtonToFront;
-- (void)hideButton;
+- (void)bringButtonToFront:(BOOL)animated;
+- (void)hideButton:(BOOL)animated;
+- (void)audioPlayerInterruptionOfPlay:(BOOL)play;
 
 @end
 

@@ -49,6 +49,10 @@
 @property (nonatomic, strong) NSMutableArray *knowBeacons;
 @property (nonatomic, strong) NSMutableArray *beaconRegions;
 
+
+@property (nonatomic, assign) int locIndex;
+@property (nonatomic, assign) int sameTimes;
+
 @end
 
 @implementation AppDelegate
@@ -71,6 +75,8 @@
     if (CLLocationManager.authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [_locationManager requestWhenInUseAuthorization];
     }
+    _isInterruptionByUnity = false;
+    _isInterruptionByUser = false;
     _knowBeacons = [NSMutableArray array];
     _beaconRegions = [NSMutableArray array];
     NSArray *musics = [ZYMusicTool musics];
@@ -83,7 +89,8 @@
             NSLog(@"start ranging uuid: %@, identifier: %@", music.uuid, music.identifier);
         }
     }
-    
+    _locIndex = -1;
+    _sameTimes = 0;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self cutImageAndSave];
     });
@@ -91,13 +98,11 @@
 }
 
 - (void)cutImageAndSave{
-    NSString *filePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
-    NSString *imageName = [NSString stringWithFormat:@"%@/yiheyuan-01x-00-00.png",filePath];
-    UIImage *tileImage = [UIImage imageWithContentsOfFile:imageName];
-    NSLog(@"%@",imageName);
-    if (tileImage) return;
+    BOOL cutFinish = [[NSUserDefaults standardUserDefaults] boolForKey:@"cutFinish"];
+    if (cutFinish) return;
     
     UIImage *image = [UIImage imageNamed:@"zhinengdaoyouditu.jpg"];
+    NSString *filePath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
     for (int i=-1; i<2; i++) {
         int scale = 2 << i;
         if (i==-1) {
@@ -123,6 +128,8 @@
                 }
                 if (y==rows-1 && x==cols-1) {
                     NSLog(@"cutImageAndSave finish");
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"cutFinish"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                 }
             }
         }
@@ -149,37 +156,34 @@
 
 - (void)addButton {
     if (_playButton) return;
-    _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70)];
+    _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-80, 70, 70)];
     [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
     [_playButton updateProgressWithNumber:0];
     [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
-//    [self.unityController.window insertSubview:_playButton atIndex:0];
+    _playButton.hidden = YES;
     [self.unityController.window addSubview:_playButton];
+    [self hideButton:NO];
     
-    _playButton.alpha = 0;
-    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-//    [self.unityController.window bringSubviewToFront:_playButton];
-    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-        //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
-        _playButton.alpha = 1;
-        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-    } completion:^(BOOL finished) {
-//        [self.unityController.window bringSubviewToFront:_playButton];
-        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-            //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
-            _playButton.alpha = 1;
-            _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-        } completion:^(BOOL finished) {
-            [self.unityController.window bringSubviewToFront:_playButton];
-        }];
-        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-            _playButton.transform = CGAffineTransformMakeRotation(M_PI);
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-                _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
-            } completion:nil];
-        }];
-    }];
+//    _playButton.alpha = 0;
+//    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//        _playButton.alpha = 1;
+//        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//    } completion:^(BOOL finished) {
+//        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//            _playButton.alpha = 1;
+//            _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+//        } completion:^(BOOL finished) {
+//            [self.unityController.window bringSubviewToFront:_playButton];
+//        }];
+//        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//            _playButton.transform = CGAffineTransformMakeRotation(M_PI);
+//        } completion:^(BOOL finished) {
+//            [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+//                _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
+//            } completion:nil];
+//        }];
+//    }];
 }
 - (void)playButtonTouched:(UITapGestureRecognizer *)gestureRecognizer {
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
@@ -231,12 +235,12 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     [self.unityController applicationWillTerminate:application];
 }
-- (void)bringButtonToFront {
+- (void)bringButtonToFront:(BOOL)animated {
     _playButton.hidden = NO;
     [self.unityController.window bringSubviewToFront:_playButton];
 }
 
-- (void)hideButton {
+- (void)hideButton:(BOOL)animated {
     _playButton.hidden = YES;
     [self.unityController.window sendSubviewToBack:_playButton];
 }
@@ -255,10 +259,9 @@
 
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
-    [iConsole log:@"all beacons %@", beacons];
     BOOL exist = NO;
     for (CLBeacon *beacon in beacons) {
-        if (beacon.proximity != CLProximityUnknown) {
+//        if (beacon.proximity != CLProximityUnknown) {
             for (int i=0; i<_knowBeacons.count; i++) {
                 CLBeacon *knowBeacon = _knowBeacons[i];
                 if ([beacon.proximityUUID.UUIDString isEqualToString:knowBeacon.proximityUUID.UUIDString]) {
@@ -271,21 +274,28 @@
                 exist = NO;
                 [_knowBeacons addObject:beacon];
             }
-        }
+//        }
     }
+    _nearestBeacon = nil;
     for (CLBeacon *beacon in _knowBeacons) {
         if (_nearestBeacon==nil) {
             _nearestBeacon = beacon;
-        } else if (_nearestBeacon.accuracy > beacon.accuracy) {
+        }
+        if (_nearestBeacon.accuracy > beacon.accuracy) {
             _nearestBeacon = beacon;
         }
     }
     if (_nearestBeacon!=nil) {
-        if (_nearestBeacon.accuracy<2) {
-            [iConsole log:@"nearest beacon %@", _nearestBeacon];
+        if (_nearestBeacon.accuracy<1) {
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
             int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
-            if (index >= 0) {
+            if (index == _locIndex) {
+                _sameTimes ++;
+            } else {
+                _locIndex = index;
+            }
+            if (index >= 0 && _sameTimes == 2) {
+                _sameTimes = 0;
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
                 [self startPlayingMusic];
@@ -333,10 +343,12 @@
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     [commandCenter.pauseCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         [self.player pause];
+        _isInterruptionByUser = YES;
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     [commandCenter.playCommand addTargetWithHandler:^MPRemoteCommandHandlerStatus(MPRemoteCommandEvent * _Nonnull event) {
         [self.player play];
+        _isInterruptionByUser = NO;
         return MPRemoteCommandHandlerStatusSuccess;
     }];
     
@@ -356,6 +368,9 @@
 - (void)startPlayingMusic {
     if (self.playingMusic == [ZYMusicTool playingMusic]) {
         [iConsole log:@"相同的景点，不需要播放新音频"];
+        return;
+    }
+    if (self.isInterruption || self.isInterruptionByUnity || self.isInterruptionByUser) {
         return;
     }
     [self resetPlayingMusic];
@@ -609,6 +624,24 @@
     }
 }
 
+/**
+ *  当Unity打断时，进行相应的操作,play表示Unity控制原生的播放
+ *
+ */
+- (void)audioPlayerInterruptionOfPlay:(BOOL)play {
+    if (play) {
+        if (self.isInterruptionByUnity) {
+            self.isInterruptionByUnity = NO;
+            [self playOrPause:YES];
+        }
+    } else {
+        if ([self.player isPlaying]) {
+            [self playOrPause:NO];
+            self.isInterruptionByUnity = YES;
+        }
+    }
+}
+
 #pragma mark ----音乐控制
 //重置播放的歌曲
 - (void)resetPlayingMusic {
@@ -620,17 +653,17 @@
 }
 
 /**
- *  播放或者暂停
+ *  切换播放或者暂停
  *
  */
-- (IBAction)playOrPause:(BOOL)isPlay {
+- (IBAction)playOrPause:(BOOL)play {
     if (_player) {
-        if (isPlay) {
-            [_player pause];
-            [self removeUITimer];
-        } else {
+        if (play) {
             [_player play];
             [self addUITimer];
+        } else {
+            [_player pause];
+            [self removeUITimer];
         }
     }
 }

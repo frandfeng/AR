@@ -136,6 +136,35 @@ static PWUnityMsgManager *sharedObject = nil;
                 }
             }
         }
+        else if ([func isEqualToString:@"ReqPlayMusic"]) {
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"play"]) {
+                    NSString *play = paramsDic[@"play"];
+                    [(AppDelegate *)[UIApplication sharedApplication].delegate audioPlayerInterruptionOfPlay:[play isEqualToString:@"True"]];
+                    return [PWU3DCodec U3DCodec:@"true"];
+                }
+            }
+        }
+        else if ([func isEqualToString:@"ReqPlayButton"]) {
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"appear"]) {
+                    NSString *appear = paramsDic[@"appear"];
+                    NSString *animate = paramsDic[@"animate"];
+                    if ([appear isEqualToString:@"True"]) {
+                        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"cutFinish"]) {
+                            [(AppDelegate *)[UIApplication sharedApplication].delegate bringButtonToFront:[animate isEqualToString:@"True"]];
+                        } else {
+                            NSLog(@"cut not finish, show later");
+                        }
+                    } else {
+                        [(AppDelegate *)[UIApplication sharedApplication].delegate hideButton:[animate isEqualToString:@"True"]];
+                    }
+                    return [PWU3DCodec U3DCodec:@"true"];
+                }
+            }
+        }
     }
     return [PWU3DCodec U3DCodec:@"false"];
 }

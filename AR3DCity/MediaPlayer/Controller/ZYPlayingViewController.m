@@ -95,7 +95,7 @@ static int const displayScale = 4;
     [self refreshMusicUI];
     [self setCoordinate];
     [self addAnnotations];
-    [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton:NO];
     [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
 
@@ -106,7 +106,7 @@ static int const displayScale = 4;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront:NO];
 }
 
 - (void)initDatas {
@@ -351,10 +351,12 @@ static int const displayScale = 4;
     if (player) {
         if (self.playOrPauseButton.isSelected == NO) {
             self.playOrPauseButton.selected = YES;
+            ((AppDelegate *)[UIApplication sharedApplication].delegate).isInterruptionByUser = NO;
             [player play];
             [self addUITimer];
         } else {
             self.playOrPauseButton.selected = NO;
+            ((AppDelegate *)[UIApplication sharedApplication].delegate).isInterruptionByUser = YES;
             [player pause];
             [self removeUITimer];
         }
