@@ -150,6 +150,11 @@ static int const displayScale = 2;
     [self addAnnotations];
     NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
 //    [_mapScrollView refreshAnnotations];
+//    [UIView animateWithDuration:0.5 animations:^{
+        ZYMusic *music = [ZYMusicTool playingMusic];
+        ARAnnotation *annotation = [self getAnnotationByMusic:music];
+        [_mapScrollView setContentCenter:annotation.contentPosition animated:YES];
+//    }];
 }
 
 - (void)startPlay:(NSNotification *)noti {
@@ -177,8 +182,8 @@ static int const displayScale = 2;
     
     _mapScrollView.tiledView.shouldAnnotateRect = true;
     //最大缩放比例
-    _mapScrollView.levelsOfZoom = 2;
-    _mapScrollView.levelsOfDetail = 2;
+    _mapScrollView.levelsOfZoom = 1;
+    _mapScrollView.levelsOfDetail = 1;
 }
 
 - (void)setCoordinate {

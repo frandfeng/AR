@@ -172,17 +172,17 @@
 
 - (void)toastChange:(NSString *)name {
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:10];
-    label.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-110, 70, 20);
+    label.font = [UIFont systemFontOfSize:15];
+    label.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-100, 70, 20);
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = name;
     label.alpha = 0;
     [self.unityController.window addSubview:label];
-    [UIView animateWithDuration:2.0 animations:^{
+    [UIView animateWithDuration:1.0 animations:^{
         label.alpha = 1;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:2.0 animations:^{
+        [UIView animateWithDuration:1.0 animations:^{
             label.alpha = 0;
         } completion:^(BOOL finished) {
             [label removeFromSuperview];
@@ -382,7 +382,6 @@
     if (_nearestBeacon!=nil) {
         if (_nearestBeacon.accuracy<2) {
             [iConsole log:@"nearest beacon %@", _nearestBeacon];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
             int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
             if (index == _locIndex) {
                 _sameTimes ++;
@@ -470,6 +469,7 @@
     }
     [self resetPlayingMusic];
     [iConsole log:@"开始播放新音频"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
     
     // 设置所需要的数据
     self.playingMusic = [ZYMusicTool playingMusic];
