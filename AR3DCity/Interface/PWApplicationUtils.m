@@ -72,6 +72,7 @@ static PWApplicationUtils *sharedObject = nil;
             return i;
         }
     }
+    return 100;
 }
 
 + (int)getIndexOfMusicForLocation:(CLLocation *)location {

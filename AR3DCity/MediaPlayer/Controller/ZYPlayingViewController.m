@@ -52,9 +52,10 @@
 //设置按钮
 @property (weak, nonatomic) IBOutlet UIButton *lyricOrPhotoBtn;
 //锁屏图片视图,用来绘制带歌词的image
-@property (nonatomic, strong) UIImageView * lrcImageView;;
+@property (nonatomic, strong) UIImageView * lrcImageView;
 //用来显示锁屏歌词
 @property (nonatomic, strong) UITextView * lockScreenTableView;
+@property (nonatomic, strong) NSMutableArray * annotations;
 @property (nonatomic, strong) ARAnnotation * currentLocAnnotation;
 
 @property (nonatomic, assign) CGSize contentSize;
@@ -72,7 +73,7 @@
 @end
 
 static NSString * const imagePicName = @"zhinengdaoyouditu.jpg";
-static int const displayScale = 4;
+static int const displayScale = 2;
 
 @implementation ZYPlayingViewController {
     id _playerTimeObserver;
@@ -95,6 +96,7 @@ static int const displayScale = 4;
     [self refreshMusicUI];
     [self setCoordinate];
     [self addAnnotations];
+    
     [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton:NO];
     [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
@@ -114,6 +116,7 @@ static int const displayScale = 4;
     _contentSize = CGSizeMake(image.size.width/[UIScreen mainScreen].scale/displayScale, image.size.height/[UIScreen mainScreen].scale/displayScale);
     mapWidth = image.size.width;
     mapHeight = image.size.height;
+    _annotations = [NSMutableArray array];
 }
 
 - (void)addNotifications {
@@ -135,15 +138,17 @@ static int const displayScale = 4;
 
 - (void)location:(NSNotification *)noti {
     NSLog(@"%@ === %@ === %@", noti.object, noti.userInfo, noti.name);
-//    CLBeacon *beacon = noti.object;
-//    if (_currentLocAnnotation) {
-//        [_mapScrollView removeAnnotation:_currentLocAnnotation];
-//        NSLog(@"remove current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
-//    }
-//    _currentLocAnnotation = [self getAnnotationByBeacon:beacon];
-//    _currentLocAnnotation.index = -1;
-//    [_mapScrollView addAnnotation:_currentLocAnnotation];
-//    NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
+    CLBeacon *beacon = noti.object;
+    if (_currentLocAnnotation) {
+        [_mapScrollView removeAnnotation:_currentLocAnnotation];
+        NSLog(@"remove current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
+    }
+    _currentLocAnnotation = [self getAnnotationByBeacon:beacon];
+    _currentLocAnnotation.index = -1;
+    [_mapScrollView addAnnotation:_currentLocAnnotation];
+    [self removeAnnotations];
+    [self addAnnotations];
+    NSLog(@"add current location x %lf, y %lf", _currentLocAnnotation.contentPosition.x, _currentLocAnnotation.contentPosition.y);
 //    [_mapScrollView refreshAnnotations];
 }
 
@@ -178,10 +183,17 @@ static int const displayScale = 4;
 
 - (void)setCoordinate {
     //暂时设置办公室四个角
-    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.056323];
-    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.057339];
-    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.057339];
-    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.056323];
+//    leftBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.056323];
+//    rightBottomLoc = [[CLLocation alloc] initWithLatitude:30.554578 longitude:104.057339];
+//    rightTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.057339];
+//    leftTopLoc = [[CLLocation alloc] initWithLatitude:30.555339 longitude:104.056323];
+}
+
+- (void)removeAnnotations {
+    for (int i=0; i<_annotations.count; i++) {
+        ARAnnotation *annotation = _annotations[i];
+        [_mapScrollView removeAnnotation:annotation];
+    }
 }
 
 - (void)addAnnotations {
@@ -190,28 +202,40 @@ static int const displayScale = 4;
         ZYMusic *music = musics[i];
         NSArray *array = [music.location componentsSeparatedByString:@","];
         if (array!=nil && array.count>1) {
-            CLLocation *placeLoc = [[CLLocation alloc] initWithLatitude:[array[1] doubleValue]  longitude:[array[0] doubleValue]];
-            ARAnnotation *annotation = [self getAnnotationByLocation:placeLoc];
+            ARAnnotation *annotation = [self getAnnotationByMusic:music];
             annotation.index = i;
+            [_annotations addObject:annotation];
             [_mapScrollView addAnnotation:annotation];
             NSLog(@"add annotations x %lf, y %lf", annotation.contentPosition.x, annotation.contentPosition.y);
         }
     }
 }
 
-- (ARAnnotation *)getAnnotationByLocation:(CLLocation *)placeLoc {
-    CGFloat y = mapHeight / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
-    CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
-    ARAnnotation *annotation = [[ARAnnotation alloc] init];
-    annotation.contentPosition = CGPointMake(x, y);
-    return annotation;
+//- (ARAnnotation *)getAnnotationByLocation:(CLLocation *)placeLoc {
+//    CGFloat y = mapHeight / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
+//    CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
+//    ARAnnotation *annotation = [[ARAnnotation alloc] init];
+//    annotation.contentPosition = CGPointMake(x, y);
+//    return annotation;
+//}
+                                        
+- (ARAnnotation *)getAnnotationByMusic:(ZYMusic *)music {
+    NSArray *array = [music.location componentsSeparatedByString:@","];
+    if (array!=nil && array.count>1) {
+//        CGFloat y = (mapHeight / displayScale / [UIScreen mainScreen].scale) * [array[1] intValue];
+//        CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * [array[0] intValue];
+        ARAnnotation *annotation = [[ARAnnotation alloc] init];
+        annotation.contentPosition = CGPointMake([array[0] floatValue]/ displayScale / [UIScreen mainScreen].scale, [array[1] floatValue] / displayScale / [UIScreen mainScreen].scale);
+        return annotation;
+    }
+    return nil;
 }
 
-- (ARAnnotation *)getAnnotationByBeacon:(CLLocation *)placeLoc {
-    CGFloat y = mapHeight / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude)/(rightTopLoc.coordinate.latitude-rightBottomLoc.coordinate.latitude);
-    CGFloat x = mapWidth / displayScale / [UIScreen mainScreen].scale * (placeLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude)/(leftBottomLoc.coordinate.longitude-rightBottomLoc.coordinate.longitude);
-    ARAnnotation *annotation = [[ARAnnotation alloc] init];
-    annotation.contentPosition = CGPointMake(x, y);
+- (ARAnnotation *)getAnnotationByBeacon:(CLBeacon *)beacon {
+    int index = [PWApplicationUtils getIndexOfMusicForBeacon:beacon];
+    ZYMusic *music = [ZYMusicTool musics][index];
+    ARAnnotation *annotation = [self getAnnotationByMusic:music];
+    annotation.contentPosition = CGPointMake(annotation.contentPosition.x, annotation.contentPosition.y+20);
     return annotation;
 }
 
@@ -394,22 +418,21 @@ static int const displayScale = 4;
     if (index>=0) {
         ZYMusic *music = [ZYMusicTool musics][index];
         ZYMusic *playingMusic = [ZYMusicTool playingMusic];
-//        CLLocation *location = ((AppDelegate *)[UIApplication sharedApplication].delegate).currentLocation;
-//        int nearestMark = [PWApplicationUtils getIndexOfMusicForLocation:location];
-//        if (music == playingMusic) {
-//            if (index == nearestMark) {
+        CLBeacon *beacon = ((AppDelegate *)[UIApplication sharedApplication].delegate).nearestBeacon;
+        int nearestMark = [PWApplicationUtils getIndexOfMusicForBeacon:beacon];
+        if (music == playingMusic) {
+            if (index == nearestMark) {
                 annotationView.imageView.image = [UIImage imageNamed:@"music_playing_orig"];
-//            } else {
-//                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
-//            }
-//        } else {
-//            if (index == nearestMark) {
-//                annotationView.imageView.image = [UIImage imageNamed:@"music_orig"];
-//            } else {
-//                annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
-//            }
-//        }
-//
+            } else {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
+            }
+        } else {
+            if (index == nearestMark) {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_orig"];
+            } else {
+                annotationView.imageView.image = [UIImage imageNamed:@"music_blue"];
+            }
+        }
 //        annotationView.label.text = music.name;
     } else {
         annotationView.imageView.image = [UIImage imageNamed:@"loction"];
@@ -455,7 +478,9 @@ static int const displayScale = 4;
         
         [((AppDelegate *)[UIApplication sharedApplication].delegate) startPlayingMusic];
         [self refreshMusicUI];
-        [_mapScrollView refreshAnnotations];
+//        [_mapScrollView refreshAnnotations];
+        [self removeAnnotations];
+        [self addAnnotations];
         
 //        self.player.delegate = self;
         

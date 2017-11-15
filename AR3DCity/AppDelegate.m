@@ -17,6 +17,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <notify.h>
 #import "ZYLrcLine.h"
+#import "LocationManager.h"
 #import "ZYPlayingViewController.h"
 #import "PWApplicationUtils.h"
 #import <AVFoundation/AVFoundation.h>
@@ -53,6 +54,8 @@
 @property (nonatomic, assign) int locIndex;
 @property (nonatomic, assign) int sameTimes;
 
+@property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
+
 @end
 
 @implementation AppDelegate
@@ -68,10 +71,14 @@
     self.unityController.window.rootViewController = tempVc;
     [self.unityController.window makeKeyAndVisible];
     [self addLocTimer];
+    [self addButton];
     [self createRemoteCommandCenter];
 //    _currentLocation = [[CLLocation alloc] init];
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
+    self.locationManager.activityType = CLActivityTypeFitness;
+    self.locationManager.distanceFilter = kCLDistanceFilterNone;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     if (CLLocationManager.authorizationStatus != kCLAuthorizationStatusAuthorizedWhenInUse) {
         [_locationManager requestWhenInUseAuthorization];
     }
@@ -79,22 +86,31 @@
     _isInterruptionByUser = false;
     _knowBeacons = [NSMutableArray array];
     _beaconRegions = [NSMutableArray array];
-    NSArray *musics = [ZYMusicTool musics];
-    for (ZYMusic *music in musics) {
-        if (music.uuid && ![music.uuid isEqualToString:@""])  {
-            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:music.uuid];
-            CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:music.identifier];
-            [_beaconRegions addObject:beaconRegion];
-            [_locationManager startRangingBeaconsInRegion:beaconRegion];
-            NSLog(@"start ranging uuid: %@, identifier: %@", music.uuid, music.identifier);
-        }
-    }
     _locIndex = -1;
     _sameTimes = 0;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self cutImageAndSave];
     });
+    [self startRangeIbeacons];
     return YES;
+}
+
+- (void)startRangeIbeacons {
+    NSArray *musics = [ZYMusicTool musics];
+    for (ZYMusic *music in musics) {
+        if (music.uuid && ![music.uuid isEqualToString:@""])  {
+            NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:music.uuid];
+            CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:music.identifier];
+            beaconRegion.notifyOnExit = YES;
+            beaconRegion.notifyOnEntry = YES;
+            beaconRegion.notifyEntryStateOnDisplay = YES;
+            [_beaconRegions addObject:beaconRegion];
+            [self.locationManager startMonitoringForRegion:beaconRegion];
+            [self.locationManager startRangingBeaconsInRegion:beaconRegion];
+            [self.locationManager requestStateForRegion:beaconRegion];
+            NSLog(@"start ranging uuid: %@, identifier: %@", music.uuid, music.identifier);
+        }
+    }
 }
 
 - (void)cutImageAndSave{
@@ -117,7 +133,7 @@
         //ceil 向上取整
         NSInteger rows = ceil(size.height / WH);
         NSInteger cols = ceil(size.width / WH);
-        NSLog(@"cut images scale:%d, rows:%d, cols:%d", scale, (int)rows, (int)cols);
+        [iConsole log:@"cut images scale:%d, rows:%d, cols:%d", scale, (int)rows, (int)cols];
         for (NSInteger y = 0; y < rows; ++y) {
             for (NSInteger x = 0; x < cols; ++x) {
                 @autoreleasepool {
@@ -152,6 +168,26 @@
     CGImageRelease(ref);
     
     return i;
+}
+
+- (void)toastChange:(NSString *)name {
+    UILabel *label = [[UILabel alloc] init];
+    label.font = [UIFont systemFontOfSize:10];
+    label.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-110, 70, 20);
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = name;
+    label.alpha = 0;
+    [self.unityController.window addSubview:label];
+    [UIView animateWithDuration:2.0 animations:^{
+        label.alpha = 1;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:2.0 animations:^{
+            label.alpha = 0;
+        } completion:^(BOOL finished) {
+            [label removeFromSuperview];
+        }];
+    }];
 }
 
 - (void)addButton {
@@ -194,13 +230,28 @@
 }
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     [self.unityController applicationDidEnterBackground:application];
+    _bgTask = [application beginBackgroundTaskWithName:@"MyTask" expirationHandler:^{
+        // Clean up any unfinished task business by marking where you
+        // stopped or ending the task outright.
+        [self startRangeIbeacons];
+        [application endBackgroundTask:_bgTask];
+        _bgTask = UIBackgroundTaskInvalid;
+    }];
+    
+    // Start the long-running task and return immediately.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        // Do the work associated with the task, preferably in chunks.
+        
+        [application endBackgroundTask:_bgTask];
+        _bgTask = UIBackgroundTaskInvalid;
+    });
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [self.unityController applicationWillEnterForeground:application];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [self.unityController applicationDidBecomeActive:application];
-    [self addButton];
 //    [self buttonAnimatedToFront];
 //    [self performSelector:@selector(buttonAnimatedToFront) withObject:nil afterDelay:10.0];
     
@@ -236,8 +287,32 @@
     [self.unityController applicationWillTerminate:application];
 }
 - (void)bringButtonToFront:(BOOL)animated {
+    if (animated && _playButton.hidden) {
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(animateButtonFront) userInfo:nil repeats:NO];
+        [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
     _playButton.hidden = NO;
     [self.unityController.window bringSubviewToFront:_playButton];
+}
+
+- (void)animateButtonFront {
+    _playButton.frame = CGRectMake(-80, [UIScreen mainScreen].bounds.size.height-80, 70, 70);
+    _playButton.alpha = 0;
+    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
+        _playButton.alpha = 1;
+        _playButton.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+    } completion:^(BOOL finished) {
+        _playButton.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
+        _playButton.alpha = 1;
+    }];
+    [UIView animateWithDuration:2 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+        _playButton.transform = CGAffineTransformMakeRotation(M_PI);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:2 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
+            _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
+        } completion:nil];
+    }];
 }
 
 - (void)hideButton:(BOOL)animated {
@@ -249,7 +324,7 @@
 - (void)addLocTimer {
     //在新增定时器之前，先移除之前的定时器
     [self removeLocTimer];
-    self.locTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
+    self.locTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(loc) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:self.locTimer forMode:NSRunLoopCommonModes];
 }
 - (void)removeLocTimer {
@@ -258,10 +333,29 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager
+         didEnterRegion:(CLRegion *)region {
+    [iConsole log:@"locationManager didEnterRegion %@", (CLBeaconRegion *)region.identifier];
+    [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+          didExitRegion:(CLRegion *)region {
+    [iConsole log:@"locationManager didExitRegion %@", (CLBeaconRegion *)region.identifier];
+}
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
+    [iConsole log:@"monitoringDidFailForRegion - error: %@", [error localizedDescription]];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+    [iConsole log:@"didDetermineState - region: %@", (CLBeaconRegion *)region.identifier];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
     BOOL exist = NO;
     for (CLBeacon *beacon in beacons) {
-//        if (beacon.proximity != CLProximityUnknown) {
+        if (beacon.proximity != CLProximityUnknown) {
             for (int i=0; i<_knowBeacons.count; i++) {
                 CLBeacon *knowBeacon = _knowBeacons[i];
                 if ([beacon.proximityUUID.UUIDString isEqualToString:knowBeacon.proximityUUID.UUIDString]) {
@@ -274,7 +368,7 @@
                 exist = NO;
                 [_knowBeacons addObject:beacon];
             }
-//        }
+        }
     }
     _nearestBeacon = nil;
     for (CLBeacon *beacon in _knowBeacons) {
@@ -286,7 +380,8 @@
         }
     }
     if (_nearestBeacon!=nil) {
-        if (_nearestBeacon.accuracy<1) {
+        if (_nearestBeacon.accuracy<2) {
+            [iConsole log:@"nearest beacon %@", _nearestBeacon];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
             int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
             if (index == _locIndex) {
@@ -294,7 +389,7 @@
             } else {
                 _locIndex = index;
             }
-            if (index >= 0 && _sameTimes == 2) {
+            if (index >= 0 && _sameTimes == 10) {
                 _sameTimes = 0;
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
@@ -381,6 +476,7 @@
 //    self.iconView.image = [UIImage imageNamed:@"yiheyuan"];
 //    self.songLabel.text = self.playingMusic.name;
     
+    [self toastChange:self.playingMusic.name];
     //开发播放音乐
     [[ZYAudioManager defaultManager] playMusic:self.playingMusic.musicId];
     self.player = [[ZYAudioManager defaultManager] player:self.playingMusic.musicId];
