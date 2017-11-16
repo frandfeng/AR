@@ -96,19 +96,19 @@ static int const displayScale = 2;
     [self refreshMusicUI];
     [self setCoordinate];
     [self addAnnotations];
-    
-    [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton:NO];
-    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self addNotifications];
+    [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton:NO];
+    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront:NO];
+    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"false\"}}"];
 }
 
 - (void)initDatas {
@@ -415,10 +415,10 @@ static int const displayScale = 2;
 }
   //MARK: JCTiledScrollViewDelegate
 - (JCAnnotationView *)tiledScrollView:(JCTiledScrollView *)scrollView viewForAnnotation:(id<JCAnnotation>)annotation {
-    ARAnnotationView *annotationView = (ARAnnotationView *)[scrollView dequeueReusableAnnotationViewWithReuseIdentifier:@"ReuseIdentifier"];
-    if (!annotationView) {
-        annotationView = [[ARAnnotationView alloc] initWithFrame:CGRectZero annotation:annotation reuseIdentifier:@"ReuseIdentifier"];
-    }
+//    ARAnnotationView *annotationView = (ARAnnotationView *)[scrollView dequeueReusableAnnotationViewWithReuseIdentifier:@"ReuseIdentifier"];
+//    if (!annotationView) {
+        ARAnnotationView *annotationView = [[ARAnnotationView alloc] initWithFrame:CGRectZero annotation:annotation reuseIdentifier:@"ReuseIdentifier"];
+//    }
     int index = ((ARAnnotation *)annotation).index;
     if (index>=0) {
         ZYMusic *music = [ZYMusicTool musics][index];
@@ -427,9 +427,15 @@ static int const displayScale = 2;
         int nearestMark = [PWApplicationUtils getIndexOfMusicForBeacon:beacon];
         if (music == playingMusic) {
             if (index == nearestMark) {
-                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_orig"];
+                annotationView.imageView.animationImages = [NSArray arrayWithObjects:[UIImage imageNamed:@"music_playing_orig1"],[UIImage imageNamed:@"music_playing_orig2"],[UIImage imageNamed:@"music_playing_orig3"], nil];
+                annotationView.imageView.animationDuration = 1.0;
+                annotationView.imageView.animationRepeatCount = 0;
+                [annotationView.imageView startAnimating];
             } else {
-                annotationView.imageView.image = [UIImage imageNamed:@"music_playing_blue"];
+                annotationView.imageView.animationImages = [NSArray arrayWithObjects:[UIImage imageNamed:@"music_playing_blue1"],[UIImage imageNamed:@"music_playing_blue2"],[UIImage imageNamed:@"music_playing_blue3"], nil];
+                annotationView.imageView.animationDuration = 1.0;
+                annotationView.imageView.animationRepeatCount = 0;
+                [annotationView.imageView startAnimating];
             }
         } else {
             if (index == nearestMark) {

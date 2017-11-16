@@ -287,11 +287,12 @@
     [self.unityController applicationWillTerminate:application];
 }
 - (void)bringButtonToFront:(BOOL)animated {
-    if (animated && _playButton.hidden) {
+    if (_playButton.hidden && animated) {
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(animateButtonFront) userInfo:nil repeats:NO];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    } else if (_playButton.hidden) {
+        _playButton.hidden = NO;
     }
-    _playButton.hidden = NO;
     [self.unityController.window bringSubviewToFront:_playButton];
 }
 
@@ -301,10 +302,12 @@
     [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
         _playButton.alpha = 1;
+        _playButton.hidden = NO;
         _playButton.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
     } completion:^(BOOL finished) {
         _playButton.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
         _playButton.alpha = 1;
+        _playButton.hidden = NO;
     }];
     [UIView animateWithDuration:2 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         _playButton.transform = CGAffineTransformMakeRotation(M_PI);
@@ -387,6 +390,7 @@
                 _sameTimes ++;
             } else {
                 _locIndex = index;
+                _sameTimes = 0;
             }
             if (index >= 0 && _sameTimes == 10) {
                 _sameTimes = 0;
@@ -469,7 +473,9 @@
     }
     [self resetPlayingMusic];
     [iConsole log:@"开始播放新音频"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
+    if (_nearestBeacon) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameLocation" object:_nearestBeacon userInfo:nil];
+    }
     
     // 设置所需要的数据
     self.playingMusic = [ZYMusicTool playingMusic];

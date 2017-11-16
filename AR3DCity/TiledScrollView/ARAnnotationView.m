@@ -38,6 +38,9 @@
     if (imageView!=nil && imageView.image!=nil) {
         return imageView.image.size;
     }
+    if (imageView!=nil && imageView.animationImages!=nil && imageView.animationImages.count>0) {
+        return imageView.animationImages[0].size;
+    }
     return CGSizeMake(30, 30);
 }
 
