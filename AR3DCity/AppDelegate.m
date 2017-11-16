@@ -53,6 +53,7 @@
 
 @property (nonatomic, assign) int locIndex;
 @property (nonatomic, assign) int sameTimes;
+@property (nonatomic, assign) int times;
 
 @property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
 
@@ -88,6 +89,7 @@
     _beaconRegions = [NSMutableArray array];
     _locIndex = -1;
     _sameTimes = 0;
+    _times = 0;
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self cutImageAndSave];
     });
@@ -356,9 +358,9 @@
 
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
-    BOOL exist = NO;
     for (CLBeacon *beacon in beacons) {
         if (beacon.proximity != CLProximityUnknown) {
+            BOOL exist = NO;
             for (int i=0; i<_knowBeacons.count; i++) {
                 CLBeacon *knowBeacon = _knowBeacons[i];
                 if ([beacon.proximityUUID.UUIDString isEqualToString:knowBeacon.proximityUUID.UUIDString]) {
@@ -377,15 +379,15 @@
     for (CLBeacon *beacon in _knowBeacons) {
         if (_nearestBeacon==nil) {
             _nearestBeacon = beacon;
-        }
-        if (_nearestBeacon.accuracy > beacon.accuracy) {
-            _nearestBeacon = beacon;
+        } else {
+            if (_nearestBeacon.accuracy > beacon.accuracy) {
+                _nearestBeacon = beacon;
+            }
         }
     }
     if (_nearestBeacon!=nil) {
-        if (_nearestBeacon.accuracy<2) {
-            [iConsole log:@"nearest beacon %@", _nearestBeacon];
-            int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
+        int index = [PWApplicationUtils getIndexOfMusicForBeacon:_nearestBeacon];
+        if (_nearestBeacon.accuracy<1) {
             if (index == _locIndex) {
                 _sameTimes ++;
             } else {
@@ -398,6 +400,9 @@
                 [ZYMusicTool setPlayingMusic:music];
                 [self startPlayingMusic];
             }
+        } else {
+            _locIndex = -1;
+            _sameTimes = 0;
         }
     }
     
