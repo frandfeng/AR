@@ -30,7 +30,8 @@
 - (void)startPlayingMusic;
 - (void)bringButtonToFront:(BOOL)animated;
 - (void)hideButton:(BOOL)animated;
-- (void)audioPlayerInterruptionOfPlay:(BOOL)play;
+- (void)audioPlayerInterruptionOfUnity:(BOOL)play;
+- (void)audioPlayerInterruptionOfUser:(BOOL)play;
 
 @end
 

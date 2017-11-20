@@ -102,13 +102,13 @@ static int const displayScale = 2;
     [super viewWillAppear:animated];
     [self addNotifications];
     [((AppDelegate *)[UIApplication sharedApplication].delegate) hideButton:NO];
-    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
+//    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"true\"}}"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [((AppDelegate *)[UIApplication sharedApplication].delegate) bringButtonToFront:NO];
-    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"false\"}}"];
+//    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnIntelligentState" andValue:@"{\"params\":{\"isOpen\":\"false\"}}"];
 }
 
 - (void)initDatas {
@@ -375,20 +375,14 @@ static int const displayScale = 2;
  *
  */
 - (IBAction)playOrPause:(id)sender {
-    ZYMusic *playingMusic = [ZYMusicTool playingMusic];
-    AVAudioPlayer *player = [[ZYAudioManager defaultManager] player:playingMusic.musicId];
-    if (player) {
-        if (self.playOrPauseButton.isSelected == NO) {
-            self.playOrPauseButton.selected = YES;
-            ((AppDelegate *)[UIApplication sharedApplication].delegate).isInterruptionByUser = NO;
-            [player play];
-            [self addUITimer];
-        } else {
-            self.playOrPauseButton.selected = NO;
-            ((AppDelegate *)[UIApplication sharedApplication].delegate).isInterruptionByUser = YES;
-            [player pause];
-            [self removeUITimer];
-        }
+    if (self.playOrPauseButton.isSelected == NO) {
+        self.playOrPauseButton.selected = YES;
+        [(AppDelegate *)[UIApplication sharedApplication].delegate audioPlayerInterruptionOfUser:self.playOrPauseButton.selected];
+        [self addUITimer];
+    } else {
+        self.playOrPauseButton.selected = NO;
+        [(AppDelegate *)[UIApplication sharedApplication].delegate audioPlayerInterruptionOfUser:self.playOrPauseButton.selected];
+        [self removeUITimer];
     }
 }
 

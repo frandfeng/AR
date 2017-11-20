@@ -93,7 +93,8 @@
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self cutImageAndSave];
     });
-    [self startRangeIbeacons];
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(startRangeIbeacons) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     return YES;
 }
 
@@ -173,18 +174,19 @@
 }
 
 - (void)toastChange:(NSString *)name {
+    CGRect buttonFrame = _playButton.frame;
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:15];
-    label.frame = CGRectMake(10, [UIScreen mainScreen].bounds.size.height-100, 70, 20);
+    label.font = [UIFont systemFontOfSize:12];
+    label.frame = CGRectMake(buttonFrame.origin.x, buttonFrame.origin.y-30, 70, 20);
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = name;
     label.alpha = 0;
     [self.unityController.window addSubview:label];
-    [UIView animateWithDuration:1.0 animations:^{
+    [UIView animateWithDuration:2.0 animations:^{
         label.alpha = 1;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1.0 animations:^{
+        [UIView animateWithDuration:2.0 animations:^{
             label.alpha = 0;
         } completion:^(BOOL finished) {
             [label removeFromSuperview];
@@ -194,13 +196,12 @@
 
 - (void)addButton {
     if (_playButton) return;
-    _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake(10, [UIScreen mainScreen].bounds.size.height-80, 70, 70)];
-    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
+    _playButton = [[XMMovableButton alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-70, 70, 70)];
+    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"] centerCircle:NO];
     [_playButton updateProgressWithNumber:0];
     [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
-    _playButton.hidden = YES;
-    [self.unityController.window addSubview:_playButton];
     [self hideButton:NO];
+    [self.unityController.window addSubview:_playButton];
     
 //    _playButton.alpha = 0;
 //    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
@@ -289,17 +290,20 @@
     [self.unityController applicationWillTerminate:application];
 }
 - (void)bringButtonToFront:(BOOL)animated {
-    if (_playButton.hidden && animated) {
+    if (animated) {
         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(animateButtonFront) userInfo:nil repeats:NO];
         [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    } else if (_playButton.hidden) {
+    } else {
         _playButton.hidden = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.unityController.window bringSubviewToFront:_playButton];
+        });
     }
-    [self.unityController.window bringSubviewToFront:_playButton];
+    NSLog(@"bringButtonToFront %lf, %lf", _playButton.frame.origin.x, _playButton.frame.origin.y);
 }
 
 - (void)animateButtonFront {
-    _playButton.frame = CGRectMake(-80, [UIScreen mainScreen].bounds.size.height-80, 70, 70);
+    _playButton.frame = CGRectMake(-70, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
     _playButton.alpha = 0;
     [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         //        _playButton.transform = CGAffineTransformMakeRotation( (360.1) * M_PI / 180.0);
@@ -322,7 +326,6 @@
 
 - (void)hideButton:(BOOL)animated {
     _playButton.hidden = YES;
-    [self.unityController.window sendSubviewToBack:_playButton];
 }
 
 #pragma mark ---定位定时器
@@ -396,6 +399,12 @@
             }
             if (index >= 0 && _sameTimes == 10) {
                 _sameTimes = 0;
+                if (self.isInterruption || self.isInterruptionByUnity || self.isInterruptionByUser) {
+                    return;
+                }
+                if (![[NSUserDefaults standardUserDefaults] boolForKey:@"cutFinish"]) {
+                    return;
+                }
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
                 [self startPlayingMusic];
@@ -471,9 +480,6 @@
 - (void)startPlayingMusic {
     if (self.playingMusic == [ZYMusicTool playingMusic]) {
         [iConsole log:@"相同的景点，不需要播放新音频"];
-        return;
-    }
-    if (self.isInterruption || self.isInterruptionByUnity || self.isInterruptionByUser) {
         return;
     }
     [self resetPlayingMusic];
@@ -558,7 +564,7 @@
             
         }
         UIImage *squareImage = [PWApplicationUtils getSquareImage:image RangeCGRect:CGRectMake(0, 0, imageSize, imageSize) centerBool:YES];
-        [_playButton setImagePic:[PWApplicationUtils getClearRectImage:squareImage]];
+        [_playButton setImagePic:[PWApplicationUtils getClearRectImage:squareImage] centerCircle:YES];
     }
     
 //    self.timeLabel.text = [self stringWithTime:totalTime];
@@ -705,29 +711,49 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     //    [self next:nil];
     [_playButton updateProgressWithNumber:0];
-    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"]];
+    [_playButton setImagePic:[UIImage imageNamed:@"smart_nav"] centerCircle:NO];
     [self removeUITimer];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"NSNotificationNameStopPlay" object:nil];
     //TODO:关闭锁屏页面
 }
+
 /**
  *  当电话给过来时，进行相应的操作
+ *  用户优先级>Unity优先级>系统优先级
  *
  */
 - (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
-    if ([self.player isPlaying]) {
-        [self playOrPause:NO];
-        self.isInterruption = YES;
-    }
+    [self audioPlayerInterruptionOfSystem:NO];
 }
 /**
  *  打断结束，做相应的操作
  *
  */
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player {
-    if (self.isInterruption) {
+    [self audioPlayerInterruptionOfSystem:YES];
+}
+
+- (void)audioPlayerInterruptionOfSystem:(BOOL)play {
+    [iConsole log:@"audioPlayerInterruptionOfSystem %d, user inter %d, unity inter %d, inter %d", play, self.isInterruptionByUser, self.isInterruptionByUnity, self.isInterruption];
+    if (play) {
+        if (!self.isInterruptionByUser && !self.isInterruptionByUnity && self.isInterruption) {
+            [self playOrPause:YES];
+        }
         self.isInterruption = NO;
+    } else {
+        [self playOrPause:NO];
+        self.isInterruption = YES;
+    }
+}
+
+- (void)audioPlayerInterruptionOfUser:(BOOL)play {
+    [iConsole log:@"audioPlayerInterruptionOfUser %d, user inter %d", play, self.isInterruptionByUser];
+    if (play) {
         [self playOrPause:YES];
+        self.isInterruptionByUser = NO;
+    } else {
+        self.isInterruptionByUser = YES;
+        [self playOrPause:NO];
     }
 }
 
@@ -735,17 +761,19 @@
  *  当Unity打断时，进行相应的操作,play表示Unity控制原生的播放
  *
  */
-- (void)audioPlayerInterruptionOfPlay:(BOOL)play {
+- (void)audioPlayerInterruptionOfUnity:(BOOL)play {
+    [iConsole log:@"audioPlayerInterruptionOfUnity %d, user inter %d, unity inter %d", play, self.isInterruptionByUser, self.isInterruptionByUnity];
+    //继续播放
     if (play) {
-        if (self.isInterruptionByUnity) {
-            self.isInterruptionByUnity = NO;
+        if (!self.isInterruptionByUser && self.isInterruptionByUnity) {
             [self playOrPause:YES];
         }
-    } else {
-        if ([self.player isPlaying]) {
-            [self playOrPause:NO];
-            self.isInterruptionByUnity = YES;
-        }
+        self.isInterruptionByUnity = NO;
+    }
+    //暂停
+    else {
+        [self playOrPause:NO];
+        self.isInterruptionByUnity = YES;
     }
 }
 
@@ -765,12 +793,14 @@
  */
 - (IBAction)playOrPause:(BOOL)play {
     if (_player) {
-        if (play) {
+        if (play && !_player.isPlaying) {
             [_player play];
             [self addUITimer];
-        } else {
+        } else if (!play && _player.isPlaying) {
             [_player pause];
             [self removeUITimer];
+        } else {
+            NSLog(@"playOrPause other play:%d， isPlaying:%d", play, _player.isPlaying);
         }
     }
 }

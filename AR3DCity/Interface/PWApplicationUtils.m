@@ -167,8 +167,8 @@ static PWApplicationUtils *sharedObject = nil;
     CGContextRef ctx =UIGraphicsGetCurrentContext();
     //默认绘制的内容尺寸和图片一样大,从某一点开始绘制
     [image drawAtPoint:CGPointZero];
-    CGFloat bigRaduis = image.size.width/5;
-    CGRect cirleRect =CGRectMake(image.size.width/2-bigRaduis, image.size.height/2-bigRaduis, bigRaduis*2, bigRaduis*2);
+    CGFloat bigRaduis = image.size.width/3;
+    CGRect cirleRect =CGRectMake(bigRaduis, bigRaduis, bigRaduis, bigRaduis);
     //CGContextAddArc(ctx,image.size.width/2-bigRaduis,image.size.height/2-bigRaduis, bigRaduis, 0.0, 2*M_PI, 0);
     CGContextAddEllipseInRect(ctx,cirleRect);
     CGContextClip(ctx);

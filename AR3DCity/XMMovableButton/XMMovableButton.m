@@ -33,8 +33,7 @@ static int kLineWidth = 3;
 
 
         self.outLayer = [CAShapeLayer layer];
-        CGRect rect = {kLineWidth / 2, kLineWidth / 2,
-            frame.size.width - kLineWidth, frame.size.height - kLineWidth};
+        CGRect rect = {0, 0, frame.size.width, frame.size.height};
         UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:rect];
         self.outLayer.strokeColor = [UIColor whiteColor].CGColor;
         self.outLayer.lineWidth = kLineWidth;
@@ -96,29 +95,29 @@ static int kLineWidth = 3;
     CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
+    NSLog(@"touchesMoved width %lf, height %lf", screenWidth, screenHeight);
+    
     CGFloat xMin = self.frame.size.width  * 0.5f;
     CGFloat xMax = screenWidth  - xMin;
     
     CGFloat yMin = self.frame.size.height * 0.5f;
     CGFloat yMax = screenHeight - self.frame.size.height * 0.5f;
     
-    if (center.x > xMax) center.x = xMax;
+    if (center.x >= xMax) center.x = xMax;
     if (center.x < xMin) center.x = xMin;
     
-    if (center.y > yMax) center.y = yMax;
+    if (center.y >= yMax) center.y = yMax;
     if (center.y < yMin) center.y = yMin;
     
     self.center = center;
     
     //移动距离大于0.5才判断为移动了(提高容错性)
     if (current.x-previous.x>=0.5 || current.y - previous.y>=0.5) {
-        
         self.isMoved = YES;
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     if (!self.isMoved) {
         //如果没有移动，则调用父类方法，触发button的点击事件
         [super touchesEnded:touches withEvent:event];
@@ -126,6 +125,7 @@ static int kLineWidth = 3;
     CGPoint center = self.center;
     //限制移动范围
     CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
+    NSLog(@"touchesEnded width %lf", screenWidth);
     
     CGFloat xMin = self.frame.size.width  * 0.5f;
     CGFloat xMax = screenWidth  - xMin;
@@ -157,9 +157,9 @@ static int kLineWidth = 3;
 
 - (void)updateProgressWithNumber:(NSUInteger)number {
     if (number==0 && [self.circleLayer superlayer]) {
-        [self.circleLayer removeFromSuperlayer];
+        
     } else if (number!=0 && ![self.circleLayer superlayer]) {
-        [self.layer addSublayer:self.circleLayer];
+        
     }
     [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
         float progress = number / 100.0;
@@ -178,8 +178,13 @@ static int kLineWidth = 3;
     [self.progressLayer addAnimation:pathAnima forKey:@"strokeEndAnimation"];
 }
 
-- (void)setImagePic:(UIImage *)image {
+- (void)setImagePic:(UIImage *)image centerCircle:(BOOL)showCircle {
     _picImageView.image = image;
+    if (showCircle) {
+        [self.layer addSublayer:self.circleLayer];
+    } else {
+        [self.circleLayer removeFromSuperlayer];
+    }
 }
 
 @end

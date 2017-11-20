@@ -141,7 +141,7 @@ static PWUnityMsgManager *sharedObject = nil;
                 NSDictionary *paramsDic = [dic objectForKey:@"params"];
                 if ([[paramsDic allKeys] containsObject:@"play"]) {
                     NSString *play = paramsDic[@"play"];
-                    [(AppDelegate *)[UIApplication sharedApplication].delegate audioPlayerInterruptionOfPlay:[play isEqualToString:@"True"]];
+                    [(AppDelegate *)[UIApplication sharedApplication].delegate audioPlayerInterruptionOfUnity:[play isEqualToString:@"True"]];
                     return [PWU3DCodec U3DCodec:@"true"];
                 }
             }
