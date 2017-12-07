@@ -15,8 +15,8 @@
             <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="LaunchScreen-iPhonePortrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="6pd-fU-b9y" userLabel="Image">
-                    <rect key="frame" x="8" y="8" width="584" height="584"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen-iPhonePortrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="6pd-fU-b9y" userLabel="Image">
+                    <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                 </imageView>
             </subviews>
             <constraints>

@@ -66,7 +66,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.unityController = [[UnityAppController alloc] init];
     [self.unityController application:application didFinishLaunchingWithOptions:launchOptions];
-    self.unityController.window = [[iConsoleWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.unityController.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIViewController *tempVc = self.unityController.rootViewController;
     self.unityController.rootViewController = nil;
     self.unityController.window.rootViewController = tempVc;
@@ -176,8 +176,8 @@
 - (void)toastChange:(NSString *)name {
     CGRect buttonFrame = _playButton.frame;
     UILabel *label = [[UILabel alloc] init];
-    label.font = [UIFont systemFontOfSize:12];
-    label.frame = CGRectMake(buttonFrame.origin.x, buttonFrame.origin.y-30, 70, 20);
+    label.font = [UIFont systemFontOfSize:15];
+    label.frame = CGRectMake(buttonFrame.origin.x-10, buttonFrame.origin.y-30, 90, 20);
     label.textColor = [UIColor whiteColor];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = name;
@@ -803,6 +803,19 @@
             NSLog(@"playOrPause other play:%d， isPlaying:%d", play, _player.isPlaying);
         }
     }
+}
+
+- (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
+{
+    // UIInterfaceOrientationMaskAll
+    // it is the safest way of doing it:
+    // - GameCenter and some other services might have portrait-only variant
+    //     and will throw exception if portrait is not supported here
+    // - When you change allowed orientations if you end up forbidding current one
+    //     exception will be thrown
+    // Anyway this is intersected with values provided from UIViewController, so we are good
+    return (1 << UIInterfaceOrientationPortrait) | (1 << UIInterfaceOrientationPortraitUpsideDown)
+    | (1 << UIInterfaceOrientationLandscapeRight) | (1 << UIInterfaceOrientationLandscapeLeft);
 }
 
 @end
