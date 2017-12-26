@@ -397,7 +397,7 @@
                 _locIndex = index;
                 _sameTimes = 0;
             }
-            if (index >= 0 && _sameTimes == 10) {
+            if (index >= 0 && _sameTimes == 5) {
                 _sameTimes = 0;
                 if (self.isInterruption || self.isInterruptionByUnity || self.isInterruptionByUser) {
                     return;
