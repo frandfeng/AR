@@ -16,7 +16,7 @@ import Foundation
 //UnityEdit.moveHFileBack();
 
 //当Unity重新导出需要刷新工程时需要调用的
-//UnityEdit.startUnityRefresh();
+UnityEdit.startUnityRefresh();
 
 //添加OTHER_CFLAGS = -DINIT_SCRIPTING_BACKEND=1和header路径
 

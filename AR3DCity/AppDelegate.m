@@ -23,6 +23,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
+#import <AVKit/AVKit.h>
 
 @interface AppDelegate () <AVAudioPlayerDelegate, CLLocationManagerDelegate>
 
@@ -228,6 +229,27 @@
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
     [[PWApplicationUtils sharedInstance].activityViewController presentViewController:vc animated:YES completion:nil];
 }
+//-(void)playMovieAtURL:(NSURL*)theURL
+//{
+//    VideoPlayerViewController *playerView = [[VideoPlayerViewController alloc] initWithContentURL:theURL];
+//    playerView.view.frame = self.unityWindow.frame;//全屏播放（全屏播放不可缺）
+//    playerView.moviePlayer.scalingMode = MPMovieScalingModeAspectFill;//全屏播放（全屏播放不可缺）
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(myMovieFinishedCallback:)
+//                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+//                                               object:playerView];
+//    [playerView.moviePlayer play];
+//    [[[PWApplicationUtils sharedInstance] activityViewController] presentMoviePlayerViewControllerAnimated:playerView];
+//}
+//
+//// When the movie is done, release the controller.
+//-(void)myMovieFinishedCallback:(NSNotification*)aNotification
+//{
+//    VideoPlayerViewController* theMovie = [aNotification object];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self
+//                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+//                                                  object:theMovie];
+//}
 - (void)applicationWillResignActive:(UIApplication *)application {
     [self.unityController applicationWillResignActive:application];
 }

@@ -10,7 +10,7 @@ import Foundation
 
 public class UnityEdit : NSObject {
     
-    static let ProjectPath = "/Users/frand/Develop/Project/iOS/";
+    static let ProjectPath = "/Users/frand/Develop/Project/iOS/AR3DCity1/";
     
     /// 当工程中第一次导入Unity时需要调用的
     public static func startUnityImport() -> Void {
@@ -76,18 +76,18 @@ public class UnityEdit : NSObject {
             print("修改GetAppController.mm失败");
         }
         //IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)
-        let res4 : Bool = editVuforia();
-        if res4 {
-            print("修改VuforiaNativeRendererController成功");
-        } else {
-            print("修改VuforiaNativeRendererController失败");
-        }
+//        let res4 : Bool = editVuforia();
+//        if res4 {
+//            print("修改VuforiaNativeRendererController成功");
+//        } else {
+//            print("修改VuforiaNativeRendererController失败");
+//        }
     }
     
     /// 将Native中的.h文件移动到一个暂时的文件夹中
     public static func removeHFile() -> Void {
         let desNativeDir : String = ProjectPath + "Temp/Native/";
-        let srcNativeDir : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/Native/";
+        let srcNativeDir : String = ProjectPath + "Unity3DPlugin/Classes/Native/";
         let fileManager : FileManager = FileManager.default;
         do {
             if fileManager.fileExists(atPath: desNativeDir) {
@@ -110,7 +110,7 @@ public class UnityEdit : NSObject {
     /// 将原来备份的.h文件移动回来
     public static func moveHFileBack() -> Void {
         let srcNativeDir : String = ProjectPath + "Temp/Native/";
-        let desNativeDir : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/Native/";
+        let desNativeDir : String = ProjectPath + "Unity3DPlugin/Classes/Native/";
         let fileManager : FileManager = FileManager.default;
         do {
             print(Date());
@@ -280,7 +280,7 @@ public class UnityEdit : NSObject {
     
     /// 修改il2cpp-config.h中的attribute
     static func replaceDec2Attr() -> Bool {
-        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Libraries/libil2cpp/include/il2cpp-config.h";
+        let path : String = ProjectPath + "Unity3DPlugin/Libraries/libil2cpp/include/il2cpp-config.h";
         var content : String = UnityUtil.read(path: path);
         if content.contains("__declspec(noreturn)") {
             content = content.replacingOccurrences(of: "__declspec(noreturn)", with: "__attribute__((noreturn))");
@@ -293,7 +293,7 @@ public class UnityEdit : NSObject {
     
     /// 修改GetAppController中的代码
     static func editGetAppControllerH() -> Bool {
-        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/UnityAppController.h";
+        let path : String = ProjectPath + "Unity3DPlugin/Classes/UnityAppController.h";
         var content : String = UnityUtil.read(path: path);
         if !content.contains("#import \"AppDelegate.h\"") {
             //添加#import "CPAppDelegate.h"
@@ -309,7 +309,7 @@ public class UnityEdit : NSObject {
     }
     
     static func editGetAppControllerM() -> Bool {
-        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Classes/UnityAppController.mm";
+        let path : String = ProjectPath + "Unity3DPlugin/Classes/UnityAppController.mm";
         var content : String = UnityUtil.read(path: path);
         if content.contains("- (void)setWindow:(id)object        {}") {
             content = content.replacingOccurrences(of: "- (void)setWindow:(id)object        {}", with: "- (void)setWindow:(id)object        {_window = object;}");
@@ -321,7 +321,7 @@ public class UnityEdit : NSObject {
     }
     
     static func editVuforia() -> Bool {
-        let path : String = ProjectPath + "AR3DCity/Unity3DPlugin/Libraries/Plugins/iOS/VuforiaNativeRendererController.mm";
+        let path : String = ProjectPath + "Unity3DPlugin/Libraries/Plugins/iOS/VuforiaNativeRendererController.mm";
         var content : String = UnityUtil.read(path: path);
         if content.contains("IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)") {
             content = content.replacingOccurrences(of: "IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)", with: "//IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)");
