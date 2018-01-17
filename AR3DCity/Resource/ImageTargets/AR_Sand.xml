@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="sbt_yiheyuan_xiequyuan14" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan13" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan12" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan11" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan10" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan9" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan8" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan7" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan6" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan5" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan4" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan3" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_xiequyuan2" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan9" size="1224.000000 918.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan8" size="1224.000000 918.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan7" size="1224.000000 918.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan6" size="1224.000000 918.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan5" size="1224.000000 918.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan4" size="3264.000000 2448.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan3" size="3264.000000 2448.000000" />
+    <ImageTarget name="sbt_yiheyuan_wenchangyuan2" size="3264.000000 2448.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu17" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu16" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu15" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu14" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu13" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu12" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu11" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu10" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu9" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu8" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu7" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu6" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu5" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu4" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu3" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu2" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge16" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge15" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge14" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge13" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge12" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge11" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge10" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge9" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge8" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge7" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge6" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge5" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge4" size="2765.000000 2074.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge3" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge2" size="2489.000000 1867.000000" />
+    <ImageTarget name="sbt_yiheyuan_zhoubian" size="2000.000000 963.000000" />
+  </Tracking>
+</QCARConfig>

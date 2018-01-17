@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="sbt_ticket_yiheyuan10" size="4608.000000 3456.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan9" size="4608.000000 3456.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan8" size="4608.000000 3456.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan7" size="4608.000000 3456.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan6" size="4608.000000 3456.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan5" size="3456.000000 4608.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan4" size="3456.000000 4608.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan3" size="3456.000000 4608.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan2" size="3456.000000 4608.000000" />
+    <ImageTarget name="sbt_ticket_yiheyuan1" size="3456.000000 4608.000000" />
+  </Tracking>
+</QCARConfig>

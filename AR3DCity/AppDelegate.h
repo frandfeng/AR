@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SampleGLResourceHandler.h"
 
 @class UnityAppController;
 @class XMMovableButton;
@@ -16,7 +17,9 @@
 @class CLBeacon;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
+@property (nonatomic, weak) id<SampleGLResourceHandler> glResourceHandler;
 
+@property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIWindow *unityWindow;
 @property (strong, nonatomic) UnityAppController *unityController;
 @property (strong, nonatomic) XMMovableButton *playButton;

@@ -16,6 +16,7 @@
 #import "LocationManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "VideoPlayerViewController.h"
+#import "ImageTargetsViewController.h"
 
 @implementation PWUnityMsgManager
 
@@ -180,6 +181,12 @@ static PWUnityMsgManager *sharedObject = nil;
                     return [PWU3DCodec U3DCodec:@"true"];
                 }
             }
+        }
+        else if ([func isEqualToString:@"ReqARScan"]) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                ImageTargetsViewController *arScanVc = [[ImageTargetsViewController alloc] init];
+                [[PWApplicationUtils sharedInstance].activityViewController presentViewController:arScanVc animated:YES completion:nil];
+            });
         }
     }
     return [PWU3DCodec U3DCodec:@"false"];

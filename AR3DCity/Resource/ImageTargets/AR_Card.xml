@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="sbt_yiheyuan_spot_zhihuihai1" size="1900.000000 1298.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_zangshijianzhu1" size="1600.000000 1093.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_yudaiqyiao1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_youlang1" size="1900.000000 1298.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_yonghelun1" size="596.000000 809.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_xiequyuan1" size="1500.000000 1025.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_wenwenchangge1" size="1900.000000 1298.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_tongting1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_tongniu1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_tingliguang1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_shiqikongqiao1" size="1900.000000 1298.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_renshoudian1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_qingyanfang1" size="1700.000000 1161.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_paiyundian1" size="1600.000000 1092.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_nanhudao1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_huazhongyou1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_gengzhitu1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_foxiangge1" size="1500.000000 1024.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_daxilou1" size="1600.000000 1092.000000" />
+    <ImageTarget name="sbt_yiheyuan_spot_binfengqiao1" size="2000.000000 1366.000000" />
+    <ImageTarget name="sbt_yiheyuan_all3" size="1600.000000 1092.000000" />
+    <ImageTarget name="sbt_yiheyuan_all2" size="2516.000000 1718.000000" />
+    <ImageTarget name="sbt_yiheyuan_all" size="1131.000000 500.000000" />
+  </Tracking>
+</QCARConfig>
