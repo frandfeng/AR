@@ -180,6 +180,12 @@ static PWUnityMsgManager *sharedObject = nil;
                 }
             }
         }
+        else if ([func isEqualToString:@"ReqARScan"]) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                ImageTargetsViewController *arScanVc = [[ImageTargetsViewController alloc] init];
+//                [[PWApplicationUtils sharedInstance].activityViewController presentViewController:arScanVc animated:YES completion:nil];
+//            });
+        }
     }
     return [PWU3DCodec U3DCodec:@"false"];
 }
