@@ -10,4 +10,6 @@
 
 @interface VideoPlayerViewController : AVPlayerViewController
 
+- (instancetype)initWithUrl:(NSURL *)url;
+
 @end

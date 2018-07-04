@@ -67,11 +67,20 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.unityController = [[UnityAppController alloc] init];
     [self.unityController application:application didFinishLaunchingWithOptions:launchOptions];
+    
+//    如果需要手机打印log的情况
+//    self.unityController.window = [[iConsoleWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    UIViewController *tempVc = self.unityController.rootViewController;
+//    self.unityController.rootViewController = nil;
+//    self.unityController.window.rootViewController = tempVc;
+//    [self.unityController.window makeKeyAndVisible];
+    
     self.unityController.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     UIViewController *tempVc = self.unityController.rootViewController;
     self.unityController.rootViewController = nil;
     self.unityController.window.rootViewController = tempVc;
     [self.unityController.window makeKeyAndVisible];
+    
     [self addLocTimer];
     [self addButton];
     [self createRemoteCommandCenter];
@@ -383,6 +392,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
+    [iConsole log:@"didRangeBeacons - region: %@", (CLBeaconRegion *)region.identifier];
     for (CLBeacon *beacon in beacons) {
         if (beacon.proximity != CLProximityUnknown) {
             BOOL exist = NO;

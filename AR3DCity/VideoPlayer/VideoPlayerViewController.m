@@ -18,11 +18,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.videoGravity = AVLayerVideoGravityResize;
+    [self.player play];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(playerItemDidReachEnd:)
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:AVPlayerItemDidPlayToEndTimeNotification object:nil];
+}
+
+- (void)playerItemDidReachEnd:(id)object {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    NSLog(@"VideoPlayerViewController didReceiveMemoryWarning");
+}
+
+- (instancetype)initWithUrl:(NSURL *)url {
+    self = [super init];
+    self.player = [[AVPlayer alloc] initWithURL:url];
+    return self;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -30,8 +55,8 @@
 }
 
 - (void)dealloc {
+    NSLog(@"VideoPlayerViewController dealloc");
     [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnPlayVideoState" andValue:[NSString stringWithFormat:@"{\"params\":{\"errCode\":\"%@\"}}", @"0"]];
-    
 }
 
 - (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {

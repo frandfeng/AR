@@ -10,7 +10,7 @@ import Foundation
 
 public class UnityEdit : NSObject {
     
-    static let ProjectPath = "/Users/frand/Develop/Project/iOS/AR3DCity1/";
+    static let ProjectPath = "/Users/frand/Develop/Project/iOS/AR3DCity/";
     
     /// 当工程中第一次导入Unity时需要调用的
     public static func startUnityImport() -> Void {
@@ -76,12 +76,12 @@ public class UnityEdit : NSObject {
             print("修改GetAppController.mm失败");
         }
         //IMPL_APP_CONTROLLER_SUBCLASS(VuforiaNativeRendererController)
-//        let res4 : Bool = editVuforia();
-//        if res4 {
-//            print("修改VuforiaNativeRendererController成功");
-//        } else {
-//            print("修改VuforiaNativeRendererController失败");
-//        }
+        let res4 : Bool = editVuforia();
+        if res4 {
+            print("修改VuforiaNativeRendererController成功");
+        } else {
+            print("修改VuforiaNativeRendererController失败");
+        }
     }
     
     /// 将Native中的.h文件移动到一个暂时的文件夹中

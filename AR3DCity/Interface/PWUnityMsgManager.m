@@ -170,13 +170,12 @@ static PWUnityMsgManager *sharedObject = nil;
             if ([[dic allKeys] containsObject:@"params"]) {
                 NSDictionary *paramsDic = [dic objectForKey:@"params"];
                 if ([[paramsDic allKeys] containsObject:@"videoName"]) {
-                    NSString *videoName = paramsDic[@"videoName"];
-                    VideoPlayerViewController *avPlayerVc = [[VideoPlayerViewController alloc] init];
-                    NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithFormat:@"Data/Raw/Video/%@", videoName] withExtension:@"mp4"];
-                    avPlayerVc.player = [[AVPlayer alloc] initWithURL:url];
-                    avPlayerVc.videoGravity = AVLayerVideoGravityResize;
-                    [avPlayerVc.player play];
-                    [[PWApplicationUtils sharedInstance].activityViewController presentViewController:avPlayerVc animated:YES completion:nil];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSString *videoName = paramsDic[@"videoName"];
+                        NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithFormat:@"Data/Raw/Video/%@", videoName] withExtension:@"mp4"];
+                        VideoPlayerViewController *avPlayerVc = [[VideoPlayerViewController alloc] initWithUrl:url];
+                        [[PWApplicationUtils sharedInstance].activityViewController presentViewController:avPlayerVc animated:YES completion:nil];
+                    });
                     return [PWU3DCodec U3DCodec:@"true"];
                 }
             }
