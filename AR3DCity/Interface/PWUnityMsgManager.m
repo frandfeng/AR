@@ -186,6 +186,24 @@ static PWUnityMsgManager *sharedObject = nil;
 //                [[PWApplicationUtils sharedInstance].activityViewController presentViewController:arScanVc animated:YES completion:nil];
 //            });
         }
+        else if ([func isEqualToString:@"ReqARNavigate"]) {
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"identifiers"]) {
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSString *identifiers = paramsDic[@"identifiers"];
+                        if ([[paramsDic allKeys] containsObject:@"stop"]) {
+                            NSString *stop = paramsDic[@"stop"];
+                            if ([stop isEqualToString:@"True"]) {
+                            } else {
+                            }
+                            return [PWU3DCodec U3DCodec:@"true"];
+                        }
+//                    });
+                    return [PWU3DCodec U3DCodec:@"true"];
+                }
+            }
+        }
     }
     return [PWU3DCodec U3DCodec:@"false"];
 }

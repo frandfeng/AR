@@ -24,6 +24,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <Foundation/Foundation.h>
 #import <AVKit/AVKit.h>
+#import "PWUnityMsgManager.h"
 
 @interface AppDelegate () <AVAudioPlayerDelegate, CLLocationManagerDelegate>
 
@@ -440,6 +441,8 @@
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
                 [self startPlayingMusic];
+                
+                [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnARNavigateChanged" andValue:[NSString stringWithFormat:@"{\"params\":{\"identifier\":\"%@\"}}", _nearestBeacon.proximityUUID]];
             }
         } else {
             _locIndex = -1;
