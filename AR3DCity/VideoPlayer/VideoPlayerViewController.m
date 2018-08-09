@@ -44,9 +44,11 @@
     NSLog(@"VideoPlayerViewController didReceiveMemoryWarning");
 }
 
-- (instancetype)initWithUrl:(NSURL *)url {
+- (instancetype)initWithUrl:(NSURL *)url andProgress:(int)millionSec {
     self = [super init];
     self.player = [[AVPlayer alloc] initWithURL:url];
+    NSLog(@"VideoPlayerViewController seek progress %d", millionSec);
+    [self.player seekToTime:CMTimeMake(millionSec/1000, 1)];
     return self;
 }
 
@@ -56,7 +58,10 @@
 
 - (void)dealloc {
     NSLog(@"VideoPlayerViewController dealloc");
-    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnPlayVideoState" andValue:[NSString stringWithFormat:@"{\"params\":{\"errCode\":\"%@\"}}", @"0"]];
+    float progress = CMTimeGetSeconds(self.player.currentItem.currentTime) * 1000;
+    NSString *prog = [NSString stringWithFormat:@"%f", progress];
+    NSLog(@"VideoPlayerViewController progress %@", prog);
+    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnPlayVideoState" andValue:[NSString stringWithFormat:@"{\"params\":{\"errCode\":\"%@\"}}", prog]];
 }
 
 /*

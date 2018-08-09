@@ -28,6 +28,11 @@
 //判断歌曲播放过程中是否被电话等打断播放
 @property (nonatomic, assign) BOOL isInterruptionByUser;
 
+//导航是否开启
+@property (nonatomic, assign) BOOL navOpen;
+//是否第一次更改导航状态
+@property (nonatomic, assign) BOOL firstNavOpen;
+
 - (void)startPlayingMusic;
 - (void)bringButtonToFront:(BOOL)animated;
 - (void)hideButton:(BOOL)animated;

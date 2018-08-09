@@ -16,6 +16,7 @@
 #import "LocationManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "VideoPlayerViewController.h"
+#import "AppDelegate+VideoView.h"
 
 @implementation PWUnityMsgManager
 
@@ -173,8 +174,18 @@ static PWUnityMsgManager *sharedObject = nil;
                     dispatch_async(dispatch_get_main_queue(), ^{
                         NSString *videoName = paramsDic[@"videoName"];
                         NSURL *url = [[NSBundle mainBundle] URLForResource:[NSString stringWithFormat:@"Data/Raw/Video/%@", videoName] withExtension:@"mp4"];
-                        VideoPlayerViewController *avPlayerVc = [[VideoPlayerViewController alloc] initWithUrl:url];
-                        [[PWApplicationUtils sharedInstance].activityViewController presentViewController:avPlayerVc animated:YES completion:nil];
+                        int progress = 0;
+                        if ([paramsDic.allKeys containsObject:@"progress"]) {
+                            NSString *progStr = paramsDic[@"progress"];
+                            progress = progStr.intValue;
+                        }
+                        if (progress==-1) {
+                            [(AppDelegate *)[UIApplication sharedApplication].delegate setVideoUrl:url];
+                            [(AppDelegate *)[UIApplication sharedApplication].delegate startPlayVideo];
+                        } else {
+                            VideoPlayerViewController *avPlayerVc = [[VideoPlayerViewController alloc] initWithUrl:url andProgress:progress];
+                            [[PWApplicationUtils sharedInstance].activityViewController presentViewController:avPlayerVc animated:YES completion:nil];
+                        }
                     });
                     return [PWU3DCodec U3DCodec:@"true"];
                 }
@@ -189,18 +200,30 @@ static PWUnityMsgManager *sharedObject = nil;
         else if ([func isEqualToString:@"ReqARNavigate"]) {
             if ([[dic allKeys] containsObject:@"params"]) {
                 NSDictionary *paramsDic = [dic objectForKey:@"params"];
-                if ([[paramsDic allKeys] containsObject:@"identifiers"]) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-                        NSString *identifiers = paramsDic[@"identifiers"];
-                        if ([[paramsDic allKeys] containsObject:@"stop"]) {
-                            NSString *stop = paramsDic[@"stop"];
-                            if ([stop isEqualToString:@"True"]) {
-                            } else {
-                            }
-                            return [PWU3DCodec U3DCodec:@"true"];
+                if ([[paramsDic allKeys] containsObject:@"stop"]) {
+                    if ([[paramsDic allKeys] containsObject:@"stop"]) {
+                        NSString *stop = paramsDic[@"stop"];
+                        if ([stop isEqualToString:@"True"]) {
+                            ((AppDelegate *)[UIApplication sharedApplication].delegate).navOpen = NO;
+                        } else {
+                            ((AppDelegate *)[UIApplication sharedApplication].delegate).navOpen = YES;
                         }
-//                    });
+                        return [PWU3DCodec U3DCodec:@"true"];
+                    }
                     return [PWU3DCodec U3DCodec:@"true"];
+                }
+            }
+        }
+        else if ([func isEqualToString:@"ReqShutdownVideo"]) {
+            if ([[dic allKeys] containsObject:@"params"]) {
+                NSDictionary *paramsDic = [dic objectForKey:@"params"];
+                if ([[paramsDic allKeys] containsObject:@"resetposition"]) {
+                    NSString *resetposition = paramsDic[@"resetposition"];
+                    if ([resetposition isEqualToString:@"True"]) {
+                        [(AppDelegate *)[UIApplication sharedApplication].delegate stopPlayVideo];
+                    } else {
+                        [(AppDelegate *)[UIApplication sharedApplication].delegate pausePlayVideo];
+                    }
                 }
             }
         }

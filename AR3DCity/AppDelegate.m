@@ -25,6 +25,7 @@
 #import <Foundation/Foundation.h>
 #import <AVKit/AVKit.h>
 #import "PWUnityMsgManager.h"
+#import "AppDelegate+VideoView.h"
 
 @interface AppDelegate () <AVAudioPlayerDelegate, CLLocationManagerDelegate>
 
@@ -82,6 +83,7 @@
     self.unityController.window.rootViewController = tempVc;
     [self.unityController.window makeKeyAndVisible];
     
+    [self initVideoView:application withOption:launchOptions];
     [self addLocTimer];
     [self addButton];
     [self createRemoteCommandCenter];
@@ -127,7 +129,7 @@
     }
 }
 
-- (void)cutImageAndSave{
+- (void)cutImageAndSave {
     BOOL cutFinish = [[NSUserDefaults standardUserDefaults] boolForKey:@"cutFinish"];
     if (cutFinish) return;
     
@@ -212,28 +214,7 @@
     [_playButton updateProgressWithNumber:0];
     [_playButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playButtonTouched:)]];
     [self hideButton:NO];
-    [self.unityController.window addSubview:_playButton];
-    
-//    _playButton.alpha = 0;
-//    _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-//    [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//        _playButton.alpha = 1;
-//        _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-//    } completion:^(BOOL finished) {
-//        [UIView animateWithDuration:2.0 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//            _playButton.alpha = 1;
-//            _playButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width-80, [UIScreen mainScreen].bounds.size.height-70, 70, 70);
-//        } completion:^(BOOL finished) {
-//            [self.unityController.window bringSubviewToFront:_playButton];
-//        }];
-//        [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//            _playButton.transform = CGAffineTransformMakeRotation(M_PI);
-//        } completion:^(BOOL finished) {
-//            [UIView animateWithDuration:1 delay:0.0 options:UIViewAnimationOptionCurveLinear animations:^{
-//                _playButton.transform = CGAffineTransformMakeRotation(2*M_PI);
-//            } completion:nil];
-//        }];
-//    }];
+    [self.unityWindow addSubview:_playButton];
 }
 - (void)playButtonTouched:(UITapGestureRecognizer *)gestureRecognizer {
     ZYPlayingViewController *vc = [[ZYPlayingViewController alloc] init];
@@ -393,7 +374,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager
         didRangeBeacons:(NSArray<CLBeacon *> *)beacons inRegion:(CLBeaconRegion *)region {
-    [iConsole log:@"didRangeBeacons - region: %@", (CLBeaconRegion *)region.identifier];
     for (CLBeacon *beacon in beacons) {
         if (beacon.proximity != CLProximityUnknown) {
             BOOL exist = NO;
@@ -440,9 +420,13 @@
                 }
                 ZYMusic *music = [ZYMusicTool musics][index];
                 [ZYMusicTool setPlayingMusic:music];
-                [self startPlayingMusic];
                 
-                [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnARNavigateChanged" andValue:[NSString stringWithFormat:@"{\"params\":{\"identifier\":\"%@\"}}", _nearestBeacon.proximityUUID]];
+                if (_navOpen && (self.playingMusic != [ZYMusicTool playingMusic] || _firstNavOpen)) {
+                    _firstNavOpen = NO;
+                    [[PWUnityMsgManager sharedInstance] sendMsg2UnityOfType:@"OnARNavigateChanged" andValue:[NSString stringWithFormat:@"{\"params\":{\"identifier\":\"%@\"}}", _nearestBeacon.proximityUUID]];
+                }
+                
+                [self startPlayingMusic];
             }
         } else {
             _locIndex = -1;
@@ -838,6 +822,13 @@
             NSLog(@"playOrPause other play:%d， isPlaying:%d", play, _player.isPlaying);
         }
     }
+}
+
+- (void)setNavOpen:(BOOL)navOpen {
+    if (navOpen) {
+        _firstNavOpen = YES;
+    }
+    _navOpen = navOpen;
 }
 
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window

@@ -10,7 +10,7 @@ import Foundation
 
 public class UnityEdit : NSObject {
     
-    static let ProjectPath = "/Users/frand/Develop/Project/iOS/AR3DCity/";
+    static let ProjectPath = "/Users/frand/Develop/AR/ARiOS2/";
     
     /// 当工程中第一次导入Unity时需要调用的
     public static func startUnityImport() -> Void {
